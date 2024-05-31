@@ -1,4 +1,39 @@
-:root {
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+     height: 100%;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+    .left-side {
+      flex: 1;
+      background-color: palegoldenrod;
+    }
+    .right-side {
+      background-color: white;
+      display: flex;
+      justify-content: flex-end; /* Align items to the right */
+      align-items: center; /* Vertically center items */
+      min-height: 100vh;
+      padding-right: 160px; /* Adjust this value to control how far from the right edge */
+      color: black;
+    }
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 
+  'Courier New',
+    monospace;
+}
+/* :root {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
@@ -104,4 +139,4 @@ a {
   html {
     color-scheme: dark;
   }
-}
+} */
