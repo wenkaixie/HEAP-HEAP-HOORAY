@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect } from 'react';
-import './login.css';
+import './page.css';
 // import applogo from '../assets/logo_white.png';
 
 const Login = () => {
