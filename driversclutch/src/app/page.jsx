@@ -1,11 +1,10 @@
 import styles from "./page.module.css";
-import Login from "./screens/login/login";
 import Navbar from "./components/navbar/navbar";
 
-export default function App () {
+export default function Page() {
   return (
     <div>
-      <Login />
+      Homepage
     </div>
   );
 }
