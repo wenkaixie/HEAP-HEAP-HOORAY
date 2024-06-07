@@ -1,7 +1,7 @@
 const express = require('express');
 
 const app = express();
-const PORT = 3000;
+const PORT = 8008;
 const {db} = require('./firebase.js')
 
 app.listen(PORT, (error) =>{
@@ -13,3 +13,10 @@ app.listen(PORT, (error) =>{
 );
 
 app.use(express.json())
+
+//health check
+app.get('/', (req, res) => {
+    return res.status(200).json({
+        message: "Server is up and running!"
+    })
+})
