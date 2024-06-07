@@ -99,6 +99,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    height: 44px;
     width: 90%;
     padding: 20px 5%;
     background: #fff;
