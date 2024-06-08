@@ -14,7 +14,9 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-        <a href='/' className='logo'>DriversClutch</a>
+        <a href='/'>
+          <img src='/assets/logo_black.png' className='logo' />
+        </a>
         <div className="menu-icon" onClick={handleShowNavbar}>
             <IconContext.Provider
                 value={{color: 'black', size: '40px'}}
