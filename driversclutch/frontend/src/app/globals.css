@@ -112,14 +112,6 @@ a {
   padding: 0px;
   box-sizing: border-box;
 }
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(rgb(5, 5, 95),rgb(42, 42, 162), rgb(103, 103, 252));
-}
-
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 
   'Courier New',

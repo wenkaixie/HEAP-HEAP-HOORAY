@@ -1,4 +1,11 @@
-
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: linear-gradient(rgb(5, 5, 95),rgb(42, 42, 162), rgb(103, 103, 252));
+  }
+  
 .tab-form{
     position: absolute;
     top: 50%;
@@ -134,4 +141,33 @@
     transform: translateY(-50%); /* Adjust the position vertically to center the image */
     max-height: 80vh; /* Example max height */
 }
+
+@media (max-width: 768px) {
+    .tab-form {
+        
+        width: 90%;
+        max-width: none;
+        max-height: none;
+        height: auto;
+        top: auto;
+        left: auto;
+        transform: none;
+        position: relative;
+        margin: 20px;
+        
+    }
+
+    .container {
+        height: auto;
+    }
+
+    .applogo {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        margin-bottom: 20px;
+    }
+}
+
   
