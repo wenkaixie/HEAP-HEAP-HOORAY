@@ -1,0 +1,6 @@
+body {
+    background-image: url('/assets/drive-background.jpg');
+    background-repeat: no-repeat;
+    background-size: 105%;
+    background-size: cover;
+  }

@@ -4,7 +4,7 @@ export default function Page() {
   return (
     <main>
       <div>
-        homepage
+        landing page
       </div>
     </main>
   );
