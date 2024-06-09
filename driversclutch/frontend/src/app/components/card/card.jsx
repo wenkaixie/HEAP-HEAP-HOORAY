@@ -1,6 +1,7 @@
 import React from 'react';
 import './card.css';
 
+// sample card
 const Card = () => {
   return (
     <div className="card">
