@@ -1,17 +1,27 @@
 import Navbar from "@/app/components/navbar/navbar";
-import './page.css'
-import Card from "@/app/components/card/card";
+import './page.css';
 
-const ServiceCard = () => {
+const Dashboard = () => {
   return (
     <div className="dashboard">
-      <h2>Upcoming Bookings</h2>
-      <p>Use this area to describe one of your services.</p>
-      <div className="dashboard-details">
-        <span>1 hr</span>
-        <span>$70</span>
+      <div className="dashboard-container">
+        <h2>Calendar</h2>
+        <p>Use this area to describe one of your services.</p>
+        <div className="dashboard-details">
+          <span>1 hr</span>
+          <span>$70</span>
+        </div>
+        <button className="book-button">Book Now</button>
       </div>
-      <button className="book-button">Book Now</button>
+      <div className="dashboard-container">
+        <h2>Upcoming Bookings</h2>
+        <p>Use this area to describe one of your services.</p>
+        <div className="dashboard-details">
+          <span>1 hr</span>
+          <span>$70</span>
+        </div>
+        <button className="book-button">Book Now</button>
+      </div>
     </div>
   );
 };
@@ -22,7 +32,7 @@ export default function Page() {
       <div>
         <Navbar />
       </div>
-      <ServiceCard />
+      <Dashboard />
     </main>
   );
 }
