@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-        <a href='/'>
+        <a href='../screens/home'>
           <img src='/assets/logo_black.png' className='logo' />
         </a>
         <div className="menu-icon" onClick={handleShowNavbar}>
@@ -33,7 +33,7 @@ const Navbar = () => {
               <a href="/">Private Instructors</a>
             </li>
             <li>
-              <a href="/">Lesson Booking</a>
+              <a href="../screens/booking">Lesson Booking</a>
             </li>
             <li>
               <a href="/">Test Booking</a>

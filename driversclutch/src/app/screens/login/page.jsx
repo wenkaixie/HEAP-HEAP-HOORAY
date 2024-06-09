@@ -2,7 +2,6 @@
 
 import React, { useEffect } from 'react';
 import './page.css';
-// import applogo from '../assets/logo_white.png';
 
 const Login = () => {
     useEffect(() => {
@@ -39,10 +38,8 @@ const Login = () => {
     }, []);
 
     return (
-        <div>
-            <div className='container'>
-                <img src='/assets/logo_white.png' alt="logo_img" className='applogo' />
-            </div>
+        <div className="container">
+            <img src='/assets/logo_white.png' alt="logo_img" className='applogo' />
             <div className='tab-form'>
                 <form action="">
                     <div className='tab-header'> 
@@ -51,11 +48,9 @@ const Login = () => {
                     </div>
                     <div className="input-box">
                         <input type="text" placeholder="Username" required />
-                        
                     </div>
                     <div className="input-box">
                         <input type="password" placeholder="Password" required />
-                        
                     </div>
 
                     <div className="remember-forgot">
@@ -77,5 +72,3 @@ const Login = () => {
 }
 
 export default Login;
-
-
