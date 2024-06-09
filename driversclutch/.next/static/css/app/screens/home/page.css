@@ -1,0 +1,185 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./src/app/components/navbar/navbar.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.navbar {
+  height: 60px;
+  background-color: #fef7e5;
+  position: relative;
+}
+
+.menu-icon {
+  display: none;
+}
+
+.nav-elements a {
+    position: relative;
+}
+
+.nav-elements a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    width: 0;
+    left: 0;
+    height: 2px;
+    background-color: #000;
+    transition: .2s;
+}
+
+.nav-elements a:hover::before {
+    width: 100%;
+}
+
+.nav-elements ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.nav-elements ul li:not(:last-child) {
+  margin-right: 50px;
+}
+
+.nav-elements ul a {
+  font-size: 20px;
+  font-weight: 400;
+  color: #2f234f;
+  text-decoration: none;
+}
+
+
+.nav-elements ul a:hover {
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .nav-elements ul li:not(:last-child) {
+    margin-right: 30px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .menu-icon {
+    display: block;
+    cursor: pointer;
+  }
+
+  .nav-elements {
+    position: absolute;
+    right: 0;
+    top: 84px;
+    background-color: #fef7e5;
+    width: 0px;
+    height: calc(100vh - 60px);
+    transition: all 0.2s ease-in;
+    overflow: hidden;
+  }
+
+  .nav-elements.active {
+    width: 200px;
+  }
+
+  .nav-elements ul {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav-elements ul li {
+    margin-left: 15px;
+    margin-top: 40px;
+  }
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 44px;
+    width: 90%;
+    padding: 20px 5%;
+    background: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+  height: 84px;
+  width: 200px;
+  object-fit: cover;
+}
+/*!***************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[13].oneOf[12].use[3]!./src/app/screens/home/page.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************/
+
+body {
+  background-image: url('/assets/drive-background.jpg');
+  background-repeat: no-repeat;
+  background-size: 105%;
+}
+
+.dashboard {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  padding-left: 80px;
+  text-align: left;
+  max-width: 1500px;
+  margin: auto;
+  margin-top: 154px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.dashboard-container {
+text-align: left;
+flex: 1 1;
+margin-bottom: 20px;
+}
+
+.dashboard-container h2{
+font-size: 44px;
+margin-bottom: 10px;
+}
+
+.dashboard-container p {
+font-size: 16px;
+color: #666;
+margin-bottom: 20px;
+}
+
+.dashboard-details {
+font-size: 18px;
+margin-bottom: 20px;
+}
+
+.dashboard-details span {
+display: block;
+}
+
+.book-button {
+background-color: black;
+color: white;
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+.book-button:hover {
+background-color: #333;
+}
+
