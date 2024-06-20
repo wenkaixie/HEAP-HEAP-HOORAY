@@ -1,8 +1,21 @@
 const express = require('express');
-
 const app = express();
-const PORT = 8008;
-const {db} = require('./firebase.js')
+const PORT = 5000;
+const {db} = require('./firebase/firebase.js')
+
+const authRoutes = require('./authentication/routes/auth');
+const authMiddleware = require('./authentication/middlewares/authMiddleware');
+const errorHandler = require('./authentication/middlewares/errorMiddleware');
+const logger = require('./authentication/middlewares/loggerMiddleware');
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(logger); // Logging middleware
+
+//routes
+app.use('/auth', authRoutes); // Mount auth routes on /auth
+
 
 app.listen(PORT, (error) =>{
     if(!error)
