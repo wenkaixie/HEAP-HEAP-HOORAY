@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -14,34 +14,43 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-        <a href='../screens/home'>
-          <img src='/assets/logo_black.png' className='logo' />
-        </a>
-        <div className="menu-icon" onClick={handleShowNavbar}>
-            <IconContext.Provider
-                value={{color: 'black', size: '40px'}}
-            >
-                <RxHamburgerMenu />
-            </IconContext.Provider>
-        </div>
-        <div className={`nav-elements  ${showNavbar && 'active'}`}>
-          <ul>
-            <li>
-              <a href="/">Theory Practices</a>
-            </li>
-            <li>
-              <a href="/">Private Instructors</a>
-            </li>
-            <li>
-              <a href="../screens/booking">Lesson Booking</a>
-            </li>
-            <li>
-              <a href="/">Test Booking</a>
-            </li>
-          </ul>
-        </div>
+      <a href='../screens/home'>
+        <img src='/assets/logo_black.png' className='logo' alt="Logo" />
+      </a>
+      <div className="menu-icon" onClick={handleShowNavbar}>
+        <IconContext.Provider
+          value={{color: 'black', size: '40px'}}
+        >
+          <RxHamburgerMenu />
+        </IconContext.Provider>
+      </div>
+      <div className={`nav-elements ${showNavbar && 'active'}`}>
+        <ul>
+          <li>
+            <a href="/">Our Instructors</a>
+          </li>
+          <li>
+            <a href="/">Theory Practices</a>
+          </li>
+          <li>
+            <a href="#">Booking</a>
+            <div className="dropdown-content">
+              <a href="../screens/booking">Theory test</a>
+              <a href="#">Practical Lesson</a>
+              <a href="#">Simulator</a>
+            </div>
+          </li>
+          <li>
+            <a href="#">Account</a>
+            <div className="dropdown-content">
+              <a href="../screens/profile">Manage Profile</a>
+              <a href="../screens/balance">Top-up Balance</a>
+            </div>
+          </li>
+        </ul>
+      </div>
     </nav>
   )
 }
 
-export default Navbar
+export default Navbar;
