@@ -1,6 +1,6 @@
 "use client"
 import { useState } from 'react';
-import Navbar from "@/app/components/navbar/navbar";
+import Navbar from "@/app/components/instructorNavbar/navbar";
 import './page.css';
 import '../../components/dashboard/dashboard.css';
 import '../../components/card/card.css';
@@ -47,8 +47,10 @@ const Dashboard = () => {
             <p>Sheng Wei</p>
           </div>
           <div>
-            <h3>Instructor</h3>
+            <h3>Students</h3>
             <p>Chaewon Kim FROM LESSERAFIM</p>
+            <p>Karina</p>
+            <p>Wonyoung</p>
           </div>
           <div>
             <h3>Email</h3>
