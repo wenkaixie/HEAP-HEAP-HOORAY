@@ -1,0 +1,131 @@
+/* page.css */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-image: url('/assets/drive-background.jpg');
+  background-repeat: no-repeat;
+  background-size: cover; 
+  background-position: center; 
+}
+
+.calendar {
+  background-color: rgba(228, 228, 228, 0.706);
+  border-radius: 8px;
+}
+
+.date-selector p {
+  font-size: 18px;
+  margin: 10px;
+}
+
+.time-table p {
+  font-size: 18px;
+  margin: 10px;
+}
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(85px, 1fr));
+  gap: 7px;
+}
+
+.time-slot {
+  padding: 10px;
+  border: 1px solid #ccc;
+  color: white;
+  background-color: rgb(60, 79, 110);
+  cursor: pointer;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.time-slot.selected {
+  background-color: rgb(150, 0, 0);
+}
+
+.time-slot:hover {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+}
+
+.time-slot:active {
+  transform: scale(0.98);
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.lesson {
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: 0px;
+  color: rgb(25, 25, 107);
+  font-size: 1.5vw;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.left-column, .right-column {
+  flex: 1;
+  padding: 80px;
+  padding-top: 40px;
+  position: relative;
+}
+
+.confirm-button {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.confirm-button button {
+  padding: 10px 192px;
+  font-size: 16px;
+  color: white;
+  background-color: rgb(5, 98, 89);
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.confirm-button:hover {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+}
+
+.confirm-button:active {
+  transform: scale(0.98);
+}
+
+.select-all{
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+  color: rgb(34, 52, 80);
+}
+
+.select-all label {
+  margin-left: 5px;
+  font-size: 15px;
+}
+
+@media (max-width: 768px) {
+  .lesson {
+    font-size: 4vw;
+  }
+
+  .left-column, .center-column {
+    flex-basis: 100%;
+  }
+}

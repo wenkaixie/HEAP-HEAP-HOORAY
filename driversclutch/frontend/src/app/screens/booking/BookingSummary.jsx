@@ -1,27 +1,3 @@
-// // BookingSummary.jsx
-// import React from 'react';
-
-// const BookingSummary = ({ bookings, handleCancelBooking }) => {
-//     return (
-//         <div className="booking-summary">
-//             <div className='title'>
-//                 <p>Booking Summary</p>
-//             </div>
-
-//             {bookings.map((booking, index) => (
-//                 <div className='container'>
-//                     <div key={index} className="booking-item">
-//                     <p>{booking.date} - {booking.time}</p>
-//                     <button onClick={() => handleCancelBooking(index)}>Cancel</button>
-//                 </div>
-//                 </div>
-                
-//             ))}
-//         </div>
-//     );
-// };
-
-// export default BookingSummary;
 import React from 'react';
 
 const BookingSummary = ({ bookings, handleCancelBooking, handleNextStep, hasClashes }) => {
@@ -33,24 +9,24 @@ const BookingSummary = ({ bookings, handleCancelBooking, handleNextStep, hasClas
 
       {bookings.map((booking, index) => (
         <div key={index} className='container'>
+          <div className="booking-item">
+            {booking.lesson} <br /><br />
+            {booking.date} <br />
+            {booking.time} - {booking.endTime}
+          </div>
           <button 
             className="cancel-button" 
             onClick={() => handleCancelBooking(index)}
           >
             Cancel
           </button>
-          <div className="booking-item">
-            <p>{booking.lesson}</p>
-            <p>{booking.date}</p>
-            <p>{booking.time} - {booking.endTime}</p>
-          </div>
         </div>
       ))}
 
-      {hasClashes && <p className="error-message">Make sure all bookings do not clash</p>}
+      {hasClashes && <p className="error-message">Ensure there are no overlapping bookings!</p>}
 
       {bookings.length > 0 && (
-        <input type="submit" value="Next" 
+        <input type="submit" value="Proceed to payment" 
           className={`next-button ${hasClashes ? 'disabled' : ''}`}
           onClick={handleNextStep}
           disabled={hasClashes}
