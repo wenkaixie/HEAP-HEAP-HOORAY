@@ -39,10 +39,6 @@ body {
   list-style-type: none;
 }
 
-.nav-elements ul li {
-  margin-right: 20px; 
-}
-
 .nav-elements ul a {
   font-size: 17px; 
   font-weight: 400;
@@ -124,7 +120,7 @@ body {
 }
 
 .nav-elements ul li{
-  margin-right: 20px;
+  margin-right: 40px;
 }
 
 .nav-elements ul li:hover .dropdown-content {

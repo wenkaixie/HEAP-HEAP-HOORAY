@@ -43,8 +43,8 @@ const Navbar = () => {
           <li>
             <a href="#">Account</a>
             <div className="dropdown-content">
-              <a href="#">Manage Profile</a>
-              <a href="#">Top-up Balance</a>
+              <a href="../screens/profile">Manage Profile</a>
+              <a href="../screens/balance">Top-up Balance</a>
             </div>
           </li>
         </ul>
