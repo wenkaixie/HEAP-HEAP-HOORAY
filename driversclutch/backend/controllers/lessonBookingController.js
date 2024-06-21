@@ -45,8 +45,6 @@ const getInstructorTimeslots = async (req, res) => {
     }
 };
 
-
-
 module.exports = {
     getInstructorTimeslots
 }

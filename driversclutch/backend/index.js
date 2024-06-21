@@ -5,20 +5,20 @@ const bodyParser = require("body-parser");
 const PORT = 5000;
 const {db} = require('./firebase/firebase.js')
 
-const authRoutes = require('./routes/auth');
-const authMiddleware = require('./middlewares/authMiddleware');
-const errorHandler = require('./middlewares/errorMiddleware');
-const logger = require('./middlewares/loggerMiddleware');
-
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger); // Logging middleware
 app.use(bodyParser.json());
 app.use(cors());
+const authMiddleware = require('./middlewares/authMiddleware');
+const errorHandler = require('./middlewares/errorMiddleware');
+const logger = require('./middlewares/loggerMiddleware');
 
 //routes
+const authRoutes = require('./routes/auth');
 app.use('/auth', authRoutes); // Mount auth routes on /auth
+
 
 
 app.listen(PORT, (error) =>{
@@ -46,3 +46,5 @@ app.use('/instructors/availability', require('./routes/instructorAvailabilityRou
 
 // for path /screens/booking
 app.use('/screens/booking', require('./routes/lessonBookingRouter.js'));
+
+// for getting student
