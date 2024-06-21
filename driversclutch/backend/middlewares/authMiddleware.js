@@ -14,7 +14,7 @@
 // module.exports = authenticateUser;
 
 // middlewares/authMiddleware.js
-const admin = require('../../firebase/firebase');
+const admin = require('../firebase/firebase');
 
 const authenticate = async (req, res, next) => {
   const idToken = req.headers.authorization?.split('Bearer ')[1];

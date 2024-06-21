@@ -3,10 +3,10 @@ const app = express();
 const PORT = 5000;
 const {db} = require('./firebase/firebase.js')
 
-const authRoutes = require('./authentication/routes/auth');
-const authMiddleware = require('./authentication/middlewares/authMiddleware');
-const errorHandler = require('./authentication/middlewares/errorMiddleware');
-const logger = require('./authentication/middlewares/loggerMiddleware');
+const authRoutes = require('./routes/auth');
+const authMiddleware = require('./middlewares/authMiddleware');
+const errorHandler = require('./middlewares/errorMiddleware');
+const logger = require('./middlewares/loggerMiddleware');
 
 // Middleware
 app.use(express.json());

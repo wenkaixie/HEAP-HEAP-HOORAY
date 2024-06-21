@@ -1,4 +1,4 @@
-const { admin } = require('../../firebase/firebase');
+const { admin } = require('../firebase/firebase');
 
 const signup = async (req, res) => {
   const { email, password } = req.body;
