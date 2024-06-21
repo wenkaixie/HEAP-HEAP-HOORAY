@@ -22,7 +22,9 @@ admin.initializeApp({
   databaseURL: 'https://driversclutch.firebaseio.com'
 });
 
-module.exports = { admin };
+const db = admin.firestore();
+
+module.exports = { admin, db };
 
 
 // const {initializeApp, cert} = require("firebase-admin/app")
