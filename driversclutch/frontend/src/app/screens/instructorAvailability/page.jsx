@@ -65,8 +65,10 @@ const Dashboard = () => {
 
   return (
     <div className='dashboard'>
-        <div className="dashboard-container">
+        <div className='title'>
           <h1>Lesson Availability</h1>
+        </div>
+        <div className="dashboard-container">
           <p>Select a date</p>
           <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </div>
@@ -79,7 +81,7 @@ const Dashboard = () => {
             handleSelectAllChange={handleSelectAllChange}
             handleConfirm={handleConfirm}
           />
-      </div>
+        </div>
     </div>
   );
 };
