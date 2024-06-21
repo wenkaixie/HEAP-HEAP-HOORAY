@@ -1,5 +1,5 @@
 .dashboard {
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.654);
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -45,7 +45,7 @@
   }
   
   .book-button {
-  background-color: black;
+  background-color: rgb(60, 79, 110);
   color: white;
   border: none;
   padding: 10px 20px;

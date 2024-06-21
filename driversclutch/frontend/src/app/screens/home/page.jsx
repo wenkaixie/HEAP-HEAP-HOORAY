@@ -3,6 +3,7 @@ import './page.css';
 import '../../components/dashboard/dashboard.css';
 import '../../components/card/card.css';
 import '../../components/background/background.css';
+import BookingSummary from "../booking/BookingSummary";
 
 const Dashboard = () => {
   return (

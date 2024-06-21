@@ -34,7 +34,6 @@ const TimeTable = ({ selectedDate, availability, handleAvailabilityChange, handl
 
   return (
     <div className="time-table">
-      <p>Select Your Unavailable Timings</p>
 
       <div className="select-all">
           <input

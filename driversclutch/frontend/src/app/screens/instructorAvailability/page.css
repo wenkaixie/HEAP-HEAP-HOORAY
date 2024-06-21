@@ -1,18 +1,12 @@
 /* page.css */
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  background-image: url('/assets/drive-background.jpg');
-  background-repeat: no-repeat;
-  background-size: cover; 
-  background-position: center; 
+h1 {
+  font-size: 48px;
 }
 
 .calendar {
   background-color: rgba(228, 228, 228, 0.706);
   border-radius: 8px;
+  max-width: 500px;
 }
 
 .date-selector p {
@@ -32,13 +26,14 @@ body {
 }
 
 .time-slot {
-  padding: 10px;
+  padding: 15px 10px;
   border: 1px solid #ccc;
   color: white;
   background-color: rgb(60, 79, 110);
   cursor: pointer;
   border-radius: 8px;
   text-align: center;
+  font-size: 15px;
 }
 
 .time-slot.selected {
@@ -53,6 +48,7 @@ body {
   transform: scale(0.98);
 }
 
+/* 
 .page {
   display: flex;
   flex-direction: column;
@@ -60,7 +56,7 @@ body {
   padding: 20px;
   min-height: 100vh;
   overflow-y: auto;
-}
+} */
 
 .lesson {
   text-align: center;
@@ -86,12 +82,13 @@ body {
 }
 
 .confirm-button {
-  text-align: right;
+  text-align: center;
   margin-top: 20px;
 }
 
 .confirm-button button {
-  padding: 10px 192px;
+  padding: 20px 0px;
+  width: 100%;
   font-size: 16px;
   color: white;
   background-color: rgb(5, 98, 89);

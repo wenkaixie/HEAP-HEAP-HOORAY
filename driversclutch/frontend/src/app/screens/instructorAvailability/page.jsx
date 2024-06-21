@@ -1,12 +1,14 @@
 "use client";
 import React, { useState } from 'react';
-import Navbar from '@/app/components/navbar/navbar';
+import Navbar from '@/app/components/instructorNavbar/navbar';
+import '../../components/dashboard/dashboard.css';
 import DateSelector from './DateSelector';
 import TimeTable from './TimeTable';
 import './page.css';
 import dayjs from 'dayjs';
+import '../../components/background/background.css';
 
-const Page = () => {
+const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [availability, setAvailability] = useState({});
 
@@ -52,6 +54,7 @@ const Page = () => {
 
       if (response.ok) {
         console.log("Availability data successfully sent to the database.");
+
       } else {
         console.error("Failed to send availability data.");
       }
@@ -61,18 +64,14 @@ const Page = () => {
   };
 
   return (
-    <div className="page">
-      <div className='navbar'>
-        <Navbar />
-      </div>
-      <div className="lesson">
-        <h1>Lesson Availability</h1>
-      </div>
-      <div className="content">
-        <div className="left-column">
+    <div className='dashboard'>
+        <div className="dashboard-container">
+          <h1>Lesson Availability</h1>
+          <p>Select a date</p>
           <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </div>
-        <div className="right-column">
+        <div className="dashboard-container">
+          <p>Select Your Unavailable Timings</p>
           <TimeTable 
             selectedDate={selectedDate} 
             availability={availability} 
@@ -80,9 +79,19 @@ const Page = () => {
             handleSelectAllChange={handleSelectAllChange}
             handleConfirm={handleConfirm}
           />
-        </div>
       </div>
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <main>
+      <div>
+        <Navbar />
+      </div>
+      <Dashboard />
+    </main>
   );
 };
 
