@@ -17,7 +17,7 @@ async function addEmailToInstructorStudentList(studentDocId, instructorDocId) {
         studentList: admin.firestore.FieldValue.arrayUnion(email)
       });
 
-      await.db.collection('students').doc(studentDocId).update({
+      await db.collection('students').doc(studentDocId).update({
         instructor: admin.firestore.FieldValue.arrayUnion(instructorDocId)
       });
   
