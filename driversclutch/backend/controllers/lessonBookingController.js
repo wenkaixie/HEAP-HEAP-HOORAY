@@ -1,15 +1,15 @@
 const { db } = require("../firebase/firebase.js");
 
 const getInstructorTimeslots = async (req, res) => {
-    const studentEmail = req.query.email; // Assuming the student email is passed as a query parameter
+    const studentID = req.query.id; // Assuming the student email is passed as a query parameter
 
-    if (!studentEmail) {
-        return res.status(400).json({code: 400, message: 'Student email is required.'});
+    if (!studentID) {
+        return res.status(400).json({code: 400, message: 'Student id is required.'});
     }
 
     try {
         const querySnapshot = await db.collection('instructors')
-            .where('studentList', 'array-contains', studentEmail)
+            .where('studentList', 'array-contains', studentID)
             .get();
 
         if (querySnapshot.empty) {
