@@ -14,7 +14,7 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-      <a href='../screens/home'>
+      <a href='../screens/instructorHome'>
         <img src='/assets/logo_black.png' className='logo' alt="Logo" />
       </a>
       <div className="menu-icon" onClick={handleShowNavbar}>
