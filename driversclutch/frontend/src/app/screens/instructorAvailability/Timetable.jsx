@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
+import './page.css';
 import dayjs from 'dayjs';
 
 const TimeTable = ({ selectedDate, availability, handleAvailabilityChange, handleSelectAllChange, handleConfirm }) => {
@@ -34,7 +35,6 @@ const TimeTable = ({ selectedDate, availability, handleAvailabilityChange, handl
 
   return (
     <div className="time-table">
-
       <div className="select-all">
           <input
             type="checkbox"

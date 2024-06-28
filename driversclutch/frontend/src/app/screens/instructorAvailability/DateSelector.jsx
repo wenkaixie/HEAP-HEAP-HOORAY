@@ -15,6 +15,7 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
           value={selectedDate}
           onChange={(date) => setSelectedDate(date)}
           minDate={dayjs()}
+          className="custom-date-calendar"
         /> 
         </div>
         

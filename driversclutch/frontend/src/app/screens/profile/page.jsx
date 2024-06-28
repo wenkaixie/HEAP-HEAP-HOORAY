@@ -23,11 +23,32 @@ const Dashboard = () => {
         <div className="dashboard-container">
           <h2>Profile</h2>
           <div className="profile-container">
-            <div className="profile-picture-container">
-                <img src="profile.jpg" class="profile-picture"/>
-                <div className="overlay">
-                  <div className="edit-icon" onClick={togglePicture}>✎</div>
-                </div>
+            <div className='profile-container-row'>
+              <div className="profile-picture-container">
+                  <img src="profile.jpg" class="profile-picture"/>
+                  <div className="overlay">
+                    <div className="edit-icon" onClick={togglePicture}>✎</div>
+                  </div>
+              </div>
+              <div>
+                <h3>Name</h3>
+                <p>Tay Zhi En</p>
+              </div>
+              <div>
+                <h3>Email</h3>
+                <p>zhizhi@gmail.com</p>
+              </div>
+              <div>
+                <h3>Date Of Birth</h3>
+                <p>1998-04-24</p>
+              </div>
+              <div>
+                <h3>Credit Balance</h3>
+                <p>284.00</p>
+              </div>
+            </div>
+            <div className='profile-container-row'>
+              <button className="book-button btn-open-popup" onClick={togglePopup}>Edit Profile</button>
             </div>
           </div>
           <div id="pictureOverlay" className={`picture-overlay ${isPictureVisible ? 'show' : ''}`}>
@@ -42,23 +63,6 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div>
-            <h3>Name</h3>
-            <p>Sheng Wei</p>
-          </div>
-          <div>
-            <h3>Instructor</h3>
-            <p>Chaewon Kim FROM LESSERAFIM</p>
-          </div>
-          <div>
-            <h3>Email</h3>
-            <p>test123@gmail.com</p>
-          </div>
-          <div>
-            <h3>Credit Balance</h3>
-            <p>264.23</p>
-          </div>
-          <button className="book-button btn-open-popup" onClick={togglePopup}>Edit Profile</button>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
               <div className='popup-box'>
                   <button className='book-button' onClick={togglePopup}>Save Changes</button>
