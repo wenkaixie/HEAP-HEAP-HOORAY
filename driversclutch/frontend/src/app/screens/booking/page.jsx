@@ -7,13 +7,13 @@ import BookingSummary from './BookingSummary';
 import dayjs from 'dayjs';
 import './page.css';
 
-const Page = () => {
+const BookingPage = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [bookings, setBookings] = useState([]);
   const [timeslots, setTimeslots] = useState([]);
   const [canceledBookings, setCanceledBookings] = useState([]);
-  const [isNextStep, setIsNextStep] = useState(false);
   const [hasClashes, setHasClashes] = useState(false);
+  
 
   // HARDCODED DATA (DELETE)
   const lessonsData = [
@@ -23,27 +23,16 @@ const Page = () => {
     'Practical Driving Lesson 7',
     'Practical Driving Lesson 8'
   ];
+
   // HARDCODED DATA (DELETE)
   useEffect(() => {
     const timeslotData = {
-      '2024-06-08': [
-        { time: "01:00 AM", available: true },
-        { time: "01:30 AM", available: true },
-        { time: "02:00 AM", available: true },
-        { time: "02:30 AM", available: true }
-      ],
-      '2024-06-09': [
-        { time: "01:00 AM", available: true },
-        { time: "01:30 AM", available: true },
-        { time: "02:00 AM", available: true },
-        { time: "02:30 AM", available: true }
-      ],
       '2024-06-14': [
         { time: "02:30 PM", available: true },
         { time: "03:00 PM", available: true },
         { time: "05:00 PM", available: true }
       ],
-      '2024-06-25': [
+      '2024-06-30': [
         { time: "03:30 PM", available: true },
         { time: "04:00 PM", available: true },
         { time: "04:30 PM", available: true },
@@ -122,35 +111,12 @@ const Page = () => {
     handleAddBooking(bookingToRemove.time);
   };
 
-  // this is for when user press next, it should bring them to payment page (UPDATE THIS! NEED TO INC. EMAIL?)
-  const handleNextStep = async () => {
-    const bookingData = bookings.map((booking) => ({
-      date: booking.date,
-      time: booking.time,
-      lesson: booking.lesson,
-    }));
-
-    try {
-      // UPDATE LINK
-      const response = await fetch('http://localhost:3000', {
-        method: 'POST',
-        headers: {
-          // UPDATE?
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingData),
-      });
-
-      if (response.ok) {
-        console.log('Booking saved successfully');
-        setIsNextStep(true);
-      } else {
-        console.error('Error saving booking');
-      }
-    } catch (error) {
-      console.error('Error:', error);
-    }
+  const handleNextStep = () => {
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    window.location.href = "./paymentBooking";
   };
+  
+  
 
   const checkForClashes = (bookings) => {
     const hasClashes = bookings.some((booking, index) => {
@@ -206,6 +172,4 @@ const Page = () => {
   );
 };
 
-export default Page;
-
-
+export default BookingPage;

@@ -11,7 +11,7 @@ body {
 }
 
 .calendar {
-  background-color: rgba(228, 228, 228, 0.706);
+  background-color: rgb(243, 243, 243);
   border-radius: 8px;
 }
 
@@ -66,7 +66,7 @@ body {
   text-align: center;
   margin-top: 60px;
   margin-bottom: 0px;
-  color: rgb(25, 25, 107);
+  color: black;
   font-size: 1.5vw;
 }
 

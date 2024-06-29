@@ -40,6 +40,13 @@ const Page = () => {
     setAvailability(newAvailability);
   };
 
+  // SEND TO DATABASE HEHEHEHEHEHE
+// {
+//   "availability": {
+//     "2024-06-16": ["09:00 AM", "10:00 AM", "01:00 PM"],
+//     "2024-06-17": ["11:00 AM", "02:30 PM", "04:00 PM"]
+//   }
+// }
   const handleConfirm = async () => {
     try {
       const response = await fetch('api', {
@@ -52,6 +59,7 @@ const Page = () => {
 
       if (response.ok) {
         console.log("Availability data successfully sent to the database.");
+
       } else {
         console.error("Failed to send availability data.");
       }
