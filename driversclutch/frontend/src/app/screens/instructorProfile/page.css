@@ -1,38 +1,36 @@
 
-h3 {
-  font-size: 26px;
-  margin: 10px 0px;
-}
+  h3 {
+    font-size: 26px;
+    margin: 10px 0px;
+  }
+  
+  .profile-container {
+    position: relative;
+    display: flex;
+    min-width: 320px;
+    gap: 40px;
+    margin: auto;
+    justify-content: flex-start;
+    align-items: top;
+    flex-wrap: wrap;
+  }
 
-.profile-container {
-  position: relative;
-  display: flex;
-  min-width: 320px;
-  gap: 40px;
-  margin: auto;
-  justify-content: flex-start;
-  align-items: top;
-  flex-wrap: wrap;
-}
+  .profile-container-row {
+    height: auto;
+    min-width: 280px;
+    display: flex;
+    gap: 40px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    min-width: 320px;
+  }
 
-.profile-container-row {
-  height: auto;
-  min-width: 280px;
-  display: flex;
-  gap: 40px;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  min-width: 320px;
-}
-
-.profile-container-row div {
-  flex: 1;
-}
+  .profile-container-row div {
+    flex: 1;
+  }
 
   .profile-picture-container {
-    max-width: 150px;
-    min-width: 150px;
     position: relative;
     width: 150px;
     height: 150px;
@@ -50,6 +48,8 @@ h3 {
   }
   
   .overlay {
+    max-width: 150px;
+    min-width: 150px;
     position: absolute;
     top: 2px;
     left: 2px;

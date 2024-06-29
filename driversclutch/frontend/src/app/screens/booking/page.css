@@ -189,3 +189,13 @@ body {
       border-top: 1px solid #ccc;
     }
   }
+
+  .date-selector {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .calendar {
+    display: flex;
+    justify-content: center;
+  }

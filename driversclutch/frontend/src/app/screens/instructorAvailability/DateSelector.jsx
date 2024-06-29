@@ -10,12 +10,12 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="date-selector">
-      <p>Select a date</p>
         <div className='calendar'>
            <DateCalendar
           value={selectedDate}
           onChange={(date) => setSelectedDate(date)}
           minDate={dayjs()}
+          className="custom-date-calendar"
         /> 
         </div>
         
