@@ -3,10 +3,6 @@ import React from 'react';
 const BookingSummary = ({ bookings, handleCancelBooking, handleNextStep, hasClashes }) => {
   return (
     <div className="booking-summary">
-      <div className='title'>
-        <p>Booking Summary</p>
-      </div>
-
       {bookings.map((booking, index) => (
         <div key={index} className='container'>
           <div className="booking-item">

@@ -8,7 +8,7 @@ const TimeSlots = ({ timeslots, selectedDate, handleAddBooking }) => {
 
   return (
     <div className="time-selector">
-      <p>Time Slots Available</p>
+      {/* <p>Time Slots Available</p> */}
       <div className="times">
         {timeslots.map((slot, index) => (
           <button

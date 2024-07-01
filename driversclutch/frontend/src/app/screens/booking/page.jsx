@@ -6,8 +6,10 @@ import TimeSlots from './TimeSlots';
 import BookingSummary from './BookingSummary';
 import dayjs from 'dayjs';
 import './page.css';
+import '../../components/background/background.css';
+import '../../components/dashboard/dashboard.css';
 
-const BookingPage = () => {
+const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [bookings, setBookings] = useState([]);
   const [timeslots, setTimeslots] = useState([]);
@@ -32,7 +34,7 @@ const BookingPage = () => {
         { time: "03:00 PM", available: true },
         { time: "05:00 PM", available: true }
       ],
-      '2024-06-30': [
+      '2024-07-26': [
         { time: "03:30 PM", available: true },
         { time: "04:00 PM", available: true },
         { time: "04:30 PM", available: true },
@@ -138,38 +140,78 @@ const BookingPage = () => {
   }, [bookings]);
 
   return (
-    <div className="page">
-      <div className='navbar'>
-        <Navbar />
-      </div>
+    // <div className="page">
+    //   <div className='navbar'>
+    //     <Navbar />
+    //   </div>
       
-      <div className="lesson">
-        <h1>Lesson Booking</h1>
-      </div>
-      <div className="content">
-        <div className="left-column">
+    //   <div className="lesson">
+    //     <h1>Lesson Booking</h1>
+    //   </div>
+    //   <div className="content">
+    //     <div className="left-column">
+    //       <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
+    //     </div>
+    //     <div className="center-column">
+    //       <TimeSlots 
+    //         timeslots={timeslots} 
+    //         selectedDate={selectedDate} 
+    //         handleAddBooking={handleAddBooking} 
+    //       />
+    //     </div>
+    //     <div className="right-column">
+    //       <BookingSummary 
+    //         bookings={bookings} 
+    //         canceledBookings={canceledBookings} 
+    //         handleCancelBooking={handleCancelBooking} 
+    //         handleRebookCanceledBooking={handleRebookCanceledBooking} 
+    //         handleNextStep={handleNextStep}
+    //         hasClashes={hasClashes}
+    //       />
+    //     </div>
+    //   </div>
+    // </div>
+    <div className='dashboard'>
+        <div className='title'>
+          <h1>Lesson Booking</h1>
+        </div>
+        <div className="dashboard-container">
+          <p>Booking for: INSTRUCTOR'S NAME</p>
           <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
         </div>
-        <div className="center-column">
+        <div className="dashboard-container">
+          <p>Time Slots Available</p>
           <TimeSlots 
-            timeslots={timeslots} 
-            selectedDate={selectedDate} 
-            handleAddBooking={handleAddBooking} 
+             timeslots={timeslots} 
+             selectedDate={selectedDate} 
+             handleAddBooking={handleAddBooking} 
           />
         </div>
-        <div className="right-column">
+        <div className="dashboard-container">
+          <div className='right'>
+          <p>Booking Summary</p>
           <BookingSummary 
-            bookings={bookings} 
-            canceledBookings={canceledBookings} 
-            handleCancelBooking={handleCancelBooking} 
-            handleRebookCanceledBooking={handleRebookCanceledBooking} 
-            handleNextStep={handleNextStep}
-            hasClashes={hasClashes}
-          />
+             bookings={bookings} 
+             canceledBookings={canceledBookings} 
+             handleCancelBooking={handleCancelBooking} 
+             handleRebookCanceledBooking={handleRebookCanceledBooking} 
+             handleNextStep={handleNextStep}
+             hasClashes={hasClashes}
+           />
+           </div>
         </div>
-      </div>
     </div>
   );
 };
 
+const BookingPage = () => {
+  return (
+    <main>
+      <div>
+        <Navbar/>
+      </div>
+      <Dashboard/>
+    </main>
+  )
+}
 export default BookingPage;
