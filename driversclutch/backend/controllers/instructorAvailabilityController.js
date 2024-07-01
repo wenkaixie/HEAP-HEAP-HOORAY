@@ -1,10 +1,10 @@
 const { db, admin } = require("../firebase/firebase.js");
 
 const updateAvailability = async (req, res) => {
-    const { email, datetime } = req.body;
+    const { email, datetimes } = req.body;
 
-    if (!email || !datetime) {
-        return res.status(400).json({ code: 400, message: "Email and datetime are required" });
+    if (!email || !Array.isArray(datetimes) || datetimes.length === 0) {
+        return res.status(400).json({ code: 400, message: "Email and an array of datetimes are required" });
     }
 
     try {
@@ -16,15 +16,19 @@ const updateAvailability = async (req, res) => {
 
         const docRef = querySnapshot.docs[0].ref;
 
-        //convert datetime string to Firestore timestamp object
-        const timestamp = admin.firestore.Timestamp.fromDate(new Date(datetime));
+        // Iterate over the datetime array and convert each string to Firestore Timestamp
+        const timestamps = datetimes.map(dt => admin.firestore.Timestamp.fromDate(new Date(dt)));
 
-        //update unavailableTimeslots array
-        await docRef.update({
-            unavailableTimeslots: admin.firestore.FieldValue.arrayUnion(timestamp)
-        });
+        // Update the unavailableTimeslots array with all timestamps
+        const updatePromises = timestamps.map(timestamp => 
+            docRef.update({
+                unavailableTimeslots: admin.firestore.FieldValue.arrayUnion(timestamp)
+            })
+        );
 
-        return res.status(200).json({code: 200, message: "Datetime added to instructor's unavailableTimeslots"})
+        await Promise.all(updatePromises);
+
+        return res.status(200).json({code: 200, message: "Datetimes added to instructor's unavailableTimeslots"})
 
     }
     catch (error) {
