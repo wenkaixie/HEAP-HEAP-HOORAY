@@ -4,10 +4,9 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const PORT = 5000;
 const {db} = require('./firebase/firebase.js')
-const authMiddleware = require('./middlewares/authMiddleware');
-const errorHandler = require('./middlewares/errorMiddleware');
+// const authMiddleware = require('./middlewares/authMiddleware');
+// const errorHandler = require('./middlewares/errorMiddleware');
 const logger = require('./middlewares/loggerMiddleware');
-
 
 // Middleware
 app.use(express.json());
@@ -17,12 +16,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-//routes
-const authRoutes = require('./routes/auth');
-app.use('/auth', authRoutes); // Mount auth routes on /auth
-
-
-
+//server check
 app.listen(PORT, (error) =>{
     if(!error)
         console.log("Server is Successfully Running, and App is listening on port "+ PORT)
@@ -31,14 +25,10 @@ app.listen(PORT, (error) =>{
     }
 );
 
-app.use(express.json())
 
-//health check
-app.get('/', (req, res) => {
-    return res.status(200).json({
-        message: "Server is up and running!"
-    })
-})
+//routes
+//authentication
+app.use('/auth', require('./routes/auth'));
 
 // for path /students/privateInstructors
 app.use('/students/privateInstructors', require('./routes/instructorListRouter.js'));  //check naming with claire
@@ -50,3 +40,4 @@ app.use('/instructors/availability', require('./routes/instructorAvailabilityRou
 app.use('/students/booking', require('./routes/lessonBookingRouter.js'));
 
 // for getting student
+app.use('/booking', require('./routes/studentListRouter.js'));
