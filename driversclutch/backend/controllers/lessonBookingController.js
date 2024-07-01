@@ -1,4 +1,4 @@
-const { db } = require("../firebase/firebase.js");
+const { db, admin } = require("../firebase/firebase.js");
 
 const getInstructorTimeslots = async (req, res) => {
     const studentID = req.query.id; // Assuming the student email is passed as a query parameter
@@ -46,7 +46,33 @@ const getInstructorTimeslots = async (req, res) => {
 };
 
 
+//after booking
+const bookedTimeslotStudent = async (req, res) => {
+    const {studentID, timeslots} = req.body;
+    if (!Array.isArray(timeslots) || timeslots.length === 0) {
+        return res.status(400).json({code: 400, message: "Timeslots array is required"})
+    }
+    try {
+        const docRef = db.collection("students").doc(studentID);
+
+        // Iterate over the datetime array and convert each string to Firestore Timestamp
+        const timestamps = timeslots.map(ts => admin.firestore.Timestamp.fromDate(new Date(ts)));
+
+        // Update the unavailableTimeslots array with all timestamps
+        const updatePromises = timestamps.map(timestamp => 
+            docRef.update({
+                upcomingLessons: admin.firestore.FieldValue.arrayUnion(timestamp)
+            })
+        );
+
+        await Promise.all(updatePromises);
+    }
+    catch (error) {
+        return res.status(500).json({ code: 500, message: `Error updating student's upcoming lesson: ${error}` });
+    }
+}
 
 module.exports = {
-    getInstructorTimeslots
+    getInstructorTimeslots,
+    bookedTimeslotStudent
 }
