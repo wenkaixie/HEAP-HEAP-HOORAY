@@ -72,7 +72,38 @@ const bookedTimeslotStudent = async (req, res) => {
     }
 }
 
+const bookedTimeslotInstructor = async (req, res) => {
+    const {studentID, instructorID, timeslots} = req.body;
+
+    if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID || !instructorID) {
+        return res.status(400).json({code: 400, message: "StudentID, InstructorID and timeslots array are required"});
+    }
+
+    try {
+        const timestamps = timeslots.map(ts => admin.firestore.Timestamp.fromDate(new Date(ts)));
+
+        const lessonData = {
+            student: studentID,
+            timeslots: timestamps
+        };
+        
+        await db.collection('instructors')
+            .doc(instructorID)
+            .collection('upcomingLessons')
+            .add(lessonData);
+
+        return res.status(200).json({code: 200, message: 'Upcoming lesson added successfully'});
+    }
+    catch (error) {
+        return res
+            .status(500)
+            .json({code:500, message: `Error updating instructor's upcoming lesson: ${error}`});
+    }
+}
+
+
 module.exports = {
     getInstructorTimeslots,
-    bookedTimeslotStudent
+    bookedTimeslotStudent,
+    bookedTimeslotInstructor
 }
