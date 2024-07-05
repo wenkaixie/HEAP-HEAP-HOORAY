@@ -27,7 +27,11 @@ const Navbar = () => {
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
           <li>
-            <a href="/">Our Instructors</a>
+          <a href="/">Our Instructors</a>
+            <div className="dropdown-content">
+              <a href="#">Class 3</a>
+              <a href="#">Class 3A</a>
+            </div>
           </li>
           <li>
             <a href="/">Theory Practices</a>
@@ -35,8 +39,8 @@ const Navbar = () => {
           <li>
             <a href="#">Booking</a>
             <div className="dropdown-content">
-              <a href="../screens/booking">Theory test</a>
-              <a href="#">Practical Lesson</a>
+              <a href="#">Theory test</a>
+              <a href="../screens/booking">Practical Lesson</a>
               <a href="#">Simulator</a>
             </div>
           </li>
