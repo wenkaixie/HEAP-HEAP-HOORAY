@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import './navbar.css';
 import { IconContext } from 'react-icons';
+import Link from "next/link";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
@@ -14,9 +15,9 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-      <a href='../screens/home'>
+      <Link href='../../../../pages/home'>
         <img src='/assets/logo_black.png' className='logo' alt="Logo" />
-      </a>
+      </Link>
       <div className="menu-icon" onClick={handleShowNavbar}>
         <IconContext.Provider
           value={{color: 'black', size: '40px'}}
@@ -29,8 +30,8 @@ const Navbar = () => {
           <li>
           <a href="#">Our Instructors</a>
             <div className="dropdown-content">
-              <a href="../screens/manual">Class 3</a>
-              <a href="../screens/auto">Class 3A</a>
+              <a href="../../../../pages/manual">Class 3</a>
+              <a href="../../../../pages/auto">Class 3A</a>
             </div>
           </li>
           <li>
@@ -40,15 +41,15 @@ const Navbar = () => {
             <a href="#">Booking</a>
             <div className="dropdown-content">
               <a href="#">Theory test</a>
-              <a href="../screens/booking">Practical Lesson</a>
+              <a href="../../../../pages/booking">Practical Lesson</a>
               <a href="#">Simulator</a>
             </div>
           </li>
           <li>
             <a href="#">Account</a>
             <div className="dropdown-content">
-              <a href="../screens/profile">Manage Profile</a>
-              <a href="../screens/balance">Top-up Balance</a>
+              <a href="../../../../pages/profile">Manage Profile</a>
+              <a href="../../../../pages/balance">Top-up Balance</a>
             </div>
           </li>
         </ul>

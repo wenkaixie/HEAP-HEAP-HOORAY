@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './page.css';
-import FBInstanceAuth from "../../firebase/firebase_auth";
+import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
 
 const Login = () => {
 	const [username, setUsername] = useState("");

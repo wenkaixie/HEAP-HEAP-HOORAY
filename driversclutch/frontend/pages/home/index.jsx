@@ -1,8 +1,8 @@
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-import '../../components/dashboard/dashboard.css';
-import '../../components/card/card.css';
-import '../../components/background/background.css';
+import '../../src/app/components/dashboard/dashboard.css';
+import '../../src/app/components/card/card.css';
+import '../../src/app/components/background/background.css';
 import BookingSummary from "../booking/BookingSummary";
 
 const Dashboard = () => {
