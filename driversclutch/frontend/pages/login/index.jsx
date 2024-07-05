@@ -60,22 +60,22 @@ const Login = () => {
 	// 	FBInstanceAuth.login(auth, username, password);
 	// };
 
-    const handleSubmit = async (event) => {
-		event.preventDefault();
-		setError(null);
-	
-		try {
-		  const { data, errorCode } = await FBInstanceAuth.login(auth, username, password);
-		  if (data) {
-			router.push('/home');
-		  } else {
-			setError(`Login failed: ${errorCode}`);
-		  }
-		} catch (error) {
-		  setError(`Unexpected error: ${error.message}`);
-		}
-	  };
-	
+const handleSubmit = async (event) => {
+	event.preventDefault();
+	setError(null);
+
+	try {
+	const { data, errorCode } = await FBInstanceAuth.login(auth, username, password);
+	if (data) {
+		router.push('/');
+	} else {
+		setError(`Login failed: ${errorCode}`);
+	}
+	} catch (error) {
+	setError(`Unexpected error: ${error.message}`);
+	}
+};
+
 
   const handleGoogleLogin = (event) => {
     event.preventDefault();
