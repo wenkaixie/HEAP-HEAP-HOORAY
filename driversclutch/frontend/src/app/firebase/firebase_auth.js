@@ -13,22 +13,37 @@ class FirebaseAuthentication {
 		return getAuth();
 	}
 
-	// handle user login with email and password
-	login = async function (auth, email, password) {
-		// const loginPath = "/";
-		let errorCode = null;
-		await signInWithEmailAndPassword(auth, email, password)
-			.then((data) => {
-				console.log("login success", data);
-				// route it to the user's dashboard
-				window;
-			})
-			.catch((error) => {
-				console.error("login error", error);
-				errorCode = error.code;
-			});
-		return errorCode;
-	};
+	// //handle user login with email and password
+	// login = async function (auth, email, password) {
+	// 	// const loginPath = "/";
+	// 	let errorCode = null;
+	// 	await signInWithEmailAndPassword(auth, email, password)
+	// 		.then((data) => {
+	// 			console.log("login success", data);
+	// 			// route it to the user's dashboard
+	// 			window;
+	// 			return data;
+	// 		})
+	// 		.catch((error) => {
+	// 			console.error("login error", error);
+	// 			errorCode = error.code;
+	// 			return null;
+	// 		});
+	// 	return { data, errorCode };
+	// };
+
+    async login(auth, email, password) {
+        let errorCode = null;
+        let data = null;
+        try {
+            data = await signInWithEmailAndPassword(auth, email, password);
+            console.log("login success", data);
+        } catch (error) {
+            console.error("login error", error);
+            errorCode = 1001;
+        }
+        return { data, errorCode };
+    }
 
 	// handle user login with google
 	googleLogin = async function (auth) {

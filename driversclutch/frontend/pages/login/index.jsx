@@ -2,12 +2,16 @@
 
 import React, { useEffect, useState } from 'react';
 import './page.css';
+//import Link from "next/link";
 import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
+import { useRouter } from 'next/router';
 
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const auth = FBInstanceAuth.getAuth();
+	const router = useRouter();
+	const [error, setError] = useState(null);
 
 	const handleUsernameChange = (event) => {
 		setUsername(event.target.value);
@@ -50,11 +54,31 @@ const Login = () => {
 		};
 	}, []);
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		console.log("submitting form");
-		FBInstanceAuth.login(auth, username, password);
-	};
+	// const handleSubmit = (event) => {
+	// 	event.preventDefault();
+	// 	console.log("submitting form");
+	// 	FBInstanceAuth.login(auth, username, password);
+	// };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setError(null); // Reset error state
+        console.log("submitting form");
+
+        try {
+            const { data, errorCode } = FBInstanceAuth.login(auth, username, password);
+            console.log("login complete", data);
+			console.log("errorCode2:", errorCode);
+			if (data == undefined && data !== null) {
+				//console.log("login success", data);
+                router.push('/home');
+            } else {
+                setError(`Login failed: ${errorCode}`);
+            }
+        } catch (error) {
+            setError(`Unexpected error: ${error.message}`);
+        }
+    };
 
   const handleGoogleLogin = (event) => {
     event.preventDefault();
