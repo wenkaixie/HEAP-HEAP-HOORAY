@@ -1,12 +1,10 @@
 const express = require("express");
-const {updateBirthdate, updateFirstName, updateLastName} = require("../controllers/studentProfileController.js");
+const {updateInfo, getInfo} = require("../controllers/studentProfileController.js");
 
 const router = express.Router();
 
-router.put('/firstname', updateFirstName);
+router.get('/', getInfo);
 
-router.put('/lastname', updateLastName);
-
-router.put('/birthdate', updateBirthdate)
+router.put('/update', updateInfo);
 
 module.exports = router;

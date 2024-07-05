@@ -1,60 +1,43 @@
 const {db, admin} = require("../firebase/firebase.js");
 
-const updateFirstName = async (req, res) => {
-    const {studentID, firstname} = req.body;
-
-    if(!studentID || !firstname) {
-        return res.status(400).json({code: 400, message: "Student Doc ID and updated firstname required"})
-    }
+const getInfo = async (req, res) => {
+    const studentID = req.query.id;
 
     try {
-        await db.collection("students").doc(studentID).update({
-            firstName: firstname
-        })
-        return res.status(200).json({code: 200, message: "First name is updated"});
+        const studentDoc = await db.collection("students").doc(studentID).get();
+        if (!studentDoc) {
+            return res.status(404).json({code: 404, message: "Student not found"})
+        }
+        const studentInfo = studentDoc.data();
+        const {upcomingLessons, completedLessons, instructor, ...filteredData } = studentInfo;
+        return res.status(200).json({code: 200, data: filteredData});
     }
     catch (error) {
-        return res.status(500).json({code: 500, message: `Error updating firstname: ${error}`});
+        return res.status(500).send(`Error getting info: ${error}`);
     }
 }
 
-const updateLastName = async (req, res) => {
-    const {studentID, lastname} = req.body;
+const updateInfo = async (req, res) => {
+    const {studentID, firstname, lastname, birthdate} = req.body;
 
-    if(!studentID || !lastname) {
-        return res.status(400).json({code: 400, message: "Student Doc ID and updated lastname required"})
+    if(!studentID || !firstname || !lastname || !birthdate) {
+        return res.status(400).json({code: 400, message: "Student Doc ID and updated firstname/lastname/birthdate required"})
     }
 
     try {
         await db.collection("students").doc(studentID).update({
-            lastName: lastname
-        })
-        return res.status(200).json({code: 200, message: "Last name is updated"});
-    }
-    catch (error) {
-        return res.status(500).json({code: 500, message: `Error updating lastname: ${error}`});
-    }
-}
-
-const updateBirthdate = async (req, res) => {
-    const {studentID, birthdate} = req.body;
-
-    if(!studentID || !birthdate) {
-        return req.status(400).json({code: 400, message: "Student Doc ID and updated lastname required"})
-    }
-
-    try {
-        await db.collection("students").doc(studentID).update({
+            firstName: firstname,
+            lastName: lastname,
             birthdate: birthdate
         })
-    } 
+        return res.status(200).json({code: 200, message: "Information successfully is updated"});
+    }
     catch (error) {
-        return res.status(500).json({code:500, message: `Error updating birthdate: ${error}`});
+        return res.status(500).json({code: 500, message: `Error updating info: ${error}`});
     }
 }
 
 module.exports = {
-    updateBirthdate,
-    updateFirstName,
-    updateLastName
+    updateInfo,
+    getInfo
 }

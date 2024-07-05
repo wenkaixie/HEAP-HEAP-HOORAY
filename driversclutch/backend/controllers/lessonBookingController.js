@@ -48,8 +48,8 @@ const getInstructorTimeslots = async (req, res) => {
 
 //after booking
 const bookedTimeslotStudent = async (req, res) => {
-    const {studentID, timeslots} = req.body;
-    if (!Array.isArray(timeslots) || timeslots.length === 0) {
+    const {studentID, timeslots, balance} = req.body;
+    if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID || !balance) {
         return res.status(400).json({code: 400, message: "Timeslots array is required"})
     }
     try {
@@ -66,6 +66,12 @@ const bookedTimeslotStudent = async (req, res) => {
         );
 
         await Promise.all(updatePromises);
+
+        await docRef.update({
+            balance: balance
+        });
+
+        return res.status(200).json({code: 200, message: "Students' upcoming lessons and account balance are successfully updated "});
     }
     catch (error) {
         return res.status(500).json({ code: 500, message: `Error updating student's upcoming lesson: ${error}` });
