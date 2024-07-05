@@ -7,10 +7,13 @@ import './page.css';
 import dayjs from 'dayjs';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
+import { GiCancel } from "react-icons/gi";
+import { SiTicktick } from "react-icons/si";
 
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [availability, setAvailability] = useState({});
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const handleAvailabilityChange = (date, time) => {
     const dateKey = date.format('YYYY-MM-DD');
@@ -49,7 +52,8 @@ const Dashboard = () => {
 //     "2024-06-17": ["11:00 AM", "02:30 PM", "04:00 PM"]
 //   }
 // }
-  const handleConfirm = async () => {
+
+  const updateDatabase = async () => {
     try {
       const response = await fetch('api', {
         method: 'POST',
@@ -68,6 +72,16 @@ const Dashboard = () => {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+  
+
+  const handleConfirm = async () => {
+    // await updateDatabase();
+    setIsPopupVisible(true);
+  };
+
+  const closePopup = () => {
+    setIsPopupVisible(false);
   };
 
   return (
@@ -89,6 +103,15 @@ const Dashboard = () => {
             handleConfirm={handleConfirm}
           />
         </div>
+        {isPopupVisible && (
+        <div id="popupOverlay" className="popup-overlay show">
+          <div className="popup-box">
+            <strong>Availabilty Confirmed</strong>
+            <GiCancel className='button' onClick={closePopup} />
+            <br /><br /><SiTicktick className="tick"/>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

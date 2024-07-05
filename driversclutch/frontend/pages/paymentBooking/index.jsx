@@ -3,11 +3,15 @@ import "./page.css";
 import React, { useEffect, useState } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
 import '@/app/components/background/background.css'
-import '@/app/components/dashboard/dashboard.css'
+import '@/app/components/dashboard/dashboard.css';
+import { GiCancel } from "react-icons/gi";
+import { SiTicktick } from "react-icons/si";
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [creditBalance, setCreditBalance] = useState(100); // HARDCODED BALANCE! FETCH BALANCE FROM DATABASE!
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
   const pricePerLesson = 50; // HARDCODED PRICE! FETCH THE PRICE INDICATED BY INSTRUCTOR IN THE PROFILE PAGE FROM THE DATABASE!
   const numOfBookings = bookings.length;
   const totalPrice = numOfBookings * pricePerLesson;
@@ -36,9 +40,7 @@ const Dashboard = () => {
     // Send booking details to the database (API call example)
     // Convert booking date and time to ISO 8601 format
     const bookingDetails = bookings.map(booking => ({
-      date: new Date(booking.date).toISOString(),
-      // Only start time will be sent over!
-      time: new Date(`${booking.date}T${booking.time}`).toISOString(), 
+      datetimes: new Date(`${booking.date}T${booking.time}`).toISOString(), 
     }));
 
     // await fetch('/api/updateBookings', {
@@ -52,9 +54,14 @@ const Dashboard = () => {
 
   const handleClick = async () => {
     if (creditBalance >= totalPrice) {
-      await updateBalance();
-      await updateDatabase();
+      // await updateBalance();
+      // await updateDatabase();
+      setIsPopupVisible(true);
     }
+  };
+
+  const closePopup = () => {
+    setIsPopupVisible(false);
   };
 
   return (
@@ -99,6 +106,15 @@ const Dashboard = () => {
           </button>
         </div>
       </div>
+      {isPopupVisible && (
+        <div id="popupOverlay" className="popup-overlay show">
+          <div className="popup-box">
+            <strong>Payment Confirmed</strong>
+            <GiCancel className='button' onClick={closePopup} />
+            <br /><br /><SiTicktick className="tick"/>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
