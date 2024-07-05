@@ -6,6 +6,33 @@ import '@/app/components/card/card.css';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
 
+const ProfileInfo = () => {
+  return (
+    <div className='profile-container'>
+      <div className='profile-container-row'>
+        <div>
+          <h3>Name</h3>
+          <p>Tay Zhi En</p>
+        </div>
+        <div>
+          <h3>Email</h3>
+          <p>zhizhi@gmail.com</p>
+        </div>
+      </div>
+      <div className='profile-container-row'>
+        <div>
+            <h3>Date Of Birth</h3>
+            <p>1998-04-24</p>
+          </div>
+          <div>
+            <h3>Credit Balance</h3>
+            <p>284.00</p>
+          </div>
+      </div>
+    </div>
+  )
+}
+
 const Dashboard = () => {
     const [isPictureVisible, setIsPictureVisible] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -65,6 +92,7 @@ const Dashboard = () => {
           </div>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
               <div className='popup-box'>
+                  <ProfileInfo />
                   <button className='book-button' onClick={togglePopup}>Save Changes</button>
               </div>
           </div>

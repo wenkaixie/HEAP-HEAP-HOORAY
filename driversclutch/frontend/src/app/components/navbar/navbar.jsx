@@ -28,28 +28,28 @@ const Navbar = () => {
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
           <li>
-          <a href="#">Our Instructors</a>
+          <Link href="#">Our Instructors</Link>
             <div className="dropdown-content">
-              <a href="../../../../manual">Class 3</a>
-              <a href="../../../../auto">Class 3A</a>
+              <Link href="../../../../manual">Class 3</Link>
+              <Link href="../../../../auto">Class 3A</Link>
             </div>
           </li>
           <li>
-            <a href="/">Theory Practices</a>
+            <Link href="/">Theory Practices</Link>
           </li>
           <li>
-            <a href="#">Booking</a>
+            <Link href="#">Booking</Link>
             <div className="dropdown-content">
-              <a href="#">Theory test</a>
-              <a href="../../../../booking">Practical Lesson</a>
-              <a href="#">Simulator</a>
+              <Link href="#">Theory test</Link>
+              <Link href="../../../../booking">Practical Lesson</Link>
+              <Link href="#">Simulator</Link>
             </div>
           </li>
           <li>
-            <a href="#">Account</a>
+            <Link href="#">Account</Link>
             <div className="dropdown-content">
-              <a href="../../../../profile">Manage Profile</a>
-              <a href="../../../../balance">Top-up Balance</a>
+              <Link href="../../../../profile">Manage Profile</Link>
+              <Link href="../../../../balance">Top-up Balance</Link>
             </div>
           </li>
         </ul>

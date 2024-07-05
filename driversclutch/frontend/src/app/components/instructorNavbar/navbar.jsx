@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import './navbar.css';
 import { IconContext } from 'react-icons';
+import Link from "next/link";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
@@ -14,9 +15,9 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-      <a href='../../../../pages/instructorHome'>
+      <Link href='../../../../pages/instructorHome'>
         <img src='/assets/logo_black.png' className='logo' alt="Logo" />
-      </a>
+      </Link>
       <div className="menu-icon" onClick={handleShowNavbar}>
         <IconContext.Provider
           value={{color: 'black', size: '40px'}}
@@ -27,15 +28,15 @@ const Navbar = () => {
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
           <li>
-            <a href="../../../../pages/instructorStudents">My Students</a>
+            <Link href="../../../../pages/instructorStudents">My Students</Link>
           </li>
           <li>
-            <a href="../../../../pages/instructorAvailability">Lesson Availability</a>
+            <Link href="../../../../pages/instructorAvailability">Lesson Availability</Link>
           </li>
           <li>
-            <a href="#">Account</a>
+            <Link href="#">Account</Link>
             <div className="dropdown-content">
-              <a href="../../../../pages/instructorProfile">Manage Profile</a>
+              <Link href="../../../../pages/instructorProfile">Manage Profile</Link>
             </div>
           </li>
         </ul>
