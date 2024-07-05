@@ -3,9 +3,9 @@
 import React, { useState } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-import '../../components/dashboard/dashboard.css';
-import '../../components/card/card.css';
-import '../../components/background/background.css';
+import '@/app/components/card/card.css';
+import '@/app/components/background/background.css'
+import '@/app/components/dashboard/dashboard.css'
 
 const Dashboard = () => {
   const renderContent = () => {

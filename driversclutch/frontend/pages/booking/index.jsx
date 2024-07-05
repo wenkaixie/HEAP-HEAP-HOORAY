@@ -6,8 +6,8 @@ import TimeSlots from './TimeSlots';
 import BookingSummary from './BookingSummary';
 import dayjs from 'dayjs';
 import './page.css';
-import '../../components/background/background.css';
-import '../../components/dashboard/dashboard.css';
+import '@/app/components/background/background.css'
+import '@/app/components/dashboard/dashboard.css'
 
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());

@@ -30,8 +30,8 @@ const Navbar = () => {
           <li>
           <a href="#">Our Instructors</a>
             <div className="dropdown-content">
-              <a href="../../../../pages/manual">Class 3</a>
-              <a href="../../../../pages/auto">Class 3A</a>
+              <a href="../../../../manual">Class 3</a>
+              <a href="../../../../auto">Class 3A</a>
             </div>
           </li>
           <li>
@@ -41,15 +41,15 @@ const Navbar = () => {
             <a href="#">Booking</a>
             <div className="dropdown-content">
               <a href="#">Theory test</a>
-              <a href="../../../../pages/booking">Practical Lesson</a>
+              <a href="../../../../booking">Practical Lesson</a>
               <a href="#">Simulator</a>
             </div>
           </li>
           <li>
             <a href="#">Account</a>
             <div className="dropdown-content">
-              <a href="../../../../pages/profile">Manage Profile</a>
-              <a href="../../../../pages/balance">Top-up Balance</a>
+              <a href="../../../../profile">Manage Profile</a>
+              <a href="../../../../balance">Top-up Balance</a>
             </div>
           </li>
         </ul>

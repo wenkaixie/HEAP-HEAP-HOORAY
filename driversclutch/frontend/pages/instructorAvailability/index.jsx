@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from 'react';
 import Navbar from '@/app/components/instructorNavbar/navbar';
-import '../../components/dashboard/dashboard.css';
 import DateSelector from './DateSelector';
 import TimeTable from './Timetable';
 import './page.css';
 import dayjs from 'dayjs';
-import '../../components/background/background.css';
+import '@/app/components/background/background.css'
+import '@/app/components/dashboard/dashboard.css'
 
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());

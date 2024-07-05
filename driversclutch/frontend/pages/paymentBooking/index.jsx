@@ -1,9 +1,9 @@
 "use client";
 import "./page.css";
 import React, { useEffect, useState } from 'react';
-import '../../components/background/background.css';
 import Navbar from '@/app/components/navbar/navbar';
-import '../../components/dashboard/dashboard.css';
+import '@/app/components/background/background.css'
+import '@/app/components/dashboard/dashboard.css'
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
