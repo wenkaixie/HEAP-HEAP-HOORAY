@@ -5,13 +5,26 @@ import './page.css';
 //import Link from "next/link";
 import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
 import { useRouter } from 'next/router';
+import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
+import { collection, query, where, getDocs } from 'firebase/firestore';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const auth = FBInstanceAuth.getAuth();
+	//const auth = FBInstanceAuth.getAuth();
 	const router = useRouter();
 	const [error, setError] = useState(null);
+	// const [user, loading] = useAuthState(auth);
+
+	// if (loading) {
+	// 	return <div>Loading...</div>
+	// }
+
+	// if (user) {
+	// 	router.push("/home");
+	// 	return <div>Welcome {user.displayName}</div>;
+	// }
 
 	const handleUsernameChange = (event) => {
 		setUsername(event.target.value);
@@ -66,15 +79,52 @@ const handleSubmit = async (event) => {
 
 	try {
 	const { data, errorCode } = await FBInstanceAuth.login(auth, username, password);
-	if (data) {
-		router.push('/');
-	} else {
-		setError(`Login failed: ${errorCode}`);
-	}
+		if (data) {
+			console.log('Login successful');
+			const role = await checkUserRole(username);
+			console.log(role);
+			if (role === 'student') {
+				router.push('/home');
+			} else if (role === 'instructor') {
+				router.push('/instructorHome');
+			}
+		} else {
+			setError(`Login failed: ${errorCode}`);
+		}
 	} catch (error) {
 	setError(`Unexpected error: ${error.message}`);
 	}
 };
+
+const checkUserRole = async (email) => {
+	console.log('Checking user role');
+	console.log('db:', FirestoreDB);
+	try {
+		// Check if email exists in the students collection
+		const studentQuery = query(collection(FirestoreDB, 'students'), where('email', '==', email));
+		const studentSnapshot = await getDocs(studentQuery);
+		if (!studentSnapshot.empty) {
+			console.log('User is a student');
+			return 'student';
+		}
+
+		// Check if email exists in the instructors collection
+		const instructorQuery = query(collection(FirestoreDB, 'instructors'), where('email', '==', email));
+		const instructorSnapshot = await getDocs(instructorQuery);
+		if (!instructorSnapshot.empty) {
+			console.log('User is an instructor');
+			return 'instructor';
+		}
+
+		console.log('User not found in any role');
+		return null;
+
+	} catch (error) {
+		console.error('Error checking user role: ', error);
+		return null;
+	}
+};
+
 
 
   const handleGoogleLogin = (event) => {

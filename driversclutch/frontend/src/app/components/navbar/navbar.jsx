@@ -5,6 +5,8 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import './navbar.css';
 import { IconContext } from 'react-icons';
 import Link from "next/link";
+import FBInstanceAuth from "../../firebase/firebase_auth";
+import { useRouter } from "next/router";
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
@@ -12,6 +14,22 @@ const Navbar = () => {
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar)
   }
+
+  const auth = FBInstanceAuth.getAuth();
+  const router = useRouter();
+	const [error, setError] = useState(null);
+
+  const handleLogout = async (event) => {
+    event.preventDefault();
+    setError(null);
+    
+    try {
+      FBInstanceAuth.logout(auth);
+      router.push('/login');
+    } catch (error) {
+        setError(`Unexpected error: ${error.message}`);
+    }
+  };
 
   return (
     <nav className="header">
@@ -50,6 +68,7 @@ const Navbar = () => {
             <div className="dropdown-content">
               <Link href="../../../../profile">Manage Profile</Link>
               <Link href="../../../../balance">Top-up Balance</Link>
+              <Link href="" onClick={handleLogout}>Sign Out</Link>
             </div>
           </li>
         </ul>
