@@ -15,7 +15,7 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-      <Link href='../../../../pages/home'>
+      <Link href='../../../../home'>
         <img src='/assets/logo_black.png' className='logo' alt="Logo" />
       </Link>
       <div className="menu-icon" onClick={handleShowNavbar}>
@@ -35,7 +35,7 @@ const Navbar = () => {
             </div>
           </li>
           <li>
-            <Link href="/">Theory Practices</Link>
+            <Link href="../../../../btt">Theory Practices</Link>
           </li>
           <li>
             <Link href="#">Booking</Link>
