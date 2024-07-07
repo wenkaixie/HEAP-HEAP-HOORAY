@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
 import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useAuthState } from "react-firebase-hooks/auth";
+import { signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
 
 const Login = () => {
 	const [username, setUsername] = useState("");
@@ -73,28 +74,35 @@ const Login = () => {
 	// 	FBInstanceAuth.login(auth, username, password);
 	// };
 
-const handleSubmit = async (event) => {
-	event.preventDefault();
-	setError(null);
-
-	try {
-	const { data, errorCode } = await FBInstanceAuth.login(auth, username, password);
-		if (data) {
-			console.log('Login successful');
-			const role = await checkUserRole(username);
-			console.log(role);
-			if (role === 'student') {
-				router.push('/home');
-			} else if (role === 'instructor') {
-				router.push('/instructorHome');
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		setError(null);
+	
+		try {
+			const userCredential = await signInWithEmailAndPassword(auth, username, password);
+			const user = userCredential.user;
+			if (user) {
+				console.log('Login successful');
+				const token = await getIdToken(user);
+				console.log('User token:', token);
+	
+				// Store the token in local storage or cookies
+				localStorage.setItem('userToken', token);
+	
+				const role = await checkUserRole(user.email);
+				console.log(role);
+				if (role === 'student') {
+					router.push('/home');
+				} else if (role === 'instructor') {
+					router.push('/instructorHome');
+				}
+			} else {
+				setError(`Login failed: ${errorCode}`);
 			}
-		} else {
-			setError(`Login failed: ${errorCode}`);
+		} catch (error) {
+			setError(`Unexpected error: ${error.message}`);
 		}
-	} catch (error) {
-	setError(`Unexpected error: ${error.message}`);
-	}
-};
+	};
 
 const checkUserRole = async (email) => {
 	console.log('Checking user role');
