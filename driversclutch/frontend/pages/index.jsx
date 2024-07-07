@@ -27,12 +27,11 @@ console.log("FirestoreDB", FirestoreDB);
 const HomePage = () => {
     return (
         <main>
-            <Navbar />
             <div>
                 Landing page
             </div>
             <Link href="/login">
-                <a>Login</a>
+                Login
             </Link>
         </main>
     );
