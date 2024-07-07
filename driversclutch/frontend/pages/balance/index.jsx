@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
 import './page.css';
 import '@/app/components/card/card.css';
@@ -9,11 +9,23 @@ import { Elements, useStripe, useElements, CardElement } from '@stripe/react-str
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-const TopUpForm = ({ setIsPopupVisible }) => {
+const TopUpForm = ({ setIsPopupVisible, isPopupVisible }) => {
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [paymentStatus, setPaymentStatus] = useState(null);
   const stripe = useStripe();
   const elements = useElements();
+
+  useEffect(() => {
+    if (!isPopupVisible) {
+      resetForm();
+    }
+  }, [isPopupVisible]);
+
+  const resetForm = () => {
+    setAmount(0); // Reset amount to 0
+    setPaymentStatus(null); // Reset payment status
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,10 +50,16 @@ const TopUpForm = ({ setIsPopupVisible }) => {
 
     if (result.error) {
       console.error(result.error.message);
+      setLoading(false);
+      setPaymentStatus('error');
     } else {
       if (result.paymentIntent.status === 'succeeded') {
         console.log('Payment succeeded!');
-        setIsPopupVisible(false); // Close popup on successful payment
+        setPaymentStatus('success'); // Set payment status to success
+        setLoading(false);
+        setTimeout(() => {
+          setIsPopupVisible(false); // Close popup after a delay on successful payment
+        }, 2000); // Delay in milliseconds (2000ms = 2 seconds)
       }
     }
 
@@ -87,6 +105,12 @@ const TopUpForm = ({ setIsPopupVisible }) => {
               Cancel
             </button>
           </div>
+          {paymentStatus === 'success' && (
+            <p style={{ color: 'green', marginTop: '1rem' }}>Payment succeeded!</p>
+          )}
+          {paymentStatus === 'error' && (
+            <p style={{ color: 'red', marginTop: '1rem' }}>Payment failed. Please try again.</p>
+          )}
         </div>
       </div>
     </form>
@@ -100,18 +124,19 @@ const Dashboard = () => {
     setIsPopupVisible(!isPopupVisible);
   };
 
+
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         <h2>Top-up Balance</h2>
         <p>Add credits to your account</p>
-        <button className="book-button" onClick={togglePopup}>
+        <button className="book-button" onClick={ togglePopup }>
           Add Credits
         </button>
         <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
           <div className="popup-box">
             <Elements stripe={stripePromise}>
-              <TopUpForm setIsPopupVisible={setIsPopupVisible} />
+              <TopUpForm setIsPopupVisible={setIsPopupVisible} isPopupVisible={isPopupVisible}/>
             </Elements>
           </div>
         </div>
