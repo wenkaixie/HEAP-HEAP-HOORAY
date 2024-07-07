@@ -26,7 +26,7 @@ const Dashboard = () => {
     'Practical Driving Lesson 8'
   ];
 
-  // HARDCODED DATA (DELETE)
+  // HARDCODED DATA (DELETE) WHEN RETRIEVING, IT SHOULD BE DATETIMES NOT IN WHAT IS PROVIDED IN DATABASE (DATABASE IS UNAVAILABLE TIMINGS)
   useEffect(() => {
     const timeslotData = {
       '2024-06-14': [
@@ -140,37 +140,6 @@ const Dashboard = () => {
   }, [bookings]);
 
   return (
-    // <div className="page">
-    //   <div className='navbar'>
-    //     <Navbar />
-    //   </div>
-      
-    //   <div className="lesson">
-    //     <h1>Lesson Booking</h1>
-    //   </div>
-    //   <div className="content">
-    //     <div className="left-column">
-    //       <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-    //     </div>
-    //     <div className="center-column">
-    //       <TimeSlots 
-    //         timeslots={timeslots} 
-    //         selectedDate={selectedDate} 
-    //         handleAddBooking={handleAddBooking} 
-    //       />
-    //     </div>
-    //     <div className="right-column">
-    //       <BookingSummary 
-    //         bookings={bookings} 
-    //         canceledBookings={canceledBookings} 
-    //         handleCancelBooking={handleCancelBooking} 
-    //         handleRebookCanceledBooking={handleRebookCanceledBooking} 
-    //         handleNextStep={handleNextStep}
-    //         hasClashes={hasClashes}
-    //       />
-    //     </div>
-    //   </div>
-    // </div>
     <div className='dashboard'>
         <div className='title'>
           <h1>Lesson Booking</h1>

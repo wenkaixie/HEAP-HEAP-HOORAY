@@ -33,7 +33,7 @@ const Navbar = () => {
 
   return (
     <nav className="header">
-      <Link href='../../../../pages/instructorHome'>
+      <Link href='../../../../instructorHome'>
         <img src='/assets/logo_black.png' className='logo' alt="Logo" />
       </Link>
       <div className="menu-icon" onClick={handleShowNavbar}>
@@ -46,15 +46,15 @@ const Navbar = () => {
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
           <li>
-            <Link href="../../../../pages/instructorStudents">My Students</Link>
+            <Link href="../../../../instructorStudents">My Students</Link>
           </li>
           <li>
-            <Link href="../../../../pages/instructorAvailability">Lesson Availability</Link>
+            <Link href="../../../../instructorAvailability">Lesson Availability</Link>
           </li>
           <li>
             <Link href="#">Account</Link>
             <div className="dropdown-content">
-              <Link href="../../../../pages/instructorProfile">Manage Profile</Link>
+              <Link href="../../../../instructorProfile">Manage Profile</Link>
               <Link href="" onClick={handleLogout}>Sign Out</Link>
             </div>
           </li>
