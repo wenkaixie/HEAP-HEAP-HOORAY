@@ -5,30 +5,68 @@ import './page.css';
 import '@/app/components/card/card.css';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
+import { maxWidth } from '@mui/system';
 
-const ProfileInfo = () => {
+const ChangePasswordInfo = () => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirmed, setNewPasswordConfirmed] = useState("");
+
+  const handleOldPasswordChange = (event) => {
+    setOldPassword(event.target.value);
+  };
+
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  const handleNewPasswordConfirmedChange = (event) => {
+    setNewPasswordConfirmed(event.target.value);
+  };
+
   return (
     <div className='profile-container'>
       <div className='profile-container-row'>
+        <h2>Change Password</h2>
+      </div>
+      <div className='profile-container-row'>
         <div>
-          <h3>Name</h3>
-          <p>Tay Zhi En</p>
-        </div>
-        <div>
-          <h3>Email</h3>
-          <p>zhizhi@gmail.com</p>
+          <h3>Old Password</h3>
+          <input 
+            type="password"
+            placeholder=""
+            required
+            value={oldPassword}
+            onChange={handleOldPasswordChange}
+            className='large-input'
+          />
         </div>
       </div>
       <div className='profile-container-row'>
         <div>
-            <h3>Date Of Birth</h3>
-            <p>1998-04-24</p>
-          </div>
-          <div>
-            <h3>Credit Balance</h3>
-            <p>284.00</p>
-          </div>
+          <h3>New Password</h3>
+          <input 
+            type="password"
+            placeholder=""
+            required
+            value={newPassword}
+            onChange={handleNewPasswordChange}
+            className='large-input'
+          />
+        </div>
+        <div>
+          <h3>Confirm New Password</h3>
+          <input 
+            type="password"
+            placeholder=""
+            required
+            value={newPasswordConfirmed}
+            onChange={handleNewPasswordConfirmedChange}
+            className='large-input'
+          />
+        </div>
       </div>
+      <br></br>
     </div>
   )
 }
@@ -59,23 +97,23 @@ const Dashboard = () => {
               </div>
               <div>
                 <h3>Name</h3>
-                <p>Tay Zhi En</p>
+                <p>Place Holder</p>
               </div>
               <div>
                 <h3>Email</h3>
-                <p>zhizhi@gmail.com</p>
+                <p>placeholder@gmail.com</p>
               </div>
               <div>
                 <h3>Date Of Birth</h3>
-                <p>1998-04-24</p>
+                <p>1999-12-31</p>
               </div>
               <div>
                 <h3>Credit Balance</h3>
-                <p>284.00</p>
+                <p>999.99</p>
               </div>
             </div>
             <div className='profile-container-row'>
-              <button className="book-button btn-open-popup" onClick={togglePopup}>Edit Profile</button>
+              <button className="book-button btn-open-popup" onClick={togglePopup}>Change Password</button>
             </div>
           </div>
           <div id="pictureOverlay" className={`picture-overlay ${isPictureVisible ? 'show' : ''}`}>
@@ -92,8 +130,11 @@ const Dashboard = () => {
           </div>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
               <div className='popup-box'>
-                  <ProfileInfo />
-                  <button className='book-button' onClick={togglePopup}>Save Changes</button>
+                  <ChangePasswordInfo />
+                  <div className='buttons-container'>
+                  <button className='book-button' onClick={togglePopup}>Cancel</button>
+                    <button className='book-button' onClick={togglePopup}>Change Password</button>
+                  </div>
               </div>
           </div>
         </div>

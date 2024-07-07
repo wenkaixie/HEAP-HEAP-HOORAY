@@ -5,6 +5,7 @@ import './page.css';
 //import Link from "next/link";
 import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
 import { useRouter } from 'next/router';
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Login = () => {
 	const [username, setUsername] = useState("");
@@ -12,6 +13,16 @@ const Login = () => {
 	const auth = FBInstanceAuth.getAuth();
 	const router = useRouter();
 	const [error, setError] = useState(null);
+	// const [user, loading] = useAuthState(auth);
+
+	// if (loading) {
+	// 	return <div>Loading...</div>
+	// }
+
+	// if (user) {
+	// 	router.push("/home");
+	// 	return <div>Welcome {user.displayName}</div>;
+	// }
 
 	const handleUsernameChange = (event) => {
 		setUsername(event.target.value);
@@ -67,7 +78,7 @@ const handleSubmit = async (event) => {
 	try {
 	const { data, errorCode } = await FBInstanceAuth.login(auth, username, password);
 	if (data) {
-		router.push('/');
+		router.push('/home');
 	} else {
 		setError(`Login failed: ${errorCode}`);
 	}
