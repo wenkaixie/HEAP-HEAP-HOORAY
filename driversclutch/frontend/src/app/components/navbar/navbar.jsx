@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import './navbar.css';
 import { IconContext } from 'react-icons';
@@ -14,6 +14,19 @@ const Navbar = () => {
   const auth = FBInstanceAuth.getAuth();
   const router = useRouter();
 	const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Update user state if user is logged in
+      } else {
+        setUser(null); // Reset user state if user is not logged in
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription
+  }, []);
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar)
@@ -37,6 +50,10 @@ const handleLogout = async (event) => {
   }
 };
 
+if (!user) {
+  return null; // Optional: Render loading state or redirect logic while checking authentication
+}
+
   return (
     <nav className="header">
       <Link href='../../../../home'>
@@ -51,9 +68,9 @@ const handleLogout = async (event) => {
       </div>
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
-          {/* <li>
-            <Link href="#">Welcome, {user.displayName}</Link>
-          </li> */}
+          <li>
+            <Link href="#">Logged in as: {user.email}</Link>
+          </li>
           <li>
             <Link href="#">Our Instructors</Link>
             <div className="dropdown-content">
