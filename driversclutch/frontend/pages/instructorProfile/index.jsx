@@ -6,6 +6,70 @@ import '@/app/components/card/card.css';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
 
+const ChangePasswordInfo = () => {
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirmed, setNewPasswordConfirmed] = useState("");
+
+  const handleOldPasswordChange = (event) => {
+    setOldPassword(event.target.value);
+  };
+
+  const handleNewPasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  const handleNewPasswordConfirmedChange = (event) => {
+    setNewPasswordConfirmed(event.target.value);
+  };
+
+  return (
+    <div className='profile-container'>
+      <div className='profile-container-row'>
+        <h2>Change Password</h2>
+      </div>
+      <div className='profile-container-row'>
+        <div>
+          <h3>Old Password</h3>
+          <input 
+            type="password"
+            placeholder=""
+            required
+            value={oldPassword}
+            onChange={handleOldPasswordChange}
+            className='large-input'
+          />
+        </div>
+      </div>
+      <div className='profile-container-row'>
+        <div>
+          <h3>New Password</h3>
+          <input 
+            type="password"
+            placeholder=""
+            required
+            value={newPassword}
+            onChange={handleNewPasswordChange}
+            className='large-input'
+          />
+        </div>
+        <div>
+          <h3>Confirm New Password</h3>
+          <input 
+            type="password"
+            placeholder=""
+            required
+            value={newPasswordConfirmed}
+            onChange={handleNewPasswordConfirmedChange}
+            className='large-input'
+          />
+        </div>
+      </div>
+      <br></br>
+    </div>
+  )
+}
+
 const Dashboard = () => {
     const [isPictureVisible, setIsPictureVisible] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);

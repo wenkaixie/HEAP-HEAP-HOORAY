@@ -33,7 +33,7 @@ const Dashboard = () => {
   const Card1 = () => {
     return (
       <div className="card">
-        <h2>Practical Driving Lesson (4)</h2>
+        <h3>Practical Driving Lesson (4)</h3>
         <div className="card-details">
           <span>8 Oct 2024</span>
           <h3>1900H - 2100H</h3>
@@ -46,7 +46,7 @@ const Dashboard = () => {
   const Card2 = () => {
     return (
       <div className="card">
-        <h2>Practical Driving Lesson (5)</h2>
+        <h3>Practical Driving Lesson (5)</h3>
         <div className="card-details">
           <span>10 Oct 2024</span>
           <h3>1900H - 2100H</h3>
@@ -59,7 +59,7 @@ const Dashboard = () => {
   const Card3 = () => {
     return (
       <div className="card">
-        <h2>Practical Driving Lesson (6)</h2>
+        <h3>Practical Driving Lesson (6)</h3>
         <div className="card-details">
           <span>12 Oct 2024</span>
           <h3>1900H - 2100H</h3>

@@ -7,6 +7,7 @@ import { IconContext } from 'react-icons';
 import Link from "next/link";
 import FBInstanceAuth from "../../firebase/firebase_auth";
 import { useRouter } from "next/router";
+import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
@@ -22,12 +23,18 @@ const Navbar = () => {
   const handleLogout = async (event) => {
     event.preventDefault();
     setError(null);
-    
+  
     try {
-      FBInstanceAuth.logout(auth);
-      router.push('/login');
+        await signOut(auth); // Use signOut directly from firebase/auth
+        console.log('User signed out from Firebase');
+        
+        localStorage.removeItem('userToken'); // Clear the token from local storage
+        console.log('userToken removed from localStorage');
+        
+        router.push('/login');
     } catch (error) {
         setError(`Unexpected error: ${error.message}`);
+        console.error('Error during logout:', error);
     }
   };
 

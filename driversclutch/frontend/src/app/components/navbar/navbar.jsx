@@ -7,32 +7,17 @@ import { IconContext } from 'react-icons';
 import Link from "next/link";
 import FBInstanceAuth from "../../firebase/firebase_auth";
 import { useRouter } from "next/router";
-import {signOut} from 'firebase/auth';
+import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
-  const [showNavbar, setShowNavbar] = useState(false)
-
-  const handleShowNavbar = () => {
-    setShowNavbar(!showNavbar)
-  }
-
+  const [showNavbar, setShowNavbar] = useState(false);
   const auth = FBInstanceAuth.getAuth();
   const router = useRouter();
 	const [error, setError] = useState(null);
 
-//   const handleLogout = async (event) => {
-//     event.preventDefault();
-//     setError(null);
-
-//     try {
-//         await FBInstanceAuth.logout(auth);
-//         localStorage.removeItem('userToken'); // Clear the token from local storage
-//         router.push('/login');
-//     } catch (error) {
-//         setError(`Unexpected error: ${error.message}`);
-//     }
-// };
-
+  const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar)
+  }
 
 const handleLogout = async (event) => {
   event.preventDefault();
@@ -66,8 +51,11 @@ const handleLogout = async (event) => {
       </div>
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
+          {/* <li>
+            <Link href="#">Welcome, {user.displayName}</Link>
+          </li> */}
           <li>
-          <Link href="#">Our Instructors</Link>
+            <Link href="#">Our Instructors</Link>
             <div className="dropdown-content">
               <Link href="../../../../manual">Class 3</Link>
               <Link href="../../../../auto">Class 3A</Link>
