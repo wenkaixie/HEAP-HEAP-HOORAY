@@ -1,4 +1,4 @@
-const {db, admin} = require("../firebase/firebase.js");
+const {db} = require("../firebase/firebase.js");
 
 const getInfo = async (req, res) => {
     const studentID = req.query.id;
