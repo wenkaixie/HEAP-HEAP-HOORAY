@@ -3,25 +3,12 @@ import './page.css';
 import '@/app/components/card/card.css';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
-import { useAuthState } from "react-firebase-hooks/auth";
-import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
-import BookingSummary from "../booking/BookingSummary";
 
 const Dashboard = () => {
-	const auth = FBInstanceAuth.getAuth();
-	const [user, loading] = useAuthState(auth);
-
-	if (loading) {
-		return <div>Loading...</div>
-	}
-
-	// if (user) {
-	// 	return <div>Welcome {user.displayName}</div>;
-	// }
 
   const callApi = async () => {
-    const token = await user.getIdToken();
-    console.log(token);
+    console.log(localStorage.getItem("userToken"));
+    console.log(localStorage.getItem("userDocID"));
   }
 
   return (

@@ -7,6 +7,19 @@ import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
 import { maxWidth } from '@mui/system';
 
+const fetchData = async () => {
+  try {
+    const response = await fetch('/students/profile');
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
+    console.log('Data:', data); // Log or set state with fetched data
+  } catch (error) {
+    console.error('Error fetching data:', error);
+  }
+};
+
 const ChangePasswordInfo = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
