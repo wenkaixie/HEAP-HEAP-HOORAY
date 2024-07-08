@@ -132,30 +132,34 @@ const Dashboard = () => {
                 <h3>Phone Number</h3>
                 <p>{profileData.phoneNumber}</p>
               </div>
+            </div>
+            <div className='profile-container-row'>
               <div>
                 <h3>Email</h3>
                 <p>{profileData.email}</p>
               </div>
-            </div>
-            <div className='profile-container-row'>
               <div>
-                <h3>Driving Centre</h3>
-                <p>{profileData.drivingCentre}</p>
-              </div>
-              <div>
-                <h3>Transmission Type</h3>
-                <p>{profileData.transmissionType}</p>
+                <h3>Car Model</h3>
+                <p>{profileData.carModel}</p>
               </div>
               <div>
                 <h3>Car Plate</h3>
                 <p>{profileData.carPlate}</p>
               </div>
               <div>
-                <h3>Work Start</h3>
-                <p>{profileData.workStart}</p>
+                <h3>Driving Centre</h3>
+                <p>{profileData.drivingCentre}</p>
               </div>
             </div>
             <div className='profile-container-row'>
+              <div>
+                <h3>Transmission Type</h3>
+                <p>{profileData.transmissionType}</p>
+              </div>
+              <div>
+                <h3>Work Start</h3>
+                <p>{profileData.workStart}</p>
+              </div>
               <div>
                 <h3>Work End</h3>
                 <p>{profileData.workEnd}</p>
@@ -164,16 +168,16 @@ const Dashboard = () => {
                 <h3>Enrolment Fee</h3>
                 <p>{profileData.enrolmentFee}</p>
               </div>
-              <div>
-                <h3>Lesson Duration</h3>
-                <p>{profileData.lessonDuration} hr</p>
-              </div>
+            </div>
+            <div className='profile-container-row'>
               <div>
                 <h3>Lesson Fee</h3>
                 <p>{profileData.lessonFee}</p>
               </div>
-            </div>
-            <div className='profile-container-row'>
+              <div>
+                <h3>Lesson Duration</h3>
+                <p>{profileData.lessonDuration} hr</p>
+              </div>
               <div>
                 <h3>Locations</h3>
                 <p>{profileData.locations}</p>

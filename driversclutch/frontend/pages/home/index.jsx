@@ -14,15 +14,6 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-container">
-        <h2>Calendar</h2>
-        <p>Use this area to describe one of your services.</p>
-        <div className="dashboard-details">
-          <span>1 hr</span>
-          <span>$70</span>
-        </div>
-        <button onClick={callApi} className="book-button">Book Now</button>
-      </div>
-      <div className="dashboard-container">
         <h2>Upcoming Bookings</h2>
         <div className="dashboard-details">
           <div>
@@ -31,6 +22,15 @@ const Dashboard = () => {
             <Card3 />
           </div>
         </div>
+      </div>
+      <div className="dashboard-container">
+        <h2>Make a new booking</h2>
+        <p>Use this area to describe one of your services.</p>
+        <div className="dashboard-details">
+          <span>1 hr</span>
+          <span>$70</span>
+        </div>
+        <button onClick={callApi} className="book-button">Book Now</button>
       </div>
     </div>
   );
