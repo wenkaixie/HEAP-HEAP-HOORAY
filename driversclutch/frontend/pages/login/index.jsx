@@ -117,6 +117,7 @@ const checkUserRole = async (email) => {
 			console.log("Hello " + studentDoc.id);
 			// Store the uid in local storage or cookies
 			localStorage.setItem('userDocID', studentDoc.id);
+			localStorage.setItem('userRole', 'student');
 			return 'student';
 		}
 
@@ -129,6 +130,7 @@ const checkUserRole = async (email) => {
 			console.log("Hello " + instructorDoc.id);
 			// Store the uid in local storage or cookies
 			localStorage.setItem('userDocID', instructorDoc.id);
+			localStorage.setItem('userRole', 'instructor');
 			return 'instructor';
 		}
 
