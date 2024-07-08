@@ -17,7 +17,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            const questionsCollectionRef = collection(db, "BTT", "1xsKDvNdGr0Tgd1YBeF3", "questions");
+            const questionsCollectionRef = collection(db, "BTT/1xsKDvNdGr0Tgd1YBeF3/question");
             const querySnapshot = await getDocs(questionsCollectionRef);
             const questionsList = querySnapshot.docs.map(doc => ({
                 id: doc.id,

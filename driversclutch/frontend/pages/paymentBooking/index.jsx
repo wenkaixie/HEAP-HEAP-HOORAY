@@ -1,133 +1,131 @@
 "use client";
-import "./page.css";
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
-import '@/app/components/background/background.css'
+import './page.css';
+import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
-import { GiCancel } from "react-icons/gi";
-import { SiTicktick } from "react-icons/si";
+
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../backend/firebase/firebase";
 
 const Dashboard = () => {
-  const [bookings, setBookings] = useState([]);
-  const [creditBalance, setCreditBalance] = useState(100); // HARDCODED BALANCE! FETCH BALANCE FROM DATABASE!
-  const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [questions, setQuestions] = useState([]);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [userAnswers, setUserAnswers] = useState({});
+    const [quizSubmitted, setQuizSubmitted] = useState(false);
+    const [score, setScore] = useState(0);
 
-  const pricePerLesson = 50; // HARDCODED PRICE! FETCH THE PRICE INDICATED BY INSTRUCTOR IN THE PROFILE PAGE FROM THE DATABASE!
-  const numOfBookings = bookings.length;
-  const totalPrice = numOfBookings * pricePerLesson;
+    const fetchQuestions = async () => {
+        try {
+            const querySnapshot = await getDocs(collection(db, 'BTT'));
+            const questions = [];
+            querySnapshot.forEach((doc) => {
+                questions.push(doc.data());
+            });
+            console.log('Questions:', questions);
+        } catch (error) {
+            console.error('Error fetching questions:', error);
+        }
+    };
 
-  useEffect(() => {
-    const storedBookings = localStorage.getItem('bookings');
-    if (storedBookings) {
-      setBookings(JSON.parse(storedBookings));
-    }
-  }, []);
+    // Call the fetchQuestions function when the component mounts
+    useEffect(() => {
+        fetchQuestions();
+    }, []);
 
-  const updateBalance = async () => {
-    const remainingBalance = creditBalance - totalPrice;
-    // Send the remaining balance to the database (API call example)
-    // await fetch('/api/updateBalance', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ balance: remainingBalance }),
-    // });
-    setCreditBalance(remainingBalance);
-  };
+    const handleAnswerChange = (event) => {
+        setUserAnswers({
+            ...userAnswers,
+            [currentQuestionIndex]: event.target.value
+        });
+    };
 
-  const updateDatabase = async () => {
-    // Send booking details to the database (API call example)
-    // Convert booking date and time to ISO 8601 format
-    const bookingDetails = bookings.map(booking => ({
-      datetimes: new Date(`${booking.date}T${booking.time}`).toISOString(), 
-    }));
+    const handleNext = () => {
+        setCurrentQuestionIndex(currentQuestionIndex + 1);
+    };
 
-    // await fetch('/api/updateBookings', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ bookings: bookingDetails }),
-    // });
-  };
+    const handleSubmit = () => {
+        let score = 0;
+        questions.forEach((question, index) => {
+            if (userAnswers[index] === question.correctAnswer) {
+                score += 1;
+            }
+        });
+        setScore(score);
+        setQuizSubmitted(true);
+    };
 
-  const handleClick = async () => {
-    if (creditBalance >= totalPrice) {
-      // await updateBalance();
-      // await updateDatabase();
-      setIsPopupVisible(true);
-    }
-  };
-
-  const closePopup = () => {
-    setIsPopupVisible(false);
-  };
-
-  return (
-    <div className="dashboard">
-      <div className="title">
-        <h1>Payment Details</h1>
-      </div>
-      <div className="dashboard-container">
-        <p>Booking Summary</p>
-
-        <div className="booking-summary">
-          {bookings.map((booking, index) => (
-            <div key={index} className="container">
-              <div className="booking-item">
-                {booking.lesson}<br /><br />
-                {booking.date} <br />
-                {booking.time} - {booking.endTime}
-                <div className="price">
-                  ${pricePerLesson}
-                </div>
-              </div>
+    const renderQuestion = () => {
+        const question = questions[currentQuestionIndex];
+        return (
+            <div>
+                <div className='question'>Q{currentQuestionIndex + 1}: {question.question}</div>
+                {["option1", "option2", "option3"].map((option, i) => (
+                    <p key={i}>
+                        <input
+                            type="radio"
+                            name={`question${currentQuestionIndex}`}
+                            value={question[option]}
+                            checked={userAnswers[currentQuestionIndex] === question[option]}
+                            onChange={handleAnswerChange}
+                        />
+                        <span className='option'>{question[option]}</span>
+                    </p>
+                ))}
             </div>
-          ))}
+        );
+    };
+
+    const renderResults = () => {
+        return (
+            <div>
+                <h2>Your Score: {score}/{questions.length}</h2>
+                {questions.map((question, index) => (
+                    <div key={index} className="question-container">
+                        <h3>{question.question}</h3>
+                        <p>Your answer: {userAnswers[index]}</p>
+                        <p>Correct answer: {question[question.correctAnswer]}</p>
+                        <p className={userAnswers[index] === question[question.correctAnswer] ? 'correct-answer' : 'wrong-answer'}>
+                            {userAnswers[index] === question[question.correctAnswer] ? "Correct" : "Wrong"}
+                        </p>
+                    </div>
+                ))}
+            </div>
+        );
+    };
+
+    if (quizSubmitted) {
+        return renderResults();
+    }
+
+    return (
+        <div className='dashboard'>
+            <div className='title'>
+                <h1>Basic Theory Test</h1>
+            </div>
+            <div className='dashboard-container'>
+                {questions.length > 0 ? renderQuestion() : <p>Loading questions...</p>}
+                <div className='btn'>
+                    {currentQuestionIndex < questions.length - 1 ? (
+                        <button className='next-btn' onClick={handleNext}>Next</button>
+                    ) : (
+                        <button className='next-btn' onClick={handleSubmit}>Submit</button>
+                    )}
+                </div>
+            </div>
         </div>
-      </div>
-      
-      <div className="dashboard-container">
-        <p>Total Amount : ${totalPrice}</p>
-        <p>Balance : ${creditBalance}</p>
-        {creditBalance < totalPrice && (
-          <div className="insufficient-credits">
-            {/* update link for top up!!!! */}
-            Insufficient credits. Click <a href="/top-up">here</a> to top up.
-          </div>
-        )}
-        <div className="pay-btn">
-          <button 
-            onClick={handleClick}
-            className={creditBalance < totalPrice ? 'disabled' : ''}
-          >
-            Pay
-          </button>
-        </div>
-      </div>
-      {isPopupVisible && (
-        <div id="popupOverlay" className="popup-overlay show">
-          <div className="popup-box">
-            <strong>Payment Confirmed</strong>
-            <GiCancel className='button' onClick={closePopup} />
-            <br /><br /><SiTicktick className="tick"/>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+    );
 };
 
-const PaymentBooking = () => {
-  return (
-    <main>
-      <div>
-        <Navbar />
-      </div>
-      <Dashboard />
-    </main>
-  );
+const BttPractice = () => {
+    return (
+        <main>
+            <div>
+                <Navbar />
+            </div>
+            <Dashboard />
+        </main>
+    );
 };
 
-export default PaymentBooking;
+export default BttPractice;
