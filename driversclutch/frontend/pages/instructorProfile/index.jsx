@@ -1,10 +1,12 @@
 "use client"
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/instructorNavbar/navbar";
 import './page.css';
 import '@/app/components/card/card.css';
-import '@/app/components/background/background.css'
-import '@/app/components/dashboard/dashboard.css'
+import '@/app/components/background/background.css';
+import '@/app/components/dashboard/dashboard.css';
+import axios from 'axios';
 
 const ChangePasswordInfo = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -73,6 +75,8 @@ const ChangePasswordInfo = () => {
 const Dashboard = () => {
     const [isPictureVisible, setIsPictureVisible] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [profileData, setProfileData] = useState(null);
+    const [error, setError] = useState(null);
 
     const togglePicture = () => {
       setIsPictureVisible(!isPictureVisible);
@@ -80,6 +84,28 @@ const Dashboard = () => {
 
     const togglePopup = () => {
         setIsPopupVisible(!isPopupVisible);
+    }
+
+    useEffect(() => {
+      const fetchProfileData = async () => {
+        try {
+          const userDocID = localStorage.getItem('userDocID');
+          if (!userDocID) {
+            throw new Error('User document ID not found in localStorage');
+          }
+          const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
+          console.log('API Response:', response.data);
+          setProfileData(response.data.data);
+        } catch (error) {
+          setError(error.message);
+        }
+      };
+  
+      fetchProfileData();
+    }, []);
+  
+    if (!profileData) {
+      return null;
     }
 
     return (
@@ -95,62 +121,66 @@ const Dashboard = () => {
                   </div>
               </div>
               <div>
-                <h3>Name</h3>
-                <p>Sheng Wei</p>
+                <h3>First Name</h3>
+                <p>{profileData.firstName}</p>
+              </div>
+              <div>
+                <h3>Last Name</h3>
+                <p>{profileData.lastName}</p>
               </div>
               <div>
                 <h3>Phone Number</h3>
-                <p>96998159</p>
+                <p>{profileData.phoneNumber}</p>
               </div>
               <div>
                 <h3>Email</h3>
-                <p>test123@gmail.com</p>
+                <p>{profileData.email}</p>
               </div>
             </div>
             <div className='profile-container-row'>
               <div>
                 <h3>Driving Centre</h3>
-                <p>CDC</p>
+                <p>{profileData.drivingCentre}</p>
               </div>
               <div>
                 <h3>Transmission Type</h3>
-                <p>Manual</p>
+                <p>{profileData.transmissionType}</p>
               </div>
               <div>
                 <h3>Car Plate</h3>
-                <p>SFC1879F</p>
+                <p>{profileData.carPlate}</p>
               </div>
               <div>
                 <h3>Work Start</h3>
-                <p>09:00</p>
+                <p>{profileData.workStart}</p>
               </div>
             </div>
             <div className='profile-container-row'>
               <div>
                 <h3>Work End</h3>
-                <p>18:00</p>
+                <p>{profileData.workEnd}</p>
               </div>
               <div>
                 <h3>Enrolment Fee</h3>
-                <p>100.00</p>
+                <p>{profileData.enrolmentFee}</p>
               </div>
               <div>
                 <h3>Lesson Duration</h3>
-                <p>1.5 hours</p>
+                <p>{profileData.lessonDuration} hr</p>
               </div>
               <div>
                 <h3>Lesson Fee</h3>
-                <p>80.00</p>
+                <p>{profileData.lessonFee}</p>
               </div>
             </div>
             <div className='profile-container-row'>
               <div>
                 <h3>Locations</h3>
-                <p>Sengkang, Hougang</p>
+                <p>{profileData.locations}</p>
               </div>
               <div>
                 <h3>Maximum Students</h3>
-                <p>10</p>
+                <p>{profileData.maximumStudents}</p>
               </div>
             </div>
             <div className='profile-container-row'>

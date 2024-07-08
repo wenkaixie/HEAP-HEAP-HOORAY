@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { RxHamburgerMenu } from "react-icons/rx";
 import './navbar.css';
 import { IconContext } from 'react-icons';
@@ -11,14 +11,26 @@ import { signOut } from 'firebase/auth';
 
 const Navbar = () => {
   const [showNavbar, setShowNavbar] = useState(false)
+  const auth = FBInstanceAuth.getAuth();
+  const router = useRouter();
+	const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      if (currentUser) {
+        setUser(currentUser); // Update user state if user is logged in
+      } else {
+        setUser(null); // Reset user state if user is not logged in
+      }
+    });
+
+    return () => unsubscribe(); // Cleanup subscription
+  }, []);
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar)
   }
-
-  const auth = FBInstanceAuth.getAuth();
-  const router = useRouter();
-	const [error, setError] = useState(null);
 
   const handleLogout = async (event) => {
     event.preventDefault();
@@ -30,7 +42,7 @@ const Navbar = () => {
         
         localStorage.removeItem('userToken'); // Clear the token from local storage
         console.log('userToken removed from localStorage');
-        
+
         localStorage.removeItem('userDocID'); // Clear the userDocID from local storage
         console.log('userDocID removed from localStorage');
         
@@ -40,6 +52,10 @@ const Navbar = () => {
         console.error('Error during logout:', error);
     }
   };
+
+  if (!user) {
+    return null;
+  }
 
   return (
     <nav className="header">
@@ -55,6 +71,9 @@ const Navbar = () => {
       </div>
       <div className={`nav-elements ${showNavbar && 'active'}`}>
         <ul>
+          <li>
+            <Link href="#">Logged in as: {user.email}</Link>
+          </li>
           <li>
             <Link href="../../../../instructorStudents">My Students</Link>
           </li>

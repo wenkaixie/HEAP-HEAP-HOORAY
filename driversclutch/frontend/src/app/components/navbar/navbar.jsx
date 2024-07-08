@@ -54,7 +54,7 @@ const handleLogout = async (event) => {
 };
 
 if (!user) {
-  return null; // Optional: Render loading state or redirect logic while checking authentication
+  return null;
 }
 
   return (
