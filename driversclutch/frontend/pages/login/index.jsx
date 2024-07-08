@@ -6,7 +6,7 @@ import './page.css';
 import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
 import { useRouter } from 'next/router';
 import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
-import { collection, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
 
@@ -113,6 +113,10 @@ const checkUserRole = async (email) => {
 		const studentSnapshot = await getDocs(studentQuery);
 		if (!studentSnapshot.empty) {
 			console.log('User is a student');
+			const studentDoc = studentSnapshot.docs[0];
+			console.log("Hello " + studentDoc.id);
+			// Store the uid in local storage or cookies
+			localStorage.setItem('userDocID', studentDoc.id);
 			return 'student';
 		}
 
@@ -121,6 +125,10 @@ const checkUserRole = async (email) => {
 		const instructorSnapshot = await getDocs(instructorQuery);
 		if (!instructorSnapshot.empty) {
 			console.log('User is an instructor');
+			const instructorDoc = instructorSnapshot.docs[0];
+			console.log("Hello " + instructorDoc.id);
+			// Store the uid in local storage or cookies
+			localStorage.setItem('userDocID', instructorDoc.id);
 			return 'instructor';
 		}
 

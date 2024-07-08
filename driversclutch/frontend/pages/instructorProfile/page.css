@@ -138,3 +138,12 @@
     height: 50%;
     margin: auto;
   }
+
+  .large-input {
+    width: 300px;
+    height: 40px;
+    font-size: 18px; 
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px 5px;
+  }
