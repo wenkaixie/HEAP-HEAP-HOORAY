@@ -6,6 +6,7 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import axios from 'axios';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -119,17 +120,41 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible }) => {
 
 const Dashboard = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+          throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setProfileData(response.data.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
+
+  if (!profileData) {
+    return null;
+  }
 
   const togglePopup = () => {
     setIsPopupVisible(!isPopupVisible);
   };
-
 
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         <h2>Top-up Balance</h2>
         <p>Add credits to your account</p>
+        <h3>Current Credit Balance: {profileData.balance}</h3>
         <button className="book-button" onClick={ togglePopup }>
           Add Credits
         </button>

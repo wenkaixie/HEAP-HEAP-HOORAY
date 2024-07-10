@@ -45,7 +45,10 @@ const Navbar = () => {
 
         localStorage.removeItem('userDocID'); // Clear the userDocID from local storage
         console.log('userDocID removed from localStorage');
-        
+
+      localStorage.removeItem('userRole'); // Clear the userRole from local storage
+      console.log('userToken removed from localStorage');
+
         router.push('/login');
     } catch (error) {
         setError(`Unexpected error: ${error.message}`);

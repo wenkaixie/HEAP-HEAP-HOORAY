@@ -48,9 +48,6 @@ const handleLogout = async (event) => {
 
       localStorage.removeItem('userRole'); // Clear the userRole from local storage
       console.log('userToken removed from localStorage');
-      
-      localStorage.removeItem('userDocID'); // Clear the userDocID from local storage
-      console.log('userDocID removed from localStorage');
 
       router.push('/login');
   } catch (error) {

@@ -1,0 +1,15 @@
+.card {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.card-content {
+    flex-grow: 1;
+}
+
+.card-image {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 5%;
+}
