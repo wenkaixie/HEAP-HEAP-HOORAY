@@ -32,9 +32,9 @@
 
 import React from 'react';
 import { useRouter } from 'next/router';
-import StudentRoute from '../src/app/components/StudentRoute'; // Adjust the path as necessary
-import InstructorRoute from '../src/app/components/InstructorRoute'; // Adjust the path as necessary
-import '../src/app/components/popup.css'; // Import the popup styles
+import StudentRoute from '../src/app/components/routeProtection/studentRoute'; // Adjust the path as necessary
+import InstructorRoute from '../src/app/components/routeProtection/InstructorRoute'; // Adjust the path as necessary
+import '../src/app/components/routeProtection/popup.css'; // Import the popup styles
 
 const noAuthRequired = ['/', '/login']; // Define routes that don't require authentication
 const instructorRoutes = ['/instructorHome', '/instructorProfile']; // Define instructor-specific routes
