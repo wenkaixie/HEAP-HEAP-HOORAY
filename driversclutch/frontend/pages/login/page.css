@@ -3,171 +3,123 @@ body {
     font-family: 'Poppins', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(rgb(5, 5, 95),rgb(42, 42, 162), rgb(103, 103, 252));
+    background: linear-gradient(rgb(60, 156, 246), rgb(117, 186, 255), rgb(176, 221, 255));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
   
-.tab-form{
-    position: absolute;
-    top: 50%;
-    left: 73%;   /*adjust this*/
-    transform: translate(-50%, -50%);
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    height: 100%;
-    max-height: 500px;
-    max-width: 450px;
+  }
+  
+  .login-form {
     background: white;
     border-radius: 8px;
+    padding: 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0px 2px 5px 2px rgba(101, 123, 123, 0.37);
+    text-align: center;
+    position: relative;
+  }
+  
+  .applogo {
+    max-height: 250px; /* Adjust logo size */
+    min-height: 250px;
+    width: 70%;
+    height: 150%;
+  }
+  
+  h1 {
+    margin: 10px 0;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  .notification {
+    background: #f9f9f9;
+    padding: 10px;
+    border-left: 4px solid #ffd943;
+    margin: 20px 0;
+  }
+  
+  .notification p {
+    margin: 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .input-box {
+    margin: 15px 0;
+    position: relative;
+  }
+  
+  .input-box input {
+    width: calc(100% - 30px); /* Adjusted to fit within the form */
+    padding: 15px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    box-sizing: border-box; /* Ensure padding is included in width */
+  }
+  
+  .checkbox-container {
     display: flex;
     align-items: center;
-    justify-content: center;
-    box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.612);
-}
-.tab-form .tab-header{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-}
-/* .tab-form .tab-header >button{
-    flex:1;
-    padding: 15px; 
-    text-align: center;
-    color: #555;
-    cursor: pointer;
-} */
-.tab-form .tab-header .btn{
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 2px solid #c3e1ff;
-    flex:1;
-    padding: 15px; 
-    text-align: center;
-    color: black;
-    background: white;
-    font-size: 17px;
-    cursor: pointer;
-    height: 70px;
-}
-.tab-form .input-box{
-    margin: 30px 0px;
-}
-.input-box input {
-    width: 100%;
-    margin-top: 5px;
-    font-size: 15px;
-    /* padding: 8px; */
-    /* background: transparent; */
-    border: 1px solid rgba(0, 0, 0, 0.174);
-    outline: none;
-    border-radius: 20px;
-    color: black;
-    padding: 20px 45px 20px 20px;
-}
-.input-box input::placeholder {
-    color: rgb(139, 139, 139);
-}
-.input-box .icon {
-    position: absolute;
-    right: 20px;
-    top: 55%;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: rgba(0, 0, 0, 0.349);
-}
-.tab-form .remember-forgot {
-    display: flex;
-    justify-content: space-between;
-    color: rgb(102, 102, 102);
-    font-size: 14.5px;
-    margin: -20px 0 30px;
-}
-.remember-forgot label input {
-    accent-color: rgb(125, 194, 251);
-    margin-right: 4px;
-}
-
-.remember-forgot a {
-    text-decoration: none;
-}
-
-.remember-forgot a:hover {
-    text-decoration: underline;
-}
-
-.tab-form .submit {
-    width: 350px;
-    height: 45px;
-    background: linear-gradient(to right, rgb(93, 95, 255) , rgb(104, 162, 250));
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    font-size: 16px;
-    color: rgb(255, 255, 255);
-    font-weight: 700;
-}
-
-.tab-form .submit:hover{
-    box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.237);
-}
-
-.tab-form .register-link {
-    font-size: 13.5px;
-    text-align: center;
-    margin-top: 10px;
-}
-
-.register-link p a {
-    color: black;
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.register-link p a:hover {
-    text-decoration: underline;
-}
-
-.container {
-    position: relative; /* Positioning context for absolute positioning */
-    height: 100vh; /* Full height of the viewport */
-}
+    justify-content: start;
+    margin: 5px 0 20px;
+    font-size: 14px;
+    color: #333;
+  }
   
-.applogo {
-    position: absolute; /* Position the image */
-    top: 48%; /* Move the image vertically to the center of the container */
-    left: 12%; /* Position the image at the left side of the container */
-    transform: translateY(-50%); /* Adjust the position vertically to center the image */
-    max-height: 80vh; /* Example max height */
-}
-
-@media (max-width: 768px) {
-    .tab-form {
-        
-        width: 90%;
-        max-width: none;
-        max-height: none;
-        height: auto;
-        top: auto;
-        left: auto;
-        transform: none;
-        position: relative;
-        margin: 20px;
-        
+  .checkbox-container input {
+    margin-right: 5px;
+  }
+  
+  .submit {
+    width: 100%;
+    padding: 15px;
+    background: #0068d0c4;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .submit:hover {
+    background: #0080ff;
+  }
+  
+  @media (max-width: 768px) {
+    .login-form {
+      width: 90%;
+      max-width: none;
+      max-height: none;
+      height: auto;
+      top: auto;
+      left: auto;
+      transform: none;
+      position: relative;
+      margin: 20px;
     }
-
+  
     .container {
-        height: auto;
+      height: auto;
     }
-
+  
     .applogo {
-        position: relative;
-        top: auto;
-        left: auto;
-        transform: none;
-        margin-bottom: 20px;
+      max-height: 80px; /* Adjust logo size for smaller screens */
     }
-}
-
+  
+    .notification {
+      margin: 10px 0; /* Adjust margin for smaller screens */
+    }
+  }
   
