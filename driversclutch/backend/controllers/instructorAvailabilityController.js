@@ -1,27 +1,25 @@
 const { db, admin } = require("../firebase/firebase.js");
 
 const updateAvailability = async (req, res) => {
-    const { email, datetimes } = req.body;
+    const { instructorID, datetimes } = req.body;
 
-    if (!email || !Array.isArray(datetimes) || datetimes.length === 0) {
+    if (!instructorID || !Array.isArray(datetimes) || datetimes.length === 0) {
         return res.status(400).json({ code: 400, message: "Email and an array of datetimes are required" });
     }
 
     try {
-        const querySnapshot = await db.collection('instructors').where('email', '==', email).get();
+        const instructorDoc = await db.collection('instructors').doc(instructorID);
 
-        if (querySnapshot.empty) {
-            return res.status(404).json({ code: 404, message: "No instructor with given email found" });
+        if (!instructorDoc) {
+            return res.status(404).json({ code: 404, message: "No instructor found" });
         }
-
-        const docRef = querySnapshot.docs[0].ref;
 
         // Iterate over the datetime array and convert each string to Firestore Timestamp
         const timestamps = datetimes.map(dt => admin.firestore.Timestamp.fromDate(new Date(dt)));
 
         // Update the unavailableTimeslots array with all timestamps
         const updatePromises = timestamps.map(timestamp => 
-            docRef.update({
+            instructorDoc.update({
                 unavailableTimeslots: admin.firestore.FieldValue.arrayUnion(timestamp)
             })
         );

@@ -1,3 +1,4 @@
+// havent test
 const { db } = require("../firebase/firebase.js");
 
 const getInfo = async (req,res) => {
