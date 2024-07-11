@@ -1,131 +1,216 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import "./page.css";
+import React, { useEffect, useState } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
-import './page.css';
-import '@/app/components/background/background.css';
+import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css';
-
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../../backend/firebase/firebase";
+import { GiCancel } from "react-icons/gi";
+import { SiTicktick } from "react-icons/si";
+import axios from 'axios'; 
 
 const Dashboard = () => {
-    const [questions, setQuestions] = useState([]);
-    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [userAnswers, setUserAnswers] = useState({});
-    const [quizSubmitted, setQuizSubmitted] = useState(false);
-    const [score, setScore] = useState(0);
+  const [bookings, setBookings] = useState([]);
+  const [creditBalance, setCreditBalance] = useState(100); // HARDCODED BALANCE! FETCH BALANCE FROM DATABASE!
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-    const fetchQuestions = async () => {
-        try {
-            const querySnapshot = await getDocs(collection(db, 'BTT'));
-            const questions = [];
-            querySnapshot.forEach((doc) => {
-                questions.push(doc.data());
-            });
-            console.log('Questions:', questions);
-        } catch (error) {
-            console.error('Error fetching questions:', error);
-        }
-    };
+  const pricePerLesson = 50; // HARDCODED PRICE! FETCH THE PRICE INDICATED BY INSTRUCTOR IN THE PROFILE PAGE FROM THE DATABASE!
+  const numOfBookings = bookings.length;
+  const totalPrice = numOfBookings * pricePerLesson;
 
-    // Call the fetchQuestions function when the component mounts
-    useEffect(() => {
-        fetchQuestions();
-    }, []);
-
-    const handleAnswerChange = (event) => {
-        setUserAnswers({
-            ...userAnswers,
-            [currentQuestionIndex]: event.target.value
-        });
-    };
-
-    const handleNext = () => {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-    };
-
-    const handleSubmit = () => {
-        let score = 0;
-        questions.forEach((question, index) => {
-            if (userAnswers[index] === question.correctAnswer) {
-                score += 1;
-            }
-        });
-        setScore(score);
-        setQuizSubmitted(true);
-    };
-
-    const renderQuestion = () => {
-        const question = questions[currentQuestionIndex];
-        return (
-            <div>
-                <div className='question'>Q{currentQuestionIndex + 1}: {question.question}</div>
-                {["option1", "option2", "option3"].map((option, i) => (
-                    <p key={i}>
-                        <input
-                            type="radio"
-                            name={`question${currentQuestionIndex}`}
-                            value={question[option]}
-                            checked={userAnswers[currentQuestionIndex] === question[option]}
-                            onChange={handleAnswerChange}
-                        />
-                        <span className='option'>{question[option]}</span>
-                    </p>
-                ))}
-            </div>
-        );
-    };
-
-    const renderResults = () => {
-        return (
-            <div>
-                <h2>Your Score: {score}/{questions.length}</h2>
-                {questions.map((question, index) => (
-                    <div key={index} className="question-container">
-                        <h3>{question.question}</h3>
-                        <p>Your answer: {userAnswers[index]}</p>
-                        <p>Correct answer: {question[question.correctAnswer]}</p>
-                        <p className={userAnswers[index] === question[question.correctAnswer] ? 'correct-answer' : 'wrong-answer'}>
-                            {userAnswers[index] === question[question.correctAnswer] ? "Correct" : "Wrong"}
-                        </p>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    if (quizSubmitted) {
-        return renderResults();
+  useEffect(() => {
+    const storedBookings = localStorage.getItem('bookings');
+    if (storedBookings) {
+      setBookings(JSON.parse(storedBookings));
     }
+  }, []);
 
-    return (
-        <div className='dashboard'>
-            <div className='title'>
-                <h1>Basic Theory Test</h1>
-            </div>
-            <div className='dashboard-container'>
-                {questions.length > 0 ? renderQuestion() : <p>Loading questions...</p>}
-                <div className='btn'>
-                    {currentQuestionIndex < questions.length - 1 ? (
-                        <button className='next-btn' onClick={handleNext}>Next</button>
-                    ) : (
-                        <button className='next-btn' onClick={handleSubmit}>Submit</button>
-                    )}
+  const userDocID = localStorage.getItem('userDocID');
+
+//   const convertToRequiredFormat = (bookings) => {
+//     const datetimes = [];
+//     for (const [date, times] of Object.entries(bookings)) {
+//       times.forEach(time => {
+//         const datetime = dayjs(`${date} ${time}`, 'YYYY-MM-DD hh:mm A').toISOString();
+//         datetimes.push(datetime);
+//       });
+//     }
+//     return datetimes;
+//   };
+
+  console.log(bookings);
+
+//   const updateDatabase = async () => {
+//     const remainingBalance = creditBalance - totalPrice;
+//     setCreditBalance(remainingBalance);
+//     const bookingDetails = bookings.map(booking => {
+//     const date = booking.date;
+//     const time = booking.time;)
+    
+
+//     console.log(`Date: ${date}, Time: ${time}`);
+//     const formattedData = convertToRequiredFormat(bookings);
+//     try {
+//         const requestData = {
+//           studentID: userDocID,
+//           timeslots: formattedData,
+//           balance: creditBalance
+//         };
+    
+//         console.log("Sending data to server:", requestData); 
+    
+//         const response = await axios.post('http://localhost:8001/students/booking/updateStudent', requestData, {
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//         });
+    
+//         if (response.status === 200) {
+//           console.log("updatedBalance data successfully sent to the database.");
+//         } else {
+//           console.error("Failed to send updatedBalance data.");
+//         }
+//       } catch (error) {
+//         console.error("Error:", error);
+//         if (error.response) {
+//           console.error("Server responded with:", error.response.data);
+//         }
+//       }
+//     };
+
+    const updateDatabase = async () => {
+        // Convert booking date and time to ISO 8601 format
+        const bookingDetails = bookings.map(booking => {
+          const date = booking.date;
+          const time = booking.time;
+      
+          console.log(`Date: ${date}, Time: ${time}`);
+      
+          // Validate date and time format
+          const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
+          const isValidTime = /^\d{2}:\d{2}(:\d{2})?$/.test(time); // matches HH:MM or HH:MM:SS
+      
+          if (!isValidDate || !isValidTime) {
+            console.error('Invalid date or time format:', { date, time });
+            return null; // Or handle the error as needed
+          }
+      
+          try {
+            const dateTimeString = `${date}T${time}`;
+            const isoDateTime = new Date(dateTimeString).toISOString();
+            return {
+              datetimes: isoDateTime,
+            };
+          } catch (error) {
+            console.error(`Failed to create ISO string from date/time: ${dateTimeString}`, error);
+            return null; // Or handle the error as needed
+          }
+        }).filter(detail => detail !== null); // Filter out invalid entries
+      
+        try {
+          const requestData = {
+            studentID: userDocID,
+            timeslots: bookingDetails,
+            balance: creditBalance
+          };
+      
+          console.log("Sending data to server:", requestData);
+      
+          const response = await axios.post('http://localhost:8001/students/booking/updateStudent/', requestData, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+      
+          if (response.status === 200) {
+            console.log("bookingDetails data successfully sent to the database.");
+            setIsPopupVisible(true);
+          } else {
+            console.error("Failed to send bookingDetails data.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          if (error.response) {
+            console.error("Server responded with:", error.response.data);
+          }
+        }
+      };
+      
+
+  const handleClick = async () => {
+    if (creditBalance >= totalPrice) {
+    //   await updateBalance();
+      await updateDatabase();
+    }
+  };
+
+  const closePopup = () => {
+    setIsPopupVisible(false);
+  };
+
+  return (
+    <div className="dashboard">
+      <div className="title">
+        <h1>Payment Details</h1>
+      </div>
+      <div className="dashboard-container">
+        <p>Booking Summary</p>
+
+        <div className="booking-summary">
+          {bookings.map((booking, index) => (
+            <div key={index} className="container">
+              <div className="booking-item">
+                {booking.lesson}<br /><br />
+                {booking.date} <br />
+                {booking.time} - {booking.endTime}
+                <div className="price">
+                  ${pricePerLesson}
                 </div>
+              </div>
             </div>
+          ))}
         </div>
-    );
+      </div>
+      
+      <div className="dashboard-container">
+        <p>Total Amount : ${totalPrice}</p>
+        <p>Balance : ${creditBalance}</p>
+        {creditBalance < totalPrice && (
+          <div className="insufficient-credits">
+            {/* update link for top up!!!! */}
+            Insufficient credits. Click <a href="../../profile">here</a> to top up.
+          </div>
+        )}
+        <div className="pay-btn">
+          <button 
+            onClick={handleClick}
+            className={creditBalance < totalPrice ? 'disabled' : ''}
+          >
+            Pay
+          </button>
+        </div>
+      </div>
+      {isPopupVisible && (
+        <div id="popupOverlay" className="popup-overlay show">
+          <div className="popup-box">
+            <strong>Payment Confirmed</strong>
+            <GiCancel className='button' onClick={closePopup} />
+            <br /><br /><SiTicktick className="tick"/>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
-const BttPractice = () => {
-    return (
-        <main>
-            <div>
-                <Navbar />
-            </div>
-            <Dashboard />
-        </main>
-    );
+const PaymentBooking = () => {
+  return (
+    <main>
+      <div>
+        <Navbar />
+      </div>
+      <Dashboard />
+    </main>
+  );
 };
 
-export default BttPractice;
+export default PaymentBooking;
