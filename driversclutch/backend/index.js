@@ -50,3 +50,6 @@ app.use('/instructors/profile', require('./routes/instructorProfileRouter.js'));
 
 // for path /instructors/homepage
 app.use('/instructors/homepage', require('./routes/instructorHomeRouter.js'));
+
+// for path /instructors/studentList
+app.use('/instructors/studentList', require('./routes/studentListRouter.js'));
