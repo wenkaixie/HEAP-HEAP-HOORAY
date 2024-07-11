@@ -19,7 +19,7 @@ const getInfo = async (req,res) => {
 }
 
 const updateInfo = async (req, res) => {
-    const {instructorID,     carModel, carPlate, drivingCentre, enrolmentFee, lessonDuration, lessonFee, maximumStudents, passRate, phoneNumber, transmissionType, workStart, workEnd, locations} = req.body;
+    const {instructorID, carModel, carPlate, drivingCentre, enrolmentFee, lessonDuration, lessonFee, maximumStudents, passRate, phoneNumber, transmissionType, workStart, workEnd, locations} = req.body;
 
     // if(!studentID || !firstname || !lastname || !birthdate) {
     //     return res.status(400).json({code: 400, message: "Student Doc ID and updated firstname/lastname/birthdate required"})

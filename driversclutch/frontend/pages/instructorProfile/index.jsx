@@ -8,69 +8,253 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
 
-const ChangePasswordInfo = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordConfirmed, setNewPasswordConfirmed] = useState("");
+const ProfileInfo = ({ profileData, setIsPopupVisible }) => {
+  const [carModel, setCarModel] = useState("");
+  const [carPlate, setCarPlate] = useState("");
+  const [drivingCentre, setDrivingCentre] = useState("");
+  const [transmissionType, setTransmissionType] = useState("");
+  const [workStart, setWorkStart] = useState("");
+  const [workEnd, setWorkEnd] = useState("");
+  const [enrolmentFee, setEnrolmentFee] = useState("");
+  const [lessonFee, setLessonFee] = useState("");
+  const [lessonDuration, setLessonDuration] = useState("");
+  const [locations, setLocations] = useState("");
+  const [maximumStudents, setMaximumStudents] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [passRate, setPassRate] = useState("");
 
-  const handleOldPasswordChange = (event) => {
-    setOldPassword(event.target.value);
-  };
+  useEffect(() => {
+    if (profileData) {
+      setCarModel(profileData.carModel);
+      setCarPlate(profileData.carPlate);
+      setDrivingCentre(profileData.drivingCentre);
+      setTransmissionType(profileData.transmissionType);
+      setWorkStart(profileData.workStart);
+      setWorkEnd(profileData.workEnd);
+      setEnrolmentFee(profileData.enrolmentFee);
+      setLessonFee(profileData.lessonFee);
+      setLessonDuration(profileData.lessonDuration);
+      setLocations(profileData.locations.join(", "));
+      setMaximumStudents(profileData.maximumStudents);
+      setPhoneNumber(profileData.phoneNumber);
+      setPassRate(profileData.passRate);
+    }
+  }, [profileData]);
 
-  const handleNewPasswordChange = (event) => {
-    setNewPassword(event.target.value);
-  };
+  const handleCarModelChange = (event) => setCarModel(event.target.value);
+  const handleCarPlateChange = (event) => setCarPlate(event.target.value);
+  const handleDrivingCentreChange = (event) => setDrivingCentre(event.target.value);
+  const handleTransmissionTypeChange = (event) => setTransmissionType(event.target.value);
+  const handleWorkStartChange = (event) => setWorkStart(event.target.value);
+  const handleWorkEndChange = (event) => setWorkEnd(event.target.value);
+  const handleEnrolmentFeeChange = (event) => setEnrolmentFee(event.target.value);
+  const handleLessonFeeChange = (event) => setLessonFee(event.target.value);
+  const handleLessonDurationChange = (event) => setLessonDuration(event.target.value);
+  const handleLocationsChange = (event) => setLocations(event.target.value);
+  const handleMaximumStudentsChange = (event) => setMaximumStudents(event.target.value);
+  const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
+  const handlePassRateChange = (event) => setPassRate(event.target.value);
 
-  const handleNewPasswordConfirmedChange = (event) => {
-    setNewPasswordConfirmed(event.target.value);
+  const userDocID = localStorage.getItem('userDocID');
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const updatedProfileData = {
+      instructorID: userDocID,
+      carModel: carModel,
+      carPlate: carPlate,
+      drivingCentre: drivingCentre,
+      enrolmentFee: Number(enrolmentFee), // Convert to number
+      lessonDuration: Number(lessonDuration), // Convert to number
+      lessonFee: Number(lessonFee), // Convert to number
+      maximumStudents: Number(maximumStudents), // Convert to number
+      passRate: Number(passRate), // Convert to number
+      phoneNumber: phoneNumber,
+      transmissionType: transmissionType,
+      workStart: workStart,
+      workEnd: workEnd,
+      locations: locations.split(",").map(location => location.trim()) // Split string into array
+    };
+
+
+    try {
+      console.log('Trying to postt', userDocID);
+      const response = await axios.put('http://localhost:8001/instructors/profile/update', updatedProfileData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Profile updated:', response.data);
+      setIsPopupVisible(false);
+    } catch (error) {
+      console.log('Error updating profile:', error);
+    }
   };
 
   return (
-    <div className='profile-container'>
-      <div className='profile-container-row'>
-        <h2>Change Password</h2>
-      </div>
-      <div className='profile-container-row'>
-        <div>
-          <h3>Old Password</h3>
-          <input 
-            type="password"
-            placeholder=""
-            required
-            value={oldPassword}
-            onChange={handleOldPasswordChange}
-            className='large-input'
-          />
+    <form onSubmit={handleSubmit}>
+      <div className='profile-container'>
+        <div className='profile-container-row'>
+          <h2>Edit Profile</h2>
+        </div>
+        <div className='profile-container-row'>
+          <div>
+            <h3>First Name</h3>
+            <p>{profileData.firstName}</p>
+          </div>
+          <div>
+            <h3>Last Name</h3>
+            <p>{profileData.lastName}</p>
+          </div>
+          <div>
+            <h3>Email</h3>
+            <p>{profileData.email}</p>
+          </div>
+          <div>
+            <h3>Phone Number</h3>
+            <input 
+              type="text"
+              required
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
+              className='large-input'
+            />
+          </div>
+        </div>
+        <div className='profile-container-row'>
+          <div>
+            <h3>Car Model</h3>
+            <input 
+              type="text"
+              required
+              value={carModel}
+              onChange={handleCarModelChange}
+              className='large-input'
+            />
+          </div>
+          <div>
+            <h3>Car Plate</h3>
+            <input 
+              type="text"
+              required
+              value={carPlate}
+              onChange={handleCarPlateChange}
+              className='large-input'
+            />
+          </div>
+          <div>
+            <h3>Driving Centre</h3>
+            <input 
+              type="text"
+              required
+              value={drivingCentre}
+              onChange={handleDrivingCentreChange}
+              className='large-input'
+            />
+          </div>
+          <div>
+            <h3>Transmission Type</h3>
+            <input 
+              type="text"
+              required
+              value={transmissionType}
+              onChange={handleTransmissionTypeChange}
+              className='large-input'
+            />
+          </div>
+        </div>
+        <div className='profile-container-row'>
+          <div>
+              <h3>Work Start</h3>
+              <input 
+                type="text"
+                required
+                value={workStart}
+                onChange={handleWorkStartChange}
+                className='large-input'
+              />
+          </div>
+          <div>
+              <h3>Work End</h3>
+              <input 
+                type="text"
+                required
+                value={workEnd}
+                onChange={handleWorkEndChange}
+                className='large-input'
+              />
+          </div>
+          <div>
+              <h3>Enrolment Fee</h3>
+              <input 
+                type="text"
+                required
+                value={enrolmentFee}
+                onChange={handleEnrolmentFeeChange}
+                className='large-input'
+              />
+          </div>
+          <div>
+              <h3>Lesson Fee</h3>
+              <input 
+                type="text"
+                required
+                value={lessonFee}
+                onChange={handleLessonFeeChange}
+                className='large-input'
+              />
+          </div>
+        </div>
+        <div className='profile-container-row'>
+          <div>
+              <h3>Lesson Duration</h3>
+              <input 
+                type="text"
+                required
+                value={lessonDuration}
+                onChange={handleLessonDurationChange}
+                className='large-input'
+              />
+          </div>
+          <div>
+              <h3>Locations</h3>
+              <input 
+                type="text"
+                required
+                value={locations}
+                onChange={handleLocationsChange}
+                className='large-input'
+              />
+          </div>
+          <div>
+              <h3>Maximum Students</h3>
+              <input 
+                type="text"
+                required
+                value={maximumStudents}
+                onChange={handleMaximumStudentsChange}
+                className='large-input'
+              />
+          </div>
+          <div>
+              <h3>Pass Rate</h3>
+              <input 
+                type="text"
+                required
+                value={passRate}
+                onChange={handlePassRateChange}
+                className='large-input'
+              />
+          </div>
+        </div>
+        <div className='profile-container-row'>
+          <button type="submit" className='book-button'>Save Changes</button>
         </div>
       </div>
-      <div className='profile-container-row'>
-        <div>
-          <h3>New Password</h3>
-          <input 
-            type="password"
-            placeholder=""
-            required
-            value={newPassword}
-            onChange={handleNewPasswordChange}
-            className='large-input'
-          />
-        </div>
-        <div>
-          <h3>Confirm New Password</h3>
-          <input 
-            type="password"
-            placeholder=""
-            required
-            value={newPasswordConfirmed}
-            onChange={handleNewPasswordConfirmedChange}
-            className='large-input'
-          />
-        </div>
-      </div>
-      <br></br>
-    </div>
-  )
-}
+    </form>
+  );
+};
 
 const Dashboard = () => {
     const [isPictureVisible, setIsPictureVisible] = useState(false);
@@ -100,10 +284,10 @@ const Dashboard = () => {
           setError(error.message);
         }
       };
-  
+
       fetchProfileData();
     }, []);
-  
+
     if (!profileData) {
       return null;
     }
@@ -129,15 +313,15 @@ const Dashboard = () => {
                 <p>{profileData.lastName}</p>
               </div>
               <div>
+                <h3>Email</h3>
+                <p>{profileData.email}</p>
+              </div>
+              <div>
                 <h3>Phone Number</h3>
                 <p>{profileData.phoneNumber}</p>
               </div>
             </div>
             <div className='profile-container-row'>
-              <div>
-                <h3>Email</h3>
-                <p>{profileData.email}</p>
-              </div>
               <div>
                 <h3>Car Model</h3>
                 <p>{profileData.carModel}</p>
@@ -150,12 +334,12 @@ const Dashboard = () => {
                 <h3>Driving Centre</h3>
                 <p>{profileData.drivingCentre}</p>
               </div>
-            </div>
-            <div className='profile-container-row'>
               <div>
                 <h3>Transmission Type</h3>
                 <p>{profileData.transmissionType}</p>
               </div>
+            </div>
+            <div className='profile-container-row'>
               <div>
                 <h3>Work Start</h3>
                 <p>{profileData.workStart}</p>
@@ -168,23 +352,27 @@ const Dashboard = () => {
                 <h3>Enrolment Fee</h3>
                 <p>{profileData.enrolmentFee}</p>
               </div>
-            </div>
-            <div className='profile-container-row'>
               <div>
                 <h3>Lesson Fee</h3>
                 <p>{profileData.lessonFee}</p>
               </div>
+            </div>
+            <div className='profile-container-row'>
               <div>
                 <h3>Lesson Duration</h3>
                 <p>{profileData.lessonDuration} hr</p>
               </div>
               <div>
                 <h3>Locations</h3>
-                <p>{profileData.locations}</p>
+                <p>{profileData.locations.join(", ")}</p>
               </div>
               <div>
                 <h3>Maximum Students</h3>
                 <p>{profileData.maximumStudents}</p>
+              </div>
+              <div>
+                <h3>Pass Rate</h3>
+                <p>{profileData.passRate}</p>
               </div>
             </div>
             <div className='profile-container-row'>
@@ -205,7 +393,7 @@ const Dashboard = () => {
           </div>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
               <div className='popup-box'>
-                  <button className='book-button' onClick={togglePopup}>Save Changes</button>
+                  <ProfileInfo profileData={profileData} setIsPopupVisible={setIsPopupVisible} />
               </div>
           </div>
         </div>
@@ -216,6 +404,7 @@ const Dashboard = () => {
 export default function Page() {
     return (
       <main>
+
         <div>
           <Navbar />
         </div>
