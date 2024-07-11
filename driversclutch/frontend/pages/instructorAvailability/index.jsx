@@ -5,11 +5,16 @@ import DateSelector from './DateSelector';
 import TimeTable from './Timetable';
 import './page.css';
 import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import { GiCancel } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
 import axios from 'axios'; // Import axios
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
@@ -48,15 +53,22 @@ const Dashboard = () => {
 
   // Convert availability to required format
   const convertToRequiredFormat = (availability) => {
+    const timeZone = 'Asia/Singapore'; // Define the desired time zone
     const datetimes = [];
+
     for (const [date, times] of Object.entries(availability)) {
-      times.forEach(time => {
-        const datetime = dayjs(`${date} ${time}`, 'YYYY-MM-DD hh:mm A').toISOString();
-        datetimes.push(datetime);
-      });
+        times.forEach(time => {
+            // Combine date and time
+            const dateTimeString = `${date} ${time}`;
+            // Parse with dayjs to create a date object in the specified time zone
+            const parsedDate = dayjs.tz(dateTimeString, 'YYYY-MM-DD hh:mm A', timeZone);
+            // Convert to ISO string
+            const isoString = parsedDate.toISOString();
+            datetimes.push(isoString);
+        });
     }
     return datetimes;
-  };
+};
 
   const updateDatabase = async () => {
 
@@ -80,6 +92,7 @@ const Dashboard = () => {
 
     if (response.status === 200) {
       console.log("Availability data successfully sent to the database.");
+      setIsPopupVisible(true);
     } else {
       console.error("Failed to send availability data.");
     }
