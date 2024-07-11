@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './page.css';
 //import Link from "next/link";
 import FBInstanceAuth from "../../src/app/firebase/firebase_auth";
@@ -9,11 +9,13 @@ import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
 import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signInWithEmailAndPassword, getIdToken } from 'firebase/auth';
+import '../../src/app/components/card/card.css';
 
 const Login = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	//const auth = FBInstanceAuth.getAuth();
+	const [showPassword, setShowPassword] = useState(false);
+	const auth = FBInstanceAuth.getAuth();
 	const router = useRouter();
 	const [error, setError] = useState(null);
 	// const [user, loading] = useAuthState(auth);
@@ -27,46 +29,14 @@ const Login = () => {
 	// 	return <div>Welcome {user.displayName}</div>;
 	// }
 
-	const handleUsernameChange = (event) => {
-		setUsername(event.target.value);
-	};
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
 
-	const handlePasswordChange = (event) => {
-		setPassword(event.target.value);
-	};
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
 
-	useEffect(() => {
-		const btns = document.querySelectorAll(".btn");
-
-		const handleClick = (event) => {
-			// Remove styles from all buttons
-			btns.forEach((btn) => {
-				btn.style.backgroundColor = "";
-				btn.style.color = "";
-			});
-
-			// Apply styles to the clicked button
-			event.target.style.backgroundColor = "#e9f4ff";
-			event.target.style.color = "#4a9ff3";
-			event.target.style.borderTopLeftRadius = "8px";
-			event.target.style.borderTopRightRadius = "8px";
-		};
-
-		// Add event listeners to all buttons
-		btns.forEach((btn) => btn.addEventListener("click", handleClick));
-
-		// Make the Student button the default selected button
-		const studentButton = document.querySelector('.btn[value="student"]');
-		if (studentButton) {
-			studentButton.style.backgroundColor = "#e9f4ff";
-			studentButton.style.color = "#4a9ff3";
-		}
-
-		// Cleanup event listeners on component unmount
-		return () => {
-			btns.forEach((btn) => btn.removeEventListener("click", handleClick));
-		};
-	}, []);
 
 	// const handleSubmit = (event) => {
 	// 	event.preventDefault();
@@ -149,61 +119,53 @@ const checkUserRole = async (email) => {
     event.preventDefault();
     console.log("google login");
     FBInstanceAuth.googleLogin(auth);
-  }
+  };
 
-	return (
-		<div className="container">
-			<img src="/assets/logo_white.png" alt="logo_img" className="applogo" />
-			<div className="tab-form">
-				<form action="">
-					<div className="tab-header">
-						<button className="btn" type="button" value="student">
-							Student
-						</button>
-						<button className="btn" type="button" value="instructor">
-							Instructor
-						</button>
-					</div>
-					<div className="input-box">
-						<input
-							type="text"
-							placeholder="Username"
-							required
-							value={username}
-							onChange={handleUsernameChange}
-						/>
-					</div>
-					<div className="input-box">
-						<input
-							type="password"
-							placeholder="Password"
-							required
-							value={password}
-							onChange={handlePasswordChange}
-						/>
-					</div>
-
-					<div className="remember-forgot">
-						<label>
-							<input type="checkbox" />
-							Remember me
-						</label>
-						<a href="#">Forgot password?</a>
-					</div>
-
-					<button className="submit" type="submit" onClick={handleSubmit}>
-						Login
-					</button>
-
-					<div className="register-link">
-						<p>
-							Don't have an account? <a href="#">Register</a>
-						</p>
-					</div>
-				</form>
-			</div>
-		</div>
-	);
+  return (
+    <div className="container">
+      <div className="login-form">
+        <img src="/assets/logo_black.png" alt="Drivers Clutch Logo" className="applogo" />
+        <div className="notification">
+          <p>
+            Please login with your credentials to access the booking system.
+          </p>
+        </div>
+        <form action="" onSubmit={handleSubmit}>
+          <div className="input-box">
+            <input
+              type="text" 
+              placeholder="Email"
+              required
+              value={username}
+              onChange={handleUsernameChange}
+            />
+          </div>
+          <div className="input-box">
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              required
+              value={password}
+              onChange={handlePasswordChange}
+            />
+          </div>
+          <div className="checkbox-container">
+            <label>
+              <input
+                type="checkbox"
+                checked={showPassword}
+                onChange={() => setShowPassword(!showPassword)}
+              />
+              Show Password
+            </label>
+          </div>
+          <button className="submit" type="submit">
+            Access To Booking System
+          </button>
+        </form>
+      </div>
+    </div>
+  );
 };
 
 export default Login;

@@ -47,3 +47,6 @@ app.use('/students/profile', require('./routes/studentProfileRouter.js'));
 
 //for path /instructors/profile
 app.use('/instructors/profile', require('./routes/instructorProfileRouter.js'));
+
+// for path /instructors/homepage
+app.use('/instructors/homepage', require('./routes/instructorHomeRouter.js'));
