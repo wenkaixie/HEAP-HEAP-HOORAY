@@ -20,7 +20,7 @@ const getInstructorTimeslots = async (req, res) => {
         const doc = querySnapshot.docs[0];
 
         //retrieve only specified fields
-        const { firstName, lastName, unavailableTimeslots } = doc.data();
+        const { firstName, lastName, workStart, workEnd, lessonDuration, unavailableTimeslots } = doc.data();
 
         //get instructor fullname accounting for chi/eng name but probs nid to edit function / just dc
         
@@ -35,7 +35,10 @@ const getInstructorTimeslots = async (req, res) => {
         const unavailableTimeslotsISO = unavailableTimeslots.map(timestamp => timestamp.toDate().toISOString());
 
         return res.status(200).json({
-        fullname,
+        fullname: fullname,
+        workStart: workStart,
+        workEnd: workEnd,
+        lessonDuration: lessonDuration,
         unavailableTimeslots: unavailableTimeslotsISO
         });
     } 
