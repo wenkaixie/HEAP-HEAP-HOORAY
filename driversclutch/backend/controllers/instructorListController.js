@@ -15,8 +15,14 @@ const getAutoInstructors = async (req, res) => {
         const instructors = [];
         querySnapshot.forEach((doc) => {
             const instructorData = doc.data();
-            const { birthdate, email, lessonDuration, transmissionType, workStart, workEnd, pendingStudents, studentList, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
-            instructors.push(filteredData);
+            const { birthdate, email, transmissionType, workStart, workEnd, pendingStudents, studentList, maximumStudents, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
+            const studentCount = studentList.length;
+            const remainingSlots = maximumStudents - studentCount;
+            const updatedFilteredData = {
+                ...filteredData,
+                remainingSlots
+            };
+            instructors.push(updatedFilteredData);
         })
 
         res.status(200).json({ code: 200, data: instructors });
@@ -42,9 +48,14 @@ const getManualInstructors = async (req, res) => {
         const instructors = [];
         querySnapshot.forEach((doc) => {
             const instructorData = doc.data();
-            const { birthdate, email, lessonDuration, transmissionType, workStart, workEnd, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
-            //mayb add maxstudents and remove pendingstudents
-            instructors.push(filteredData);
+            const { birthdate, email, transmissionType, workStart, workEnd, pendingStudents, studentList, maximumStudents, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
+            const studentCount = studentList.length;
+            const remainingSlots = maximumStudents - studentCount;
+            const updatedFilteredData = {
+                ...filteredData,
+                remainingSlots
+            };
+            instructors.push(updatedFilteredData);
         })
 
         res.status(200).json({ code: 200, data: instructors });

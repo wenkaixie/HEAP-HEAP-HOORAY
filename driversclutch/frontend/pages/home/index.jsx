@@ -12,63 +12,65 @@ const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-      const fetchBookingsData = async () => {
-      try {
-          const userDocID = localStorage.getItem('userDocID');
-          if (!userDocID) {
-          throw new Error('User document ID not found in localStorage');
-          }
-          const response = await axios.get(`http://localhost:8001/students/homepage/lessons/?studentID=Ua4LOcd1bRmwKBeTleej`);
-          console.log('API Response:', response.data);
-          setBookingsData(response.data);
-      } catch (error) {
-          setError(error.message);
+  const fetchBookingsData = async () => {
+  try {
+      const userDocID = localStorage.getItem('userDocID');
+      if (!userDocID) {
+      throw new Error('User document ID not found in localStorage');
       }
-      };
+      const response = await axios.get(`http://localhost:8001/students/homepage/lessons/?studentID=${userDocID}`);
+      console.log('API Response:', response.data);
+      setBookingsData(response.data);
+  } catch (error) {
+      setError(error.message);
+  }
+  };
 
-      fetchBookingsData();
+  useEffect(() => {
+    fetchBookingsData();
   }, []);
-
 
   if (!bookingsData) {
       return null;
   }
 
-  // const renderContent = () => {
-  //   const cards = [];
-  //   for (let i = 0; i < bookingsData.length; i++) {
-  //     cards.push(<CardManual key={i} booking={bookingsData[i]} />);
-  //   }
+  if (error) {
+    return <p>{error}</p>;
+  }
 
-  //   return (
-  //     <div className="dashboard-details">
-  //       {error ? (
-  //         <p>{error}</p>
-  //       ) : (
-  //         bookingsData.length > 0 ? (
-  //           cards
-  //         ) : (
-  //           <p>Loading...</p>
-  //         )
-  //       )}
-  //     </div>
-  //   );
-  // };
+  const renderBookings = () => {
+    const cards = [];
+    bookingsData.upcomingLessons.sort();
+    for (let i = 0; i < bookingsData.upcomingLessons.length; i++) {
+      if (i >= 3) {
+        break;
+      }
+      cards.push(<LessonCard key={i} index={i + bookingsData.lessonCount} lesson={bookingsData.upcomingLessons[i]} lessonDuration={bookingsData.lessonDuration} />);
+    }
+
+    return (
+      <div className="dashboard-details">
+        {error ? (
+          <p>{error}</p>
+        ) : (
+          bookingsData.upcomingLessons.length > 0 ? (
+            cards
+          ) : (
+            <p>Loading...</p>
+          )
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="dashboard">
       <div className="dashboard-container">
         <h2>Upcoming Bookings</h2>
         <div className="dashboard-details">
-          {bookingsData.upcomingLessons && bookingsData.upcomingLessons.length > 0 ? (
-            bookingsData.upcomingLessons.map((lesson, index) => (
-              <LessonCard key={index} lesson={lesson} />
-            ))
-          ) : (
-            <p>No upcoming lessons.</p>
-          )}
+          {renderBookings()}
         </div>
+        <button className="book-button">View All Bookings</button>
       </div>
       <div className="dashboard-container">
         <div>
@@ -92,16 +94,35 @@ const Dashboard = () => {
 };
 
 
-const LessonCard = ({ lesson }) => {
+const LessonCard = ({ index, lesson, lessonDuration }) => {
+  const startDate = new Date(lesson);
+  const endDate = new Date(startDate.getTime() + lessonDuration * 60 * 60 * 1000);
+
+  const formattedStartDate = startDate.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+
+  const formattedStartTime = startDate.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
+  const formattedEndTime = endDate.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+
   return (
-    <div className="card">
+    <div className='card'>
       <div className="card-content">
-        <h3>{lesson.title}</h3>
+        <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
+        <br></br>
         <div className="card-details">
-          <span>{lesson.date}</span>
-          <h3>{lesson.time}</h3>
+          <h3>{formattedStartDate}</h3>
+          <h3>{formattedStartTime} - {formattedEndTime}</h3>
         </div>
-        <button className="book-button">View Details</button>
       </div>
       <div className="card-content card-image">
         <Image
