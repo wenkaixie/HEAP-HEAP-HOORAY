@@ -66,7 +66,7 @@ const getInstructorTimeslots = async (req, res) => {
 //after booking
 const bookedTimeslotStudent = async (req, res) => {
     const {studentID, timeslots, balance, unavailableTimeslots} = req.body;
-    if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID || !balance) {
+    if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID) {
         return res.status(400).json({code: 400, message: "Timeslots array is required"})
     }
     try {
@@ -116,7 +116,7 @@ const bookedTimeslotStudent = async (req, res) => {
 const bookedTimeslotInstructor = async (req, res) => {
     const {studentID, timeslots} = req.body;
 
-    if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID || !instructorID) {
+    if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID ) {
         return res.status(400).json({code: 400, message: "StudentID, InstructorID and timeslots array are required"});
     }
 

@@ -25,7 +25,7 @@ const Dashboard = () => {
   const [hasClashes, setHasClashes] = useState(false);
   const [error, setError] = useState(null);
   const [studentData, setStudentData] = useState(null);
-  const [completedLessons, setCompletedLessons] = useState([]);
+  const [lessonCount, setLessonCount] = useState(0);
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -49,8 +49,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (studentData) {
-      const { workStart, workEnd, lessonDuration, unavailableTimeslots, completedLessons } = studentData;
-      setCompletedLessons(studentData.completedLessons);
+      const { workStart, workEnd, lessonDuration, unavailableTimeslots, lessonCount } = studentData;
+      setLessonCount(studentData.lessonCount);
 
       const generateTimeslots = () => {
         const start = dayjs(workStart, 'hh:mm A');
@@ -60,7 +60,7 @@ const Dashboard = () => {
 
         while (currentTime.isBefore(end) || currentTime.isSame(end)) {
           generatedTimes.push(currentTime.format('hh:mm A'));
-          currentTime = currentTime.add(0.5, 'hour');
+          currentTime = currentTime.add(lessonDuration, 'hour');
         }
 
         return generatedTimes;
@@ -69,6 +69,7 @@ const Dashboard = () => {
       const markUnavailableTimeslots = (timeslots, unavailableTimes) => {
         const timeZone = 'Asia/Singapore';
         const unavailableTimesData = {};
+        const now = dayjs().tz(timeZone);
 
         unavailableTimes.forEach(dateTime => {
           const date = dayjs.utc(dateTime).tz(timeZone);
@@ -82,10 +83,15 @@ const Dashboard = () => {
         });
 
         const dateKey = selectedDate.format('YYYY-MM-DD');
-        return timeslots.map(time => ({
-          time,
-          available: !(unavailableTimesData[dateKey] && unavailableTimesData[dateKey].includes(time))
-        }));
+        return timeslots.map(time => {
+          const timeslotDateTime = dayjs(`${selectedDate.format('YYYY-MM-DD')} ${time}`, 'YYYY-MM-DD hh:mm A').tz(timeZone);
+          const isPast = timeslotDateTime.isBefore(now);
+          const isUnavailable = unavailableTimesData[dateKey] && unavailableTimesData[dateKey].includes(time);
+          return {
+            time,
+            available: !isPast && !isUnavailable
+          };
+        });
       };
 
       const availableTimes = generateTimeslots();
@@ -97,7 +103,7 @@ const Dashboard = () => {
 
 
   const generateLessonNames = (bookings) => {
-    const startingLessonNumber = completedLessons.length + 1;
+    const startingLessonNumber = lessonCount + 1;
     return bookings.map((booking, index) => ({
       ...booking,
       lesson: `Practical Driving Lesson ${startingLessonNumber + index}`
@@ -150,60 +156,6 @@ const Dashboard = () => {
     checkForClashes(updatedBookings);
   };
   
-  /////////////////
-  
-  // const handleAddBooking = (time) => {
-  //   if (!studentData) return;
-
-  //   const { lessonDuration } = studentData;
-  //   const endTime = dayjs(selectedDate.format('YYYY-MM-DD') + ' ' + time, 'YYYY-MM-DD hh:mm A')
-  //     .add(lessonDuration, 'hour')
-  //     .format('hh:mm A');
-
-  //   const newBooking = {
-  //     date: selectedDate.format('D MMMM YYYY'),
-  //     time,
-  //     endTime,
-  //     lesson: ''
-  //   };
-
-  //   const updatedBookings = [...bookings, newBooking].sort((a, b) =>
-  //     dayjs(a.date + ' ' + a.time, 'D MMMM YYYY hh:mm A') -
-  //     dayjs(b.date + ' ' + b.time, 'D MMMM YYYY hh:mm A')
-  //   );
-
-  //   setBookings(updatedBookings.map((booking, index) => ({
-  //     ...booking,
-  //     lesson: lessonsData[index]
-  //   })));
-
-  //   setTimeslots(timeslots.map(slot =>
-  //     slot.time === time ? { ...slot, available: false } : slot
-  //   ));
-
-  //   checkForClashes(updatedBookings);
-  // };
-
-  // const handleCancelBooking = (index) => {
-  //   const bookingToRemove = bookings[index];
-  //   const updatedBookings = bookings.filter((_, i) => i !== index).sort((a, b) =>
-  //     dayjs(a.date + ' ' + a.time, 'D MMMM YYYY hh:mm A') -
-  //     dayjs(b.date + ' ' + b.time, 'D MMMM YYYY hh:mm A')
-  //   );
-
-  //   setBookings(updatedBookings.map((booking, index) => ({
-  //     ...booking,
-  //     lesson: lessonsData[index]
-  //   })));
-
-  //   setCanceledBookings([...canceledBookings, bookingToRemove]);
-
-  //   setTimeslots(timeslots.map(slot =>
-  //     slot.time === bookingToRemove.time ? { ...slot, available: true } : slot
-  //   ));
-
-  //   checkForClashes(updatedBookings);
-  // };
 
   const handleRebookCanceledBooking = (bookingToRemove) => {
     const updatedCanceledBookings = canceledBookings.filter(
@@ -252,7 +204,7 @@ const Dashboard = () => {
   return (
     <div className='dashboard'>
       <div className='title'>
-        <h1>Lesson Booking</h1>
+        <h2>Lesson Booking</h2>
       </div>
       <div className="dashboard-container">
         <p>Instructor: {instructorName}</p>

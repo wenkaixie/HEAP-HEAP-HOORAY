@@ -115,7 +115,7 @@ const Dashboard = () => {
   return (
     <div className='dashboard'>
       <div className='title'>
-        <h1>Lesson Availability</h1>
+        <h2>Lesson Availability</h2>
       </div>
       <div className="dashboard-container">
         <p>Select a date</p>
