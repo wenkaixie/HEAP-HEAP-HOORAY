@@ -8,6 +8,8 @@ const getAllStudentInfo = async (req, res) => {
             return res.status(404).json({ code: 404, message: "Instructor not found" });
         }
 
+        const lessonDuration = instructorDoc.data().lessonDuration;
+
         const studentList = instructorDoc.data().studentList;
         const studentInfoPromises = studentList.map(async (studentID) => {
             const studentDoc = await db.collection("students").doc(studentID).get();
@@ -32,7 +34,7 @@ const getAllStudentInfo = async (req, res) => {
         });
 
         const studentInfos = await Promise.all(studentInfoPromises);
-        return res.status(200).json(studentInfos);
+        return res.status(200).json({lessonDuration: lessonDuration, studentInfo: studentInfos});
     }
     catch (error) {
         return res.status(500).json({code: 500, message: `Error getting upcoming lessons: ${error} `})
