@@ -53,3 +53,6 @@ app.use('/instructors/homepage', require('./routes/instructorHomeRouter.js'));
 
 // for path /instructors/studentList
 app.use('/instructors/studentList', require('./routes/studentListRouter.js'));
+
+// for path /students/balance
+app.use('/students/balance', require('./routes/balanceRouter.js'));
