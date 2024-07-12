@@ -8,22 +8,21 @@ const getInstructorTimeslots = async (req, res) => {
     }
 
     try {
-        const querySnapshot = await db.collection('instructors')
+        const instructorQuerySnapshot = await db.collection('instructors')
             .where('studentList', 'array-contains', studentID)
             .get();
 
-        if (querySnapshot.empty) {
+        if (instructorQuerySnapshot.empty) {
             return res.status(404).json({code: 404, message: 'No instructor found for the given student email.'});
         }
 
         // Assuming only one document contains the specific student email
-        const doc = querySnapshot.docs[0];
+        const instructorDoc = instructorQuerySnapshot.docs[0];
 
         //retrieve only specified fields
-        const { firstName, lastName, unavailableTimeslots } = doc.data();
+        const { firstName, lastName, workStart, workEnd, lessonDuration, unavailableTimeslots = []} = instructorDoc.data();
 
         //get instructor fullname accounting for chi/eng name but probs nid to edit function / just dc
-        
         // if (firstName.indexOf(' ') == -1) {
         //     const fullname = `${firstName} ${lastName}`;
         // } else {
@@ -34,9 +33,25 @@ const getInstructorTimeslots = async (req, res) => {
         // Convert Firestore Timestamps to ISO 8601 strings
         const unavailableTimeslotsISO = unavailableTimeslots.map(timestamp => timestamp.toDate().toISOString());
 
+        const studentDocRef = db.collection('students').doc(studentID);
+        const studentDoc = await studentDocRef.get();
+
+        if (!studentDoc.exists) {
+            return res.status(404).json({ code: 404, message: 'No student found.' });
+        }
+
+        const { completedLessons = [] } = studentDoc.data();
+
+        // Convert Firestore Timestamps to ISO 8601 strings
+        const completedLessonsISO = completedLessons.map(timestamp => timestamp.toDate().toISOString());
+
         return res.status(200).json({
-        fullname,
-        unavailableTimeslots: unavailableTimeslotsISO
+        fullname: fullname,
+        workStart: workStart,
+        workEnd: workEnd,
+        lessonDuration: lessonDuration,
+        unavailableTimeslots: unavailableTimeslotsISO,
+        completedLessons: completedLessonsISO
         });
     } 
 

@@ -6,7 +6,8 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "@/app/firebase/firebase_db";
+import { FirestoreDB } from "@/app/firebase/firebase_config";
+import axios from 'axios';
 
 const Dashboard = () => {
     const [questions, setQuestions] = useState([]);
@@ -17,17 +18,36 @@ const Dashboard = () => {
 
     useEffect(() => {
         const fetchQuestions = async () => {
-            const questionsCollectionRef = collection(db, "BTT/1xsKDvNdGr0Tgd1YBeF3/question");
-            const querySnapshot = await getDocs(questionsCollectionRef);
-            const questionsList = querySnapshot.docs.map(doc => ({
-                id: doc.id,
-                ...doc.data()
-            }));
-            setQuestions(questionsList);
+            try {
+                const bttCollectionRef = collection(FirestoreDB, "BTT");
+                const bttQuerySnapshot = await getDocs(bttCollectionRef);
+
+                let allQuestions = [];
+
+                for (const doc of bttQuerySnapshot.docs) {
+                    const docId = doc.id;
+                    const questionsCollectionRef = collection(FirestoreDB, `BTT/${docId}/question`);
+                    const questionsQuerySnapshot = await getDocs(questionsCollectionRef);
+                    const questionsList = questionsQuerySnapshot.docs.map(questionDoc => ({
+                        id: questionDoc.id,
+                        ...questionDoc.data()
+                    }));
+                    allQuestions = [...allQuestions, ...questionsList];
+                }
+
+                console.log("Fetched questions:", allQuestions); // Log all fetched questions
+                setQuestions(allQuestions);
+            } catch (error) {
+                console.error("Error fetching questions: ", error); // Log any errors
+            }
         };
 
         fetchQuestions();
     }, []);
+
+    useEffect(() => {
+        console.log('Questions state updated:', questions);
+    }, [questions]);
 
     const handleAnswerChange = (event) => {
         setUserAnswers({
@@ -52,7 +72,13 @@ const Dashboard = () => {
     };
 
     const renderQuestion = () => {
+        if (questions.length === 0) {
+            return <div>Loading...</div>;
+        }
+
         const question = questions[currentQuestionIndex];
+        console.log('Rendering question:', question);
+
         return (
             <div>
                 <div className='question'>Q{currentQuestionIndex + 1}: {question.question}</div>
@@ -125,5 +151,3 @@ const BttPractice = () => {
 };
 
 export default BttPractice;
-
-
