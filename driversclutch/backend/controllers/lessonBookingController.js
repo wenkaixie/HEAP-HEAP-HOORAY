@@ -140,9 +140,7 @@ const bookedTimeslotInstructor = async (req, res) => {
         return res.status(200).json({code: 200, message: 'Upcoming lesson added successfully'});
     }
     catch (error) {
-        return res
-            .status(500)
-            .json({code:500, message: `Error updating instructor's upcoming lesson: ${error}`});
+        return res.status(500).json({code:500, message: `Error updating instructor's upcoming lesson: ${error}`});
     }
 }
 
