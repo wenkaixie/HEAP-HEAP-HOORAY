@@ -7,6 +7,12 @@ import '@/app/components/dashboard/dashboard.css';
 import { GiCancel } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
 import axios from 'axios'; 
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import utc from 'dayjs/plugin/utc';
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
@@ -24,122 +30,98 @@ const Dashboard = () => {
     }
   }, []);
 
-  const userDocID = localStorage.getItem('userDocID');
+  const convertToRequiredFormat = (bookings) => {
+    const timeZone = 'Asia/Singapore'; // Define the desired time zone
+    const datetimes = [];
+    const unavailableTimeslots = [];
 
-//   const convertToRequiredFormat = (bookings) => {
-//     const datetimes = [];
-//     for (const [date, times] of Object.entries(bookings)) {
-//       times.forEach(time => {
-//         const datetime = dayjs(`${date} ${time}`, 'YYYY-MM-DD hh:mm A').toISOString();
-//         datetimes.push(datetime);
-//       });
-//     }
-//     return datetimes;
-//   };
+    bookings.forEach(booking => {
+      const { date, time } = booking;
+      if (date && time) {
+        const startDateTimeString = `${date} ${time}`;
+        const parsedStartDate = dayjs.tz(startDateTimeString, 'YYYY-MM-DD hh:mm A', timeZone);
+        
+        const unavailableEndTime = parsedStartDate.add(30, 'minute');
 
-  console.log(bookings);
+        datetimes.push(parsedStartDate.toISOString());
 
-//   const updateDatabase = async () => {
-//     const remainingBalance = creditBalance - totalPrice;
-//     setCreditBalance(remainingBalance);
-//     const bookingDetails = bookings.map(booking => {
-//     const date = booking.date;
-//     const time = booking.time;)
-    
+        unavailableTimeslots.push(parsedStartDate.toISOString(), unavailableEndTime.toISOString());
+      } else {
+        console.error(`Invalid booking entry: ${JSON.stringify(booking)}`);
+      }
+    });
 
-//     console.log(`Date: ${date}, Time: ${time}`);
-//     const formattedData = convertToRequiredFormat(bookings);
-//     try {
-//         const requestData = {
-//           studentID: userDocID,
-//           timeslots: formattedData,
-//           balance: creditBalance
-//         };
-    
-//         console.log("Sending data to server:", requestData); 
-    
-//         const response = await axios.post('http://localhost:8001/students/booking/updateStudent', requestData, {
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//         });
-    
-//         if (response.status === 200) {
-//           console.log("updatedBalance data successfully sent to the database.");
-//         } else {
-//           console.error("Failed to send updatedBalance data.");
-//         }
-//       } catch (error) {
-//         console.error("Error:", error);
-//         if (error.response) {
-//           console.error("Server responded with:", error.response.data);
-//         }
-//       }
-//     };
+    return { datetimes, unavailableTimeslots };
+};
 
-    const updateDatabase = async () => {
-        // Convert booking date and time to ISO 8601 format
-        const bookingDetails = bookings.map(booking => {
-          const date = booking.date;
-          const time = booking.time;
-      
-          console.log(`Date: ${date}, Time: ${time}`);
-      
-          // Validate date and time format
-          const isValidDate = /^\d{4}-\d{2}-\d{2}$/.test(date);
-          const isValidTime = /^\d{2}:\d{2}(:\d{2})?$/.test(time); // matches HH:MM or HH:MM:SS
-      
-          if (!isValidDate || !isValidTime) {
-            console.error('Invalid date or time format:', { date, time });
-            return null; // Or handle the error as needed
-          }
-      
-          try {
-            const dateTimeString = `${date}T${time}`;
-            const isoDateTime = new Date(dateTimeString).toISOString();
-            return {
-              datetimes: isoDateTime,
-            };
-          } catch (error) {
-            console.error(`Failed to create ISO string from date/time: ${dateTimeString}`, error);
-            return null; // Or handle the error as needed
-          }
-        }).filter(detail => detail !== null); // Filter out invalid entries
-      
-        try {
-          const requestData = {
-            studentID: userDocID,
-            timeslots: bookingDetails,
-            balance: creditBalance
-          };
-      
-          console.log("Sending data to server:", requestData);
-      
-          const response = await axios.post('http://localhost:8001/students/booking/updateStudent/', requestData, {
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
-      
-          if (response.status === 200) {
-            console.log("bookingDetails data successfully sent to the database.");
-            setIsPopupVisible(true);
-          } else {
-            console.error("Failed to send bookingDetails data.");
-          }
-        } catch (error) {
-          console.error("Error:", error);
-          if (error.response) {
-            console.error("Server responded with:", error.response.data);
-          }
-        }
+const updateDatabaseStudent = async () => {
+    try {
+      const userDocID = localStorage.getItem('userDocID');
+      const remainingBalance = creditBalance - totalPrice;
+      const { datetimes, unavailableTimeslots } = convertToRequiredFormat(bookings);
+      const requestData = {
+        studentID: userDocID,
+        timeslots: datetimes,
+        unavailableTimeslots: unavailableTimeslots,
+        balance: remainingBalance,
       };
-      
+      console.log("Sending data to server:", requestData); // Log the request data
+
+      const response = await axios.post('http://localhost:8001/students/booking/updateStudent', requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("Booking data successfully sent to the database.");
+      } else {
+        console.error("Failed to send booking data.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      if (error.response) {
+        console.error("Server responded with:", error.response.data);
+      }
+    }
+};
+
+const updateDatabaseInstructor = async () => {
+    try {
+      const userDocID = localStorage.getItem('userDocID');
+      const { datetimes } = convertToRequiredFormat(bookings);
+      const requestData = {
+        studentID: userDocID,
+        timeslots: datetimes
+      };
+      console.log("Sending data to server:", requestData); // Log the request data
+
+      const response = await axios.post('http://localhost:8001/students/booking/updateInstructor', requestData, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (response.status === 200) {
+        console.log("UpcomingLessons data successfully sent to the database.");
+        setCreditBalance(remainingBalance);
+        setIsPopupVisible(true);
+      } else {
+        console.error("Failed to send UpcomingLessons data.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      if (error.response) {
+        console.error("Server responded with:", error.response.data);
+      }
+    }
+};
+
 
   const handleClick = async () => {
     if (creditBalance >= totalPrice) {
-    //   await updateBalance();
-      await updateDatabase();
+      await updateDatabaseStudent();
+      await updateDatabaseInstructor();
     }
   };
 
