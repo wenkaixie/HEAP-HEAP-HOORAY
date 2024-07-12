@@ -55,20 +55,20 @@ const Dashboard = () => {
   const convertToRequiredFormat = (availability) => {
     const timeZone = 'Asia/Singapore'; // Define the desired time zone
     const datetimes = [];
-
+  
     for (const [date, times] of Object.entries(availability)) {
-        times.forEach(time => {
-            // Combine date and time
-            const dateTimeString = `${date} ${time}`;
-            // Parse with dayjs to create a date object in the specified time zone
-            const parsedDate = dayjs.tz(dateTimeString, 'YYYY-MM-DD hh:mm A', timeZone);
-            // Convert to ISO string
-            const isoString = parsedDate.toISOString();
-            datetimes.push(isoString);
-        });
+      times.forEach(time => {
+        // Combine date and time
+        const dateTimeString = `${date} ${time}`;
+        // Parse with dayjs to create a date object in the specified time zone
+        const parsedDate = dayjs.tz(dateTimeString, 'YYYY-MM-DD hh:mm A', timeZone);
+        // Convert to ISO string
+        const isoString = parsedDate.toISOString();
+        datetimes.push(isoString);
+      });
     }
     return datetimes;
-};
+  };
 
   const updateDatabase = async () => {
 
