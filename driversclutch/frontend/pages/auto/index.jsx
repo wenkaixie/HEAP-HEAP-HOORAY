@@ -1,21 +1,48 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
+import axios from 'axios';
 import './page.css';
 import '@/app/components/card/card.css';
-import '@/app/components/background/background.css'
-import '@/app/components/dashboard/dashboard.css'
+import '@/app/components/background/background.css';
+import '@/app/components/dashboard/dashboard.css';
 
 const Dashboard = () => {
+  const [instructors, setInstructors] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchInstructors = async () => {
+      try {
+        const response = await axios.get('http://localhost:8001/students/privateInstructors/auto');
+        console.log('API Response:', response.data);
+        setInstructors(response.data.data);
+      } catch (error) {
+        console.error('Error fetching instructors:', error);
+        setError(`Network Error: ${error.message}`);
+      }
+    };
+
+    fetchInstructors();
+  }, []);
+
   const renderContent = () => {
+    const cards = instructors.map((instructor, index) => (
+      <CardAuto key={index} instructor={instructor} />
+    ));
+
     return (
       <div className="dashboard-details">
-        <div>
-          <CardAuto1 />
-          <CardAuto3 />
-          <CardAuto5 />
-        </div>
+        {error ? (
+          <p>{error}</p>
+        ) : (
+          instructors.length > 0 ? (
+            cards
+          ) : (
+            <p>Loading...</p>
+          )
+        )}
       </div>
     );
   };
@@ -25,120 +52,50 @@ const Dashboard = () => {
       <Navbar />
       <div className="dashboard-container">
         <h2>Private Instructors</h2>
-        <div>Class 3A Instructors</div>
+        <div className="instructor-class" style ={{fontSize: '18px'}}>Class 3A Instructors</div>
         {renderContent()}
       </div>
     </div>
   );
 };
 
-const CardAuto1 = () => {
+const CardAuto = ({ instructor }) => {
   return (
     <div className="card">
       <div className="card-container">
         <div className="details-container">
-          <h2>Ng Lai Huat</h2>
+          <h3 className="instructor-name" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+            {instructor.firstName} {instructor.lastName}
+          </h3>
           <div className="profile-container">
             <div className="profile-picture-container">
               <img src="profile.jpg" className="profile-picture" alt="Profile" />
             </div>
           </div>
           <div>
-            <span>Enrollment Fee: $90</span>
-            <span>Lesson Fee: $60</span>
+            <span>Enrollment Fee: ${instructor.enrollmentFee}</span>
+            <span>Lesson Fee: ${instructor.lessonFee}</span>
+            <br />
           </div>
-          <button className="book-button">View Details</button>
         </div>
+        <button className="book-button" style={{ fontSize: '15px'}}>View Details</button>
       </div>
-
       <div className="inner-card-container">
-        <CardAuto2 />
+        <CardAutoDetails instructor={instructor} />
       </div>
     </div>
   );
 };
 
-const CardAuto2 = () => {
+
+
+const CardAutoDetails = ({ instructor }) => {
   return (
     <div className="inner-card">
-      <span>Lesson Duration: 1 Hour</span>
-      <span>Location: Woodlands, Marsiling</span>
-      <span>Remaining Slots: 5</span>
-      <span>Pass Rate: 54%</span>
-    </div>
-  );
-};
-
-const CardAuto3 = () => {
-  return (
-    <div className="card">
-      <div className="card-container">
-        <div className="details-container">
-          <h2>Ng Lian Huat</h2>
-          <div className="profile-container">
-            <div className="profile-picture-container">
-              <img src="profile.jpg" className="profile-picture" alt="Profile" />
-            </div>
-          </div>
-          <div>
-            <span>Enrollment Fee: $90</span>
-            <span>Lesson Fee: $75</span>
-          </div>
-          <button className="book-button">View Details</button>
-        </div>
-      </div>
-
-      <div className="inner-card-container">
-        <CardAuto4 />
-      </div>
-    </div>
-  );
-};
-
-const CardAuto4 = () => {
-  return (
-    <div className="inner-card">
-      <span>Lesson Duration: 1.5 Hours</span>
-      <span>Location: Clementi</span>
-      <span>Remaining Slots: 4</span>
-      <span>Pass Rate: 57%</span>
-    </div>
-  );
-};
-
-const CardAuto5 = () => {
-  return (
-    <div className="card">
-      <div className="card-container">
-        <div className="details-container">
-          <h2>Tan Kim Seong</h2>
-          <div className="profile-container">
-            <div className="profile-picture-container">
-              <img src="profile.jpg" className="profile-picture" alt="Profile" />
-            </div>
-          </div>
-          <div>
-            <span>Enrollment Fee: $200</span>
-            <span>Lesson Fee: $75</span>
-          </div>
-          <button className="book-button">View Details</button>
-        </div>
-      </div>
-
-      <div className="inner-card-container">
-        <CardAuto6 />
-      </div>
-    </div>
-  );
-};
-
-const CardAuto6 = () => {
-  return (
-    <div className="inner-card">
-      <span>Lesson Duration: 1.5 Hours</span>
-      <span>Location: Bright Hill</span>
-      <span>Remaining Slots: 6</span>
-      <span>Pass Rate: 58%</span>
+      <span>Lesson Duration: {instructor.lessonDuration} Hours</span>
+      <span>Location: {instructor.locations.join(', ')}</span>
+      <span>Remaining Slots: {instructor.remainingSlots}</span>
+      <span>Pass Rate: {instructor.passRate}</span>
     </div>
   );
 };
