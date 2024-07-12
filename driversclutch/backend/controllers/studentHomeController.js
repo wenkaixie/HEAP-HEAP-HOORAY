@@ -34,6 +34,7 @@ const getLessonProgress = async (req,res) => {
         const lessonCount = updatedCompletedLessons.length;
 
         const updatedUpcomingLessonsISO = updatedUpcomingLessons.map(timestamp => timestamp.toDate().toISOString());
+        const updatedCompletedLessonsISO = updatedCompletedLessons.map(timestamp => timestamp.toDate().toISOString());
 
         const instructorSnapshot = await db.collection("instructors").where('studentList', 'array-contains', studentID).get();
         if (instructorSnapshot.empty) {
@@ -42,7 +43,7 @@ const getLessonProgress = async (req,res) => {
         const instructorDoc = instructorSnapshot.docs[0];
         const lessonDuration = instructorDoc.data().lessonDuration;
 
-        return res.status(200).json({code: 200, upcomingLessons: updatedUpcomingLessonsISO, lessonCount: lessonCount, lessonDuration: lessonDuration});
+        return res.status(200).json({code: 200, upcomingLessons: updatedUpcomingLessonsISO, completedLessons: updatedCompletedLessonsISO, lessonCount: lessonCount, lessonDuration: lessonDuration});
     }
     catch (error) {
         return res.status(500).json({code: 500, message: `Error updating progress and getting upcoming lessons: ${error} `})
