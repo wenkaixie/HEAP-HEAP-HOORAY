@@ -9,7 +9,7 @@ const getInfo = async (req, res) => {
             return res.status(404).json({code: 404, message: "Student not found"})
         }
         const studentInfo = studentDoc.data();
-        const {upcomingLessons, completedLessons, instructor, ...filteredData } = studentInfo;
+        const {upcomingLessons, completedLessons, ...filteredData } = studentInfo;
         return res.status(200).json({code: 200, data: filteredData});
     }
     catch (error) {
