@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [creditBalance, setCreditBalance] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [studentData, setStudentData] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -40,15 +41,12 @@ const Dashboard = () => {
     fetchStudentData();
   }, []);
 
-  if (!studentData) {
-    return null;
-  } else {
+    
     useEffect(() => {
         if(studentData){
             setCreditBalance(studentData.balance);
         }
       })
-  }
 
   const pricePerLesson = 50; // HARDCODED PRICE! FETCH THE PRICE INDICATED BY INSTRUCTOR IN THE PROFILE PAGE FROM THE DATABASE!
   const numOfBookings = bookings.length;
