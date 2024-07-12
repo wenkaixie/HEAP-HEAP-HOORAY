@@ -1,19 +1,67 @@
+
+import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/instructorNavbar/navbar";
 import './page.css';
 import '@/app/components/card/card.css';
-import '@/app/components/background/background.css'
-import '@/app/components/dashboard/dashboard.css'
+import '@/app/components/background/background.css';
+import '@/app/components/dashboard/dashboard.css';
+import Image from 'next/image';
+import axios from 'axios';
 
 const Dashboard = () => {
+    const [studentsData, setStudentsData] = useState(null);
+    const [error, setError] = useState(null);
+
+    const fetchStudentsData = async () => {
+      try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+          throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`http://localhost:8001/instructors/studentList/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setStudentsData(response.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
+    useEffect(() => {
+      fetchStudentsData();
+    }, []);
+
+    const renderContent = () => {
+      const cards = [];
+      for (let i = 0; i < studentsData.length; i++) {
+        cards.push(<Card student={studentsData[i]} />);
+      }
+  
+      return (
+        <div className="dashboard-details">
+          {error ? (
+            <p>{error}</p>
+          ) : (
+            studentsData.length > 0 ? (
+              cards
+            ) : (
+              <p>Loading...</p>
+            )
+          )}
+        </div>
+      );
+    };
+
+    if (!studentsData) {
+      return null;
+    }
+
     return (
       <div className="dashboard">
         <div className="dashboard-container">
           <h2>My Students</h2>
           <div className="dashboard-details">
             <div>
-              <Card1 />
-              <Card2 />
-              <Card3 />
+              {renderContent()}
             </div>
           </div>
         </div>
@@ -21,45 +69,17 @@ const Dashboard = () => {
     );
   };
   
-  const Card1 = () => {
+  const Card = ({ student }) => {
     return (
       <div className="card">
-        <h3>Thomas Lin</h3>
+        <h3>{student.studentName}</h3>
         <div className="card-details">
-          <span>8 Oct 2024</span>
-          <h3>1900H - 2100H</h3>
         </div>
         <button className="book-button">View Details</button>
       </div>
     );
   };
-  
-  const Card2 = () => {
-    return (
-      <div className="card">
-        <h3>Samual Low</h3>
-        <div className="card-details">
-          <span>10 Oct 2024</span>
-          <h3>1900H - 2100H</h3>
-        </div>
-        <button className="book-button">View Details</button>
-      </div>
-    );
-  };
-  
-  const Card3 = () => {
-    return (
-      <div className="card">
-        <h3>Richard Tan</h3>
-        <div className="card-details">
-          <span>12 Oct 2024</span>
-          <h3>1900H - 2100H</h3>
-        </div>
-        <button className="book-button">View Details</button>
-      </div>
-    );
-  };
-  
+
   export default function Page() {
     return (
       <main>

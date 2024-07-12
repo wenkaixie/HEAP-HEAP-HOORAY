@@ -8,7 +8,7 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
 
-const ProfileInfo = ({ profileData, setIsPopupVisible }) => {
+const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
   const [carModel, setCarModel] = useState("");
   const [carPlate, setCarPlate] = useState("");
   const [drivingCentre, setDrivingCentre] = useState("");
@@ -69,17 +69,17 @@ const ProfileInfo = ({ profileData, setIsPopupVisible }) => {
       lessonDuration: Number(lessonDuration), // Convert to number
       lessonFee: Number(lessonFee), // Convert to number
       maximumStudents: Number(maximumStudents), // Convert to number
-      passRate: Number(passRate), // Convert to number
+      passRate: passRate,
       phoneNumber: phoneNumber,
       transmissionType: transmissionType,
       workStart: workStart,
       workEnd: workEnd,
-      locations: locations.split(",").map(location => location.trim()) // Split string into array
+      locations: locations.split(",").map(location => location.trim())
     };
 
 
     try {
-      console.log('Trying to postt', userDocID);
+      console.log('Trying to postt', updatedProfileData);
       const response = await axios.put('http://localhost:8001/instructors/profile/update', updatedProfileData, {
         headers: {
           'Content-Type': 'application/json',
@@ -87,6 +87,7 @@ const ProfileInfo = ({ profileData, setIsPopupVisible }) => {
       });
       console.log('Profile updated:', response.data);
       setIsPopupVisible(false);
+      fetchProfileData();
     } catch (error) {
       console.log('Error updating profile:', error);
     }
@@ -270,21 +271,21 @@ const Dashboard = () => {
         setIsPopupVisible(!isPopupVisible);
     }
 
-    useEffect(() => {
-      const fetchProfileData = async () => {
-        try {
-          const userDocID = localStorage.getItem('userDocID');
-          if (!userDocID) {
-            throw new Error('User document ID not found in localStorage');
-          }
-          const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
-          console.log('API Response:', response.data);
-          setProfileData(response.data.data);
-        } catch (error) {
-          setError(error.message);
+    const fetchProfileData = async () => {
+      try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+          throw new Error('User document ID not found in localStorage');
         }
-      };
+        const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setProfileData(response.data.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
 
+    useEffect(() => {
       fetchProfileData();
     }, []);
 
@@ -393,7 +394,7 @@ const Dashboard = () => {
           </div>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
               <div className='popup-box'>
-                  <ProfileInfo profileData={profileData} setIsPopupVisible={setIsPopupVisible} />
+                  <ProfileInfo profileData={profileData} setIsPopupVisible={setIsPopupVisible} fetchProfileData={fetchProfileData} />
               </div>
           </div>
         </div>

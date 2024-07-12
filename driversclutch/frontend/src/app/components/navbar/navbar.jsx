@@ -90,6 +90,7 @@ if (!user) {
           <li>
             <Link href="#">Booking</Link>
             <div className="dropdown-content">
+              <Link href="../../../../bookingList">My Bookings</Link>
               <Link href="#">Theory test</Link>
               <Link href="../../../../booking">Practical Lesson</Link>
               <Link href="#">Simulator</Link>
