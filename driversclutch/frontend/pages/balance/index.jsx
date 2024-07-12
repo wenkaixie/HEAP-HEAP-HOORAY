@@ -155,6 +155,7 @@ const Dashboard = () => {
         <h2>Top-up Balance</h2>
         <p>Add credits to your account</p>
         <h3>Current Credit Balance: {profileData.balance}</h3>
+        <br></br>
         <button className="book-button" onClick={ togglePopup }>
           Add Credits
         </button>

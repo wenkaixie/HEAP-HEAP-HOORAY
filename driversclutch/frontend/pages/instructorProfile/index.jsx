@@ -361,7 +361,7 @@ const Dashboard = () => {
             <div className='profile-container-row'>
               <div>
                 <h3>Lesson Duration</h3>
-                <p>{profileData.lessonDuration} hr</p>
+                <p>{profileData.lessonDuration} Hr</p>
               </div>
               <div>
                 <h3>Locations</h3>
