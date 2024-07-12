@@ -41,7 +41,7 @@ const getInstructorTimeslots = async (req, res) => {
             return res.status(404).json({ code: 404, message: 'No student found.' });
         }
 
-        const { completedLessons = [] } = studentDoc.data().completedLessons;
+        const completedLessons = studentDoc.data().completedLessons;
         const lessonCount = completedLessons.length;
 
         // // Convert Firestore Timestamps to ISO 8601 strings
