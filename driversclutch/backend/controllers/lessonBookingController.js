@@ -94,10 +94,11 @@ const bookedTimeslotStudent = async (req, res) => {
         if (instructorSnapshot.empty) {
             return res.status(404).json({ code: 404, message: "No instructors found for the student." });
         }
-    
+        // convert unavailableTimeslot to firebase timestamps
+        const unavailableTimeslotsFirestore = unavailableTimeslots.map(dt => admin.firestore.Timestamp.fromDate(new Date(dt)));
         // Update each instructor's unavailableTimeslots
         const instructorDocRef = instructorSnapshot.docs[0].ref;
-        const instructorUpdatePromises = unavailableTimeslots.map(timestamp =>
+        const instructorUpdatePromises = unavailableTimeslotsFirestore.map(timestamp =>
             instructorDocRef.update({
                 unavailableTimeslots: admin.firestore.FieldValue.arrayUnion(timestamp)
             })
