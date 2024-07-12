@@ -46,15 +46,6 @@ const Dashboard = () => {
 
     fetchStudentData();
   }, []);
-  
-
-  // const lessonsData = [
-  //   'Practical Driving Lesson 4',
-  //   'Practical Driving Lesson 5',
-  //   'Practical Driving Lesson 6',
-  //   'Practical Driving Lesson 7',
-  //   'Practical Driving Lesson 8'
-  // ];
 
   useEffect(() => {
     if (studentData) {
@@ -69,7 +60,7 @@ const Dashboard = () => {
 
         while (currentTime.isBefore(end) || currentTime.isSame(end)) {
           generatedTimes.push(currentTime.format('hh:mm A'));
-          currentTime = currentTime.add(lessonDuration, 'hour');
+          currentTime = currentTime.add(0.5, 'hour');
         }
 
         return generatedTimes;

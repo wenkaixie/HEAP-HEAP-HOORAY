@@ -32,6 +32,7 @@ const getInstructorTimeslots = async (req, res) => {
 
         // Convert Firestore Timestamps to ISO 8601 strings
         const unavailableTimeslotsISO = unavailableTimeslots.map(timestamp => timestamp.toDate().toISOString());
+        
 
         const studentDocRef = db.collection('students').doc(studentID);
         const studentDoc = await studentDocRef.get();
@@ -40,10 +41,11 @@ const getInstructorTimeslots = async (req, res) => {
             return res.status(404).json({ code: 404, message: 'No student found.' });
         }
 
-        const { completedLessons = [] } = studentDoc.data();
+        const completedLessons = studentDoc.data().completedLessons;
+        const lessonCount = completedLessons.length;
 
-        // Convert Firestore Timestamps to ISO 8601 strings
-        const completedLessonsISO = completedLessons.map(timestamp => timestamp.toDate().toISOString());
+        // // Convert Firestore Timestamps to ISO 8601 strings
+        // const completedLessonsISO = completedLessons.map(timestamp => timestamp.toDate().toISOString());
 
         return res.status(200).json({
         fullname: fullname,
@@ -51,7 +53,7 @@ const getInstructorTimeslots = async (req, res) => {
         workEnd: workEnd,
         lessonDuration: lessonDuration,
         unavailableTimeslots: unavailableTimeslotsISO,
-        completedLessons: completedLessonsISO
+        lessonCount: lessonCount
         });
     } 
 
@@ -63,38 +65,55 @@ const getInstructorTimeslots = async (req, res) => {
 
 //after booking
 const bookedTimeslotStudent = async (req, res) => {
-    const {studentID, timeslots, balance} = req.body;
+    const {studentID, timeslots, balance, unavailableTimeslots} = req.body;
     if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID || !balance) {
         return res.status(400).json({code: 400, message: "Timeslots array is required"})
     }
     try {
-        const docRef = db.collection("students").doc(studentID);
+        const studentDocRef  = db.collection("students").doc(studentID);
 
         // Iterate over the datetime array and convert each string to Firestore Timestamp
         const timestamps = timeslots.map(ts => admin.firestore.Timestamp.fromDate(new Date(ts)));
 
         // Update the unavailableTimeslots array with all timestamps
         const updatePromises = timestamps.map(timestamp => 
-            docRef.update({
+            studentDocRef .update({
                 upcomingLessons: admin.firestore.FieldValue.arrayUnion(timestamp)
             })
         );
 
         await Promise.all(updatePromises);
 
-        await docRef.update({
+        await studentDocRef .update({
             balance: balance
         });
 
-        return res.status(200).json({code: 200, message: "Students' upcoming lessons and account balance are successfully updated "});
+        // Query instructors who have the student in their studentList
+        const instructorSnapshot = await db.collection('instructors').where('studentList', 'array-contains', studentID).get();
+
+        if (instructorSnapshot.empty) {
+            return res.status(404).json({ code: 404, message: "No instructors found for the student." });
+        }
+    
+        // Update each instructor's unavailableTimeslots
+        const instructorDocRef = instructorSnapshot.docs[0].ref;
+        const instructorUpdatePromises = unavailableTimeslots.map(timestamp =>
+            instructorDocRef.update({
+                unavailableTimeslots: admin.firestore.FieldValue.arrayUnion(timestamp)
+            })
+        );
+
+        await Promise.all(instructorUpdatePromises);
+
+        return res.status(200).json({code: 200, message: "Instructor unavailable timeslots and students' upcoming lessons and account balance are successfully updated "});
     }
     catch (error) {
-        return res.status(500).json({ code: 500, message: `Error updating student's upcoming lesson: ${error}` });
+        return res.status(500).json({ code: 500, message: "Error updating student's upcoming lesson: ${error}" });
     }
 }
 
 const bookedTimeslotInstructor = async (req, res) => {
-    const {studentID, instructorID, timeslots} = req.body;
+    const {studentID, timeslots} = req.body;
 
     if (!Array.isArray(timeslots) || timeslots.length === 0 || !studentID || !instructorID) {
         return res.status(400).json({code: 400, message: "StudentID, InstructorID and timeslots array are required"});
@@ -107,6 +126,10 @@ const bookedTimeslotInstructor = async (req, res) => {
             student: studentID,
             timeslots: timestamps
         };
+
+        const studentDoc = await db.collection("students").doc(studentID).get();
+        const instructorID = studentDoc.data().instructor;
+
         
         await db.collection('instructors')
             .doc(instructorID)
