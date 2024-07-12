@@ -32,6 +32,7 @@ const getInstructorTimeslots = async (req, res) => {
 
         // Convert Firestore Timestamps to ISO 8601 strings
         const unavailableTimeslotsISO = unavailableTimeslots.map(timestamp => timestamp.toDate().toISOString());
+        
 
         const studentDocRef = db.collection('students').doc(studentID);
         const studentDoc = await studentDocRef.get();
@@ -40,10 +41,11 @@ const getInstructorTimeslots = async (req, res) => {
             return res.status(404).json({ code: 404, message: 'No student found.' });
         }
 
-        const { completedLessons = [] } = studentDoc.data();
+        const { completedLessons = [] } = studentDoc.data().completedLessons;
+        const lessonCount = completedLessons.length;
 
-        // Convert Firestore Timestamps to ISO 8601 strings
-        const completedLessonsISO = completedLessons.map(timestamp => timestamp.toDate().toISOString());
+        // // Convert Firestore Timestamps to ISO 8601 strings
+        // const completedLessonsISO = completedLessons.map(timestamp => timestamp.toDate().toISOString());
 
         return res.status(200).json({
         fullname: fullname,
@@ -51,7 +53,7 @@ const getInstructorTimeslots = async (req, res) => {
         workEnd: workEnd,
         lessonDuration: lessonDuration,
         unavailableTimeslots: unavailableTimeslotsISO,
-        completedLessons: completedLessonsISO
+        lessonCount: lessonCount
         });
     } 
 
