@@ -92,14 +92,29 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <div>
           <h2>Make a New Booking</h2>
-          <p>Book a Practical Lesson</p>
+          <p>Book a practical lesson</p>
           <Link href="/booking" className="book-button" style={{ textDecoration: "none"}}>Book Now</Link>
         </div>
+        <br></br>
+        <br></br>
+        <div>
+          <h2>Theory Practice</h2>
+          <p>Test your knowledge with a mock theory test</p>
+          <Link href="/btt" className="book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
+        </div>
+        <br></br>
         <br></br>
         <div>
           <h2>Top-up Credit Balance</h2>
           <p>Credit Balance: {profileData.balance}</p>
           <Link href="/balance" className="book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
+        </div>
+        <br></br>
+        <br></br>
+        <div>
+          <h2>Manage Profile</h2>
+          <p>View and edit your profile</p>
+          <Link href="/profile" className="book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
         </div>
       </div>
     </div>
