@@ -6,7 +6,19 @@ const getBalance = async(req, res) => {
         const studentDoc = await db.collection("students").doc(studentID).get();
         const balance = studentDoc.data().balance;
 
-        return res.status(200).json({code: 200, balance: balance});
+        const instructorSnapshot = await db
+            .collection('instructors')
+            .where('studentList', 'array-contains', studentID)
+            .get();
+
+        if (instructorSnapshot.empty) {
+            return res.status(404).json({ code: 404, message: "No instructors found for the student." });
+        }
+        
+        const instructorDoc = instructorSnapshot.docs[0];
+        const lessonFee = instructorDoc.data().lessonFee;
+        
+        return res.status(200).json({code: 200, balance: balance, lessonFee: lessonFee});
     }
     catch (error) {
         return res.status(500).json({ code: 500, message: `Error getting balance: ${error}` });
