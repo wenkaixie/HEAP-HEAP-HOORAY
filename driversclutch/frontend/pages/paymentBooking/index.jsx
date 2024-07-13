@@ -16,8 +16,37 @@ dayjs.extend(timezone);
 
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
-  const [creditBalance, setCreditBalance] = useState(100); // HARDCODED BALANCE! FETCH BALANCE FROM DATABASE!
+  const [creditBalance, setCreditBalance] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [studentData, setStudentData] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStudentData = async () => {
+      try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+          throw new Error('User document ID not found in localStorage');
+        }
+        console.log(`Fetching student data for userDocID: ${userDocID}`);
+        const response = await axios.get(`http://localhost:8001/students/balance/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setStudentData(response.data);
+      } catch (error) {
+        console.error('Error fetching student data:', error);
+        setError(error.message);
+      }
+    };
+
+    fetchStudentData();
+  }, []);
+
+    
+    useEffect(() => {
+        if(studentData){
+            setCreditBalance(studentData.balance);
+        }
+      })
 
   const pricePerLesson = 50; // HARDCODED PRICE! FETCH THE PRICE INDICATED BY INSTRUCTOR IN THE PROFILE PAGE FROM THE DATABASE!
   const numOfBookings = bookings.length;
@@ -30,29 +59,29 @@ const Dashboard = () => {
     }
   }, []);
 
-  const convertToRequiredFormat = (bookings) => {
-    const timeZone = 'Asia/Singapore'; // Define the desired time zone
+const convertToRequiredFormat = (bookings) => {
     const datetimes = [];
     const unavailableTimeslots = [];
-
+  
     bookings.forEach(booking => {
       const { date, time } = booking;
       if (date && time) {
         const startDateTimeString = `${date} ${time}`;
-        const parsedStartDate = dayjs.tz(startDateTimeString, 'YYYY-MM-DD hh:mm A', timeZone);
+        const parsedStartDate = dayjs(startDateTimeString, 'YYYY-MM-DD hh:mm A').utcOffset(8);
         
         const unavailableEndTime = parsedStartDate.add(30, 'minute');
-
+  
         datetimes.push(parsedStartDate.toISOString());
-
+  
         unavailableTimeslots.push(parsedStartDate.toISOString(), unavailableEndTime.toISOString());
       } else {
         console.error(`Invalid booking entry: ${JSON.stringify(booking)}`);
       }
     });
-
+  
     return { datetimes, unavailableTimeslots };
-};
+  };
+  
 
 const updateDatabaseStudent = async () => {
     try {
@@ -62,14 +91,14 @@ const updateDatabaseStudent = async () => {
       const requestData = {
         studentID: userDocID,
         timeslots: datetimes,
-        unavailableTimeslots: unavailableTimeslots,
         balance: remainingBalance,
+        unavailableTimeslots: unavailableTimeslots
       };
-      console.log("Sending data to server:", requestData); // Log the request data
+      console.log("Sending data to server:", requestData);
 
       const response = await axios.post('http://localhost:8001/students/booking/updateStudent', requestData, {
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
       });
 
@@ -89,6 +118,7 @@ const updateDatabaseStudent = async () => {
 const updateDatabaseInstructor = async () => {
     try {
       const userDocID = localStorage.getItem('userDocID');
+      const remainingBalance = creditBalance - totalPrice;
       const { datetimes } = convertToRequiredFormat(bookings);
       const requestData = {
         studentID: userDocID,
@@ -127,12 +157,13 @@ const updateDatabaseInstructor = async () => {
 
   const closePopup = () => {
     setIsPopupVisible(false);
+    window.location.href = "./booking";
   };
 
   return (
     <div className="dashboard">
       <div className="title">
-        <h1>Payment Details</h1>
+        <h2>Payment Details</h2>
       </div>
       <div className="dashboard-container">
         <p>Booking Summary</p>
@@ -159,7 +190,7 @@ const updateDatabaseInstructor = async () => {
         {creditBalance < totalPrice && (
           <div className="insufficient-credits">
             {/* update link for top up!!!! */}
-            Insufficient credits. Click <a href="../../profile">here</a> to top up.
+            Insufficient credits. Click <a href="./balance">here</a> to top up.
           </div>
         )}
         <div className="pay-btn">
