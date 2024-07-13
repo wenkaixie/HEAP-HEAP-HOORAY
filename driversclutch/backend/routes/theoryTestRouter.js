@@ -4,8 +4,8 @@ const {getBasicTheoryTestQuestion} = require("../controllers/theoryTestControlle
 
 const router = express.Router();
 
-router.post("/basicTheoryTest", getBasicTheoryTestQuestion);
+router.get("/basicTheoryTest", getBasicTheoryTestQuestion);
 
-//router.post("/finalTheoryTest", getFinalTheoryTestQuestion);
+//router.get("/finalTheoryTest", getFinalTheoryTestQuestion);
 
 module.exports = router;

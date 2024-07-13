@@ -187,6 +187,7 @@ import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
 
+
 const Dashboard = () => {
     const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
     const numOfQnsToDisplay = 10; // Number of questions to display in the quiz
@@ -222,7 +223,9 @@ const Dashboard = () => {
             const fetchQnData = async () => {
                 try {
                     const serialNum = randomSN[questionNum];
+                    console.log("Fetching question data for serial number:", serialNum); // Added logging here
                     const response = await axios.get(`http://localhost:8001/students/theoryTest/basicTheoryTest/?sn=${serialNum}`);
+                    console.log("Response data:", response.data); // Added logging here
                     setQuestionData(response.data);
                 } catch (error) {
                     console.error('Error fetching question data:', error);
@@ -231,16 +234,37 @@ const Dashboard = () => {
             fetchQnData();
         }
     }, [questionNum, randomSN]);
-    console.log(questionData);
-
+    
+    console.log("Current question data:", questionData); // Added logging here
+    
     // Evaluate the answer
-    const evaluateAns = () => {
-        if (userAnswer !== questionData.correctAnswer) {
-            setWrongAnsQn(prev => [...prev, { ...questionData, userAnswer }]);
-        } else {
-            setWrongAnsQn(prev => prev.filter(q => q.sn !== questionData.sn));
-        }
+    // const evaluateAns = () => {
+    //     if (userAnswer !== questionData.correctAnswer) {
+    //         setWrongAnsQn(prev => [...prev, { ...questionData, userAnswer }]);
+    //     } else {
+    //         setWrongAnsQn(prev => prev.filter(q => q.sn !== questionData.sn));
+    //     }
+    // };
+
+// Evaluate the answer
+const evaluateAns = () => {
+    const currentQuestionData = {
+        ...questionData,
+        userAnswer,
+        sn: randomSN[questionNum] // Ensure 'sn' or some unique identifier is part of questionData
     };
+
+    // Determine if the user's answer is correct
+    if (userAnswer !== questionData.correctAnswer) {
+        if (!wrongAnsQn.some(q => q.sn === currentQuestionData.sn)) {
+            setWrongAnsQn(prev => [...prev, currentQuestionData]);
+        }
+    } else {
+        setWrongAnsQn(prev => prev.filter(q => q.sn !== currentQuestionData.sn));
+    }
+};
+
+    
 
     // Handle Next button click
     const handleNext = () => {
@@ -273,14 +297,14 @@ const Dashboard = () => {
         return (
             <div className='dashboard'>
                 <h2>Quiz Submitted!</h2>
-                <p>Your score: {score} / {numOfQnsToDisplay}</p>
+                <p>Your Score: {score} / {numOfQnsToDisplay}</p>
                 <h3>Incorrect Questions:</h3>
                 <ul>
                     {wrongAnsQn.map((q, index) => (
                         <li key={index}>
-                            <p>Q{q.sn}: {q.question}</p>
-                            <p>Your answer: {q.userAnswer}</p>
-                            <p>Correct answer: {q.correctAnswer}</p>
+                            <p>Q{index+1}: {q.question}</p>
+                            <p>Your Answer: {q.userAnswer}</p>
+                            <p>Correct Answer: {q[q.correctAnswer]}</p>
                         </li>
                     ))}
                 </ul>
