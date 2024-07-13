@@ -17,6 +17,7 @@ dayjs.extend(timezone);
 const Dashboard = () => {
   const [bookings, setBookings] = useState([]);
   const [creditBalance, setCreditBalance] = useState(0);
+  const [pricePerLesson, setPricePerLesson] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [studentData, setStudentData] = useState(null);
   const [error, setError] = useState(null);
@@ -45,10 +46,10 @@ const Dashboard = () => {
     useEffect(() => {
         if(studentData){
             setCreditBalance(studentData.balance);
+            setPricePerLesson(studentData.lessonFee)
         }
       })
-
-  const pricePerLesson = 50; // HARDCODED PRICE! FETCH THE PRICE INDICATED BY INSTRUCTOR IN THE PROFILE PAGE FROM THE DATABASE!
+  
   const numOfBookings = bookings.length;
   const totalPrice = numOfBookings * pricePerLesson;
 
@@ -136,6 +137,8 @@ const updateDatabaseInstructor = async () => {
         console.log("UpcomingLessons data successfully sent to the database.");
         setCreditBalance(remainingBalance);
         setIsPopupVisible(true);
+        localStorage.removeItem('bookings'); // Clear the userDocID from local storage
+        console.log('Bookingdetails removed from localStorage');
       } else {
         console.error("Failed to send UpcomingLessons data.");
       }

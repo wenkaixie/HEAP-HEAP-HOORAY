@@ -85,7 +85,11 @@ if (!user) {
             </div>
           </li>
           <li>
-            <Link href="../../../../btt">Theory Practices</Link>
+            <Link href="#">Theory Practices</Link>
+            <div className="dropdown-content">
+              <Link href="../../../../btt">Basic Theory Test</Link>
+              <Link href="../../../../ftt">Final Theory Test</Link>
+            </div>
           </li>
           <li>
             <Link href="#">Booking</Link>
