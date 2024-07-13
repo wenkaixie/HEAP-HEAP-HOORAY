@@ -10,7 +10,7 @@ import axios from 'axios';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
-const TopUpForm = ({ setIsPopupVisible, isPopupVisible }) => {
+const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
   const [amount, setAmount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [paymentStatus, setPaymentStatus] = useState(null);
@@ -30,42 +30,51 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const userDocID = localStorage.getItem('userDocID');
+
+    const topUpValue = {
+      studentID: userDocID,
+      amount: Number(amount)
+    }
 
     setLoading(true);
 
-    const res = await fetch('/api/create-payment-intent', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ amount: amount * 100 }), // amount in cents
-    });
+    // const res = await fetch('/api/create-payment-intent', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({ amount: amount * 100 }), // amount in cents
+    // });
 
-    const { clientSecret } = await res.json();
+    // const { clientSecret } = await res.json();
 
-    const result = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardElement),
-      },
-    });
+    // const result = await stripe.confirmCardPayment(clientSecret, {
+    //   payment_method: {
+    //     card: elements.getElement(CardElement),
+    //   },
+    // });
 
-    if (result.error) {
-      console.error(result.error.message);
-      setLoading(false);
+    try {
+      console.log('trying to post', topUpValue);
+      const response = await axios.put('http://localhost:8001/students/balance/topup', topUpValue, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Payment succeeded!');
+      console.log('Balance updated: ', response.data);
+      setPaymentStatus('success');
+      fetchBalanceData();
+      setTimeout(() => {
+        setIsPopupVisible(false); 
+      }, 2000);
+    } catch (error) {
+      console.log('Error top-up balance: ', error);
       setPaymentStatus('error');
-    } else {
-      if (result.paymentIntent.status === 'succeeded') {
-        console.log('Payment succeeded!');
-        setPaymentStatus('success'); // Set payment status to success
-        setLoading(false);
-        setTimeout(() => {
-          setIsPopupVisible(false); // Close popup after a delay on successful payment
-        }, 2000); // Delay in milliseconds (2000ms = 2 seconds)
-      }
     }
-
-    setLoading(false);
   };
+    // setLoading(false);
 
   const handleAmountChange = (event) => {
     setAmount(event.target.value);
@@ -120,28 +129,28 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible }) => {
 
 const Dashboard = () => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [profileData, setProfileData] = useState(null);
+  const [balanceData, setBalanceData] = useState(null);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const userDocID = localStorage.getItem('userDocID');
-        if (!userDocID) {
-          throw new Error('User document ID not found in localStorage');
-        }
-        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
-        console.log('API Response:', response.data);
-        setProfileData(response.data.data);
-      } catch (error) {
-        setError(error.message);
+  const fetchBalanceData = async () => {
+    try {
+      const userDocID = localStorage.getItem('userDocID');
+      if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
       }
-    };
+      const response = await axios.get(`http://localhost:8001/students/balance/?id=${userDocID}`);
+      console.log('API Response:', response.data);
+      setBalanceData(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-    fetchProfileData();
+  useEffect(() => {
+    fetchBalanceData();
   }, []);
 
-  if (!profileData) {
+  if (!balanceData) {
     return null;
   }
 
@@ -154,7 +163,7 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <h2>Top-up Balance</h2>
         <p>Add credits to your account</p>
-        <h3>Current Credit Balance: {profileData.balance}</h3>
+        <h3>Current Credit Balance: {balanceData.balance}</h3>
         <br></br>
         <button className="book-button" onClick={ togglePopup }>
           Add Credits
@@ -162,7 +171,7 @@ const Dashboard = () => {
         <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
           <div className="popup-box">
             <Elements stripe={stripePromise}>
-              <TopUpForm setIsPopupVisible={setIsPopupVisible} isPopupVisible={isPopupVisible}/>
+              <TopUpForm setIsPopupVisible={setIsPopupVisible} isPopupVisible={isPopupVisible} fetchBalanceData={fetchBalanceData}/>
             </Elements>
           </div>
         </div>

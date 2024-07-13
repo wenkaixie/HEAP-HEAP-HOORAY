@@ -7,9 +7,11 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import Image from 'next/image';
 import axios from 'axios';
+import Link from "next/link";
 
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   const [error, setError] = useState(null);
 
   const fetchBookingsData = async () => {
@@ -26,8 +28,23 @@ const Dashboard = () => {
   }
   };
 
+  const fetchProfileData = async () => {
+    try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setProfileData(response.data.data);
+    } catch (error) {
+        setError(error.message);
+    }
+    };
+
   useEffect(() => {
     fetchBookingsData();
+    fetchProfileData();
   }, []);
 
   if (!bookingsData) {
@@ -70,23 +87,19 @@ const Dashboard = () => {
         <div className="dashboard-details">
           {renderBookings()}
         </div>
-        <button className="book-button">View All Bookings</button>
+        <Link href="/bookingList" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
       </div>
       <div className="dashboard-container">
         <div>
           <h2>Make a New Booking</h2>
           <p>Book a Practical Lesson</p>
-          <button className="book-button">Book Now</button>
+          <Link href="/booking" className="book-button" style={{ textDecoration: "none"}}>Book Now</Link>
         </div>
         <br></br>
         <div>
-          <h2>Make a new booking</h2>
-          <p>Use this area to describe one of your services.</p>
-          <div className="dashboard-details">
-            <span>1 hr</span>
-            <span>$70</span>
-          </div>
-          <button className="book-button">Book Now</button>
+          <h2>Top-up Credit Balance</h2>
+          <p>Credit Balance: {profileData.balance}</p>
+          <Link href="/balance" className="book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
         </div>
       </div>
     </div>
@@ -120,8 +133,8 @@ const LessonCard = ({ index, lesson, lessonDuration }) => {
         <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
         <br></br>
         <div className="card-details">
-          <h3>{formattedStartDate}</h3>
-          <h3>{formattedStartTime} - {formattedEndTime}</h3>
+          <p>{formattedStartDate}</p>
+          <p>{formattedStartTime} - {formattedEndTime}</p>
         </div>
       </div>
       <div className="card-content card-image">
