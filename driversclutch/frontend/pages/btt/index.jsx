@@ -191,6 +191,20 @@ const Dashboard = () => {
     const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
     const numOfQnsToDisplay = 2; // Number of questions to display in the quiz
 
+    // Fetch the total number of questions from the backend
+    useEffect(() => {
+        const fetchTotalQuestions = async () => {
+            try {
+                const response = await axios.get('http://localhost:8001/totalQuestions');
+                setNumOfQuestionsInDB(response.data.totalQuestions);
+            } catch (error) {
+                console.error('Error fetching total questions:', error);
+            }
+        };
+
+        fetchTotalQuestions();
+    }, []);
+
     // State variables
     const [randomSN, setRandomSN] = useState([]);
     const [questionNum, setQuestionNum] = useState(0);
