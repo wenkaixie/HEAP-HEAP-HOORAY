@@ -8,71 +8,72 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
 
-const ChangePasswordInfo = () => {
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordConfirmed, setNewPasswordConfirmed] = useState("");
+// const ChangePasswordInfo = () => {
+//   const [oldPassword, setOldPassword] = useState("");
+//   const [newPassword, setNewPassword] = useState("");
+//   const [newPasswordConfirmed, setNewPasswordConfirmed] = useState("");
 
-  const handleOldPasswordChange = (event) => {
-    setOldPassword(event.target.value);
-  };
+//   const handleOldPasswordChange = (event) => {
+//     setOldPassword(event.target.value);
+//   };
 
-  const handleNewPasswordChange = (event) => {
-    setNewPassword(event.target.value);
-  };
+//   const handleNewPasswordChange = (event) => {
+//     setNewPassword(event.target.value);
+//   };
 
-  const handleNewPasswordConfirmedChange = (event) => {
-    setNewPasswordConfirmed(event.target.value);
-  };
+//   const handleNewPasswordConfirmedChange = (event) => {
+//     setNewPasswordConfirmed(event.target.value);
+//   };
 
-  return (
-    <div className='profile-container'>
-      <div className='profile-container-row'>
-        <h2>Change Password</h2>
-      </div>
-      <div className='profile-container-row'>
-        <div>
-          <h3>Old Password</h3>
-          <input 
-            type="password"
-            required
-            value={oldPassword}
-            onChange={handleOldPasswordChange}
-            className='large-input'
-          />
-        </div>
-      </div>
-      <div className='profile-container-row'>
-        <div>
-          <h3>New Password</h3>
-          <input 
-            type="password"
-            required
-            value={newPassword}
-            onChange={handleNewPasswordChange}
-            className='large-input'
-          />
-        </div>
-        <div>
-          <h3>Confirm New Password</h3>
-          <input 
-            type="password"
-            required
-            value={newPasswordConfirmed}
-            onChange={handleNewPasswordConfirmedChange}
-            className='large-input'
-          />
-        </div>
-      </div>
-      <br />
-    </div>
-  )
-}
+//   return (
+//     <div className='profile-container'>
+//       <div className='profile-container-row'>
+//         <h2>Change Password</h2>
+//       </div>
+//       <div className='profile-container-row'>
+//         <div>
+//           <h3>Old Password</h3>
+//           <input 
+//             type="password"
+//             required
+//             value={oldPassword}
+//             onChange={handleOldPasswordChange}
+//             className='large-input'
+//           />
+//         </div>
+//       </div>
+//       <div className='profile-container-row'>
+//         <div>
+//           <h3>New Password</h3>
+//           <input 
+//             type="password"
+//             required
+//             value={newPassword}
+//             onChange={handleNewPasswordChange}
+//             className='large-input'
+//           />
+//         </div>
+//         <div>
+//           <h3>Confirm New Password</h3>
+//           <input 
+//             type="password"
+//             required
+//             value={newPasswordConfirmed}
+//             onChange={handleNewPasswordConfirmedChange}
+//             className='large-input'
+//           />
+//         </div>
+//       </div>
+//       <br />
+//     </div>
+//   )
+// }
 
 const Dashboard = () => {
   const [isPictureVisible, setIsPictureVisible] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const [profileData, setProfileData] = useState(null);
+  const [instructorName, setInstructorName] = useState(null);
   const [error, setError] = useState(null);
 
   const togglePicture = () => {
@@ -83,23 +84,28 @@ const Dashboard = () => {
     setIsPopupVisible(!isPopupVisible);
   }
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const userDocID = localStorage.getItem('userDocID');
-        if (!userDocID) {
-          throw new Error('User document ID not found in localStorage');
-        }
-        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
-        console.log('API Response:', response.data);
-        setProfileData(response.data.data);
-      } catch (error) {
-        setError(error.message);
+  const fetchProfileData = async () => {
+    try {
+      const userDocID = localStorage.getItem('userDocID');
+      if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
       }
-    };
+      const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+      console.log('API Response:', response.data);
+      setProfileData(response.data.data);
 
+      
+
+      setInstructorName(response.data.data.instructor);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
+  useEffect(() => {
     fetchProfileData();
   }, []);
+
 
   if (!profileData) {
     return null;
@@ -111,10 +117,12 @@ const Dashboard = () => {
         <h2>Profile</h2>
         <div className="profile-container">
           <div className='profile-container-row'>
-            <div className="profile-picture-container">
-              <img src="profile.jpg" className="profile-picture" />
-              <div className="overlay">
-                <div className="edit-icon" onClick={togglePicture}>✎</div>
+            <div>
+              <div className="profile-picture-container">
+                <img src="profile.jpg" className="profile-picture" />
+                <div className="overlay">
+                  <div className="edit-icon" onClick={togglePicture}>✎</div>
+                </div>
               </div>
             </div>
             <div>
@@ -129,6 +137,8 @@ const Dashboard = () => {
               <h3>Email</h3>
               <p>{profileData.email}</p>
             </div>
+          </div>
+          <div className='profile-container-row'>
             <div>
               <h3>Date Of Birth</h3>
               <p>{profileData.birthdate}</p>
@@ -137,10 +147,14 @@ const Dashboard = () => {
               <h3>Credit Balance</h3>
               <p>{profileData.balance}</p>
             </div>
+            <div>
+              <h3>Instructor</h3>
+              <p>{instructorName}</p>
+            </div>
           </div>
-          <div className='profile-container-row'>
+          {/* <div className='profile-container-row'>
             <button className="book-button btn-open-popup" onClick={togglePopup}>Change Password</button>
-          </div>
+          </div> */}
         </div>
         <div id="pictureOverlay" className={`picture-overlay ${isPictureVisible ? 'show' : ''}`}>
           <div className='picture-box'>
@@ -154,7 +168,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
+        {/* <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
           <div className='popup-box'>
             <ChangePasswordInfo />
             <div className='buttons-container'>
@@ -162,7 +176,7 @@ const Dashboard = () => {
               <button className='book-button' onClick={togglePopup}>Change Password</button>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

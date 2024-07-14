@@ -9,6 +9,7 @@ import Image from 'next/image';
 import axios from 'axios';
 import Link from "next/link";
 
+
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
   const [profileData, setProfileData] = useState(null);
