@@ -1,4 +1,3 @@
-/* dashboard css
 .dashboard {
   background-color: rgba(255, 255, 255, 0.654);
   border: 1px solid #e0e0e0;
@@ -44,6 +43,11 @@ h2 {
   color: black;
   margin-bottom: 40px;
 }
+
+.qn-indicator {
+  text-align: center;
+  flex: 1;
+}
   
   .options {
     line-height: 60px;
@@ -77,16 +81,8 @@ h2 {
   .question-container {
     margin-bottom: 20px;
   }
-  
-  .correct-answer {
-    color: green;
-  }
-  
-  .wrong-answer {
-    color: red;
-  } */
 
-  .dashboard {
+  /* .dashboard {
     background-color: rgba(255, 255, 255, 0.654);
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -115,7 +111,6 @@ h2 {
     text-align: center;
     margin-bottom: 20px;
 }
-
 
 
 .qn {
@@ -164,4 +159,4 @@ h2 {
 .btn:disabled, .nxt-submit:disabled {
     background-color: #cccccc;
     cursor: not-allowed;
-}
+} */
