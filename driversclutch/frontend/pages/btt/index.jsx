@@ -1,4 +1,4 @@
-// "use client";
+
 // import React, { useState, useEffect } from 'react';
 // import Navbar from '@/app/components/navbar/navbar';
 // import './page.css';
@@ -189,7 +189,7 @@ import axios from 'axios';
 
 const Dashboard = () => {
     const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
-    const numOfQnsToDisplay = 5; // Number of questions to display in the quiz
+    const numOfQnsToDisplay = 2; // Number of questions to display in the quiz
 
     // State variables
     const [randomSN, setRandomSN] = useState([]);
@@ -294,24 +294,51 @@ const Dashboard = () => {
         const score = numOfQnsToDisplay - wrongAnsQn.length;
         return (
             <div className='dashboard'>
-                <h2>Quiz Submitted!</h2>
-                <p>Your score: {score} / {numOfQnsToDisplay}</p>
-                <h3>Incorrect Questions:</h3>
-                <ul>
+                <div className='title'>
+                    <h2>Test Summary</h2>
+                </div>
+
+                <div className='dashboard-container'>
+                    <div className='score' style={{ fontWeight: 400 }}>
+                        Your score: {score} / {numOfQnsToDisplay}
+                    </div>
+
+                    {wrongAnsQn.length > 0 && (
+                        <div className='incorrect-header'>
+                            <h3 style={{ fontWeight: 600 }}>Incorrect Questions:</h3>
+                        </div>
+                    )}
+
                     {wrongAnsQn.map((q, index) => (
-                        <li key={index}>
-                            <p>Question: {q.question}</p>
-                            {q.image && (
-                            <div className='image'>
-                                <img src={q.image} alt="Question related" />
+                        <div className='wrong-qn'>
+                            <div className='qn'>
+                                Question: {q.question}
                             </div>
-                        )}
-                            <p>Your answer: {q.userAnswer}</p>
-                            <p>Correct answer: {q[q.correctAnswer]}</p>
-                        </li>
+
+                            {q.image && (
+                                <div className='image'>
+                                    <img src={q.image} alt="Question related" />
+                                </div>
+                            )}
+
+                            <div className='ans'>
+                                <div className='your-ans'>
+                                    Your answer: {q.userAnswer}
+                                </div>
+                                <div className='correct'>
+                                    Correct answer: {q[q.correctAnswer]}
+                                </div>
+                            </div>
+
+                        </div>
                     ))}
-                </ul>
-                <button className='btn' onClick={handleRetake}>Retake Test</button>
+                    <div className='retake-container'>
+                        <button className='retake-btn' onClick={handleRetake}>Retake test</button>
+                    </div>
+
+
+                </div>
+
             </div>
         );
     }
@@ -362,12 +389,12 @@ const Dashboard = () => {
                             <label htmlFor="opt3">Option 3: {questionData.option3}</label> <br />
                         </div>
                         <div className='button'>
-                            {questionNum > 0 && (
-                                <button className='btn' onClick={handleBack}>Back</button>
-                            )}
-                            <span className='qn-indicator'>{questionNum + 1} of {numOfQnsToDisplay}</span>
+                            <button className='btn' onClick={handleBack} disabled={questionNum === 0}>Back</button>
+                            <div className='qn-indicator'>
+                                {questionNum + 1} of {numOfQnsToDisplay}
+                            </div>
                             {isLastQuestion ? (
-                                <button className='nxt-submit' onClick={handleSubmit}>Submit</button>
+                                <button className='nxt-submit' onClick={handleSubmit} disabled={userAnswers[questionNum] === undefined}>Submit</button>
                             ) : (
                                 <button className='nxt-submit' onClick={handleNext} disabled={userAnswers[questionNum] === undefined}>Next</button>
                             )}
