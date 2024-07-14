@@ -19,12 +19,14 @@ const serviceAccount = require('./serviceAccountKey.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://driversclutch.firebaseio.com'
+  databaseURL: 'https://driversclutch.firebaseio.com',
+  storageBucket: 'gs://driversclutch.appspot.com'
 });
 
 const db = admin.firestore();
+const storage = admin.storage();
 
-module.exports = { admin, db };
+module.exports = { admin, db, storage };
 
 
 // const {initializeApp, cert} = require("firebase-admin/app")
