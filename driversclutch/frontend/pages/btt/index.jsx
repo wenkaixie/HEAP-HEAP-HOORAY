@@ -188,14 +188,14 @@ import '@/app/components/background/background.css';
 import axios from 'axios';
 
 const Dashboard = () => {
-    const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
+    const [numOfQuestionsInDB, setNumOfQuestionsInDB] = useState(0);
     const numOfQnsToDisplay = 2; // Number of questions to display in the quiz
 
     // Fetch the total number of questions from the backend
     useEffect(() => {
         const fetchTotalQuestions = async () => {
             try {
-                const response = await axios.get('http://localhost:8001/totalQuestions');
+                const response = await axios.get('http://localhost:8001/students/theoryTest/totalBTTQuestions');
                 setNumOfQuestionsInDB(response.data.totalQuestions);
             } catch (error) {
                 console.error('Error fetching total questions:', error);
@@ -205,6 +205,7 @@ const Dashboard = () => {
         fetchTotalQuestions();
     }, []);
 
+    //console.log(numOfQuestionsInDB);
     // State variables
     const [randomSN, setRandomSN] = useState([]);
     const [questionNum, setQuestionNum] = useState(0);
