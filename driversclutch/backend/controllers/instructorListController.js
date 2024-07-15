@@ -15,7 +15,7 @@ const getAutoInstructors = async (req, res) => {
         const instructors = [];
         querySnapshot.forEach((doc) => {
             const instructorData = doc.data();
-            const { birthdate, email, transmissionType, workStart, workEnd, pendingStudents, studentList, maximumStudents, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
+            const { birthdate, transmissionType, workStart, workEnd, pendingStudents, studentList, maximumStudents, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
             const studentCount = studentList.length;
             const remainingSlots = maximumStudents - studentCount;
             const updatedFilteredData = {
@@ -48,7 +48,7 @@ const getManualInstructors = async (req, res) => {
         const instructors = [];
         querySnapshot.forEach((doc) => {
             const instructorData = doc.data();
-            const { birthdate, email, transmissionType, workStart, workEnd, pendingStudents, studentList, maximumStudents, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
+            const { birthdate, transmissionType, workStart, workEnd, pendingStudents, studentList, maximumStudents, unavailableTimeslots, upcomingLessons, ...filteredData } = instructorData;
             const studentCount = studentList.length;
             const remainingSlots = maximumStudents - studentCount;
             const updatedFilteredData = {
