@@ -52,7 +52,7 @@ const getBasicTheoryTestQuestion = async (req, res) => {
 
 const getTotalFTTQuestions = async (req, res) => {
     try {
-        const snapshot = await db.collection('BTT').get();
+        const snapshot = await db.collection('FTT').get();
         const totalQuestions = snapshot.size;
         return res.status(200).json({ totalQuestions });
     } catch (error) {

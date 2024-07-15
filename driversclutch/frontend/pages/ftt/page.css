@@ -1,0 +1,151 @@
+.dashboard {
+    background-color: rgba(255, 255, 255, 0.654);
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px 60px;
+    text-align: left;
+    min-width: 320px;
+    max-width: calc(100% - 450px);
+    margin: auto;
+    margin-top: 154px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-container {
+    text-align: left;
+    flex: 1;
+    margin-bottom: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard {
+      flex-direction: column;
+      padding: 20px 30px;
+    }
+    .btn, .nxt-submit, .retake-btn {
+      width: 20%;
+      font-size: 14px; 
+    }
+  }
+  
+  h2 {
+    font-size: 38px;
+  }
+    
+  .title {
+    width: 100%;
+    text-align: left;
+  }
+    
+  .qn {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 40px;
+  }
+  
+  .score {
+    font-size: 28px;
+    color: rgb(60, 79, 110);
+    text-align: center;
+  }
+  
+  .incorrect-header {
+    width: 100%;
+    font-size: 23px;
+    text-align: left;
+  }
+  
+  .qn-indicator {
+    text-align: center;
+    flex: 1;
+  }
+    
+  .options {
+    line-height: 60px;
+    font-size: 17px;
+    color: #595959;
+  }
+  
+  .ans {
+    line-height: 60px;
+    font-size: 17px;
+  }
+  
+  .your-ans {
+    color: rgb(171, 87, 87);
+  }
+  
+  .correct {
+    color: rgb(52, 121, 52)
+  }
+  
+  .wrong-qn {
+    background-color: #ffffffbc;
+    border-radius: 8px;
+    padding: 30px;
+    margin-bottom: 10px;
+  }
+    
+  .button {
+    padding-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+    
+  .btn, .nxt-submit, .retake-btn {
+    background-color: rgb(60, 79, 110);
+    width: 100px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  .btn:hover, .nxt-submit:hover, .retake-btn:hover {
+    box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+  }
+  
+  .btn:active, .nxt-submit:active, .retake-btn:active {
+    transform: scale(0.98);
+  }
+  
+  .retake-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .btn:disabled, .nxt-submit:disabled {
+    background-color: #bbb9b9;
+    cursor: not-allowed;
+  }
+  
+  .question-container {
+    margin-bottom: 20px;
+  }
+  
+  .image {
+    display: flex;
+    justify-content: center;
+    margin: 10px 0; 
+  }
+  
+  .image img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  
+  
+  
