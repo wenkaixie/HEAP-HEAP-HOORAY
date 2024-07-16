@@ -1,17 +1,15 @@
 const express = require('express');
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const multer = require('multer');
 
 const PORT = 8001;
 
-const {db, storage} = require('./firebase/firebase.js')
+const {db} = require('./firebase/firebase.js')
 // const authMiddleware = require('./middlewares/authMiddleware');
 // const errorHandler = require('./middlewares/errorMiddleware');
 const logger = require('./middlewares/loggerMiddleware');
 
 const app = express();
-const upload = multer({ storage: multer.memoryStorage() });
 
 // Middleware
 app.use(express.json());

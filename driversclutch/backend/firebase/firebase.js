@@ -25,8 +25,9 @@ admin.initializeApp({
 
 const db = admin.firestore();
 const storage = admin.storage();
+const bucket = admin.storage().bucket();
 
-module.exports = { admin, db, storage };
+module.exports = { admin, db, storage, bucket };
 
 
 // const {initializeApp, cert} = require("firebase-admin/app")
