@@ -56,7 +56,7 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
     // });
 
     try {
-      console.log('trying to post', topUpValue);
+      console.log('trying to put', topUpValue);
       const response = await axios.put('http://localhost:8001/students/balance/topup', topUpValue, {
         headers: {
           'Content-Type': 'application/json',

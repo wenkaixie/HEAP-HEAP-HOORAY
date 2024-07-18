@@ -7,10 +7,157 @@ import './page.css';
 import '@/app/components/card/card.css';
 import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
+import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
+import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
+
+const InstructorDetails = ({ togglePopup, instructor }) => {
+  const userDocID = localStorage.getItem('userDocID');
+
+  const fullyEnrol = async (event) => {
+    event.preventDefault();
+    const instructorEmail = instructor.email;
+
+    const instructorQuery = query(collection(FirestoreDB, 'instructors'), where('email', '==', instructor.email));
+		const instructorSnapshot = await getDocs(instructorQuery);
+
+		if (!instructorSnapshot.empty) {
+			const instructorDocID = instructorSnapshot.docs[0].id;
+
+      const details = {
+        studentDocId: userDocID,
+        instructorDocId: instructorDocID
+      }
+      
+      try {
+        console.log('trying to post', details);
+        const response = await axios.post('http://localhost:8001/students/privateInstructors/selected', details, {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
+        console.log('Full enrolment suceeded');
+        console.log('Enrolment Data ', response.data);
+      } catch (error) {
+        console.log('Error in enrolment ', error);
+      }
+		}
+  };
+
+  const handleEnrolment = async (event) => {
+    event.preventDefault();
+
+    const deductValue = {
+      studentID: userDocID,
+      amount: - Number(instructor.enrolmentFee)
+    }
+    
+    try {
+      console.log('trying to put', deductValue);
+      const response = await axios.put('http://localhost:8001/students/balance/topup', deductValue, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      console.log('Payment succeeded!');
+      console.log('Balance updated: ', response.data);
+      fullyEnrol(event);
+      setTimeout(() => {
+        togglePopup(); 
+      }, 2000);
+    } catch (error) {
+      console.log('Error in deduct balance: ', error);
+    }
+  };
+  
+  const handleEnrolClick = (event) => {
+    // if (profileData.instructor) {
+    //   alert('Already enrolled to an instructor');
+    // } else {
+      handleEnrolment(event);
+    // }
+  };
+
+  return (
+    <div className="popup-box">
+      <div>
+        <h2 style={{ fontSize: '30px' }}>Instructor Details</h2>
+      </div>
+      <br />
+      <div className='container'>
+        <div className="profile-container">
+          <div className="profile-picture-container">
+            <img src={instructor.profileImage} className="profile-picture" alt="Profile" />
+          </div>
+        </div>
+        <div className='container-row'>
+          <div>
+            <h3>Name</h3>
+            <p>{instructor.firstName} {instructor.lastName}</p>
+          </div>
+          <div>
+            <h3>Email</h3>
+            <p>{instructor.email}</p>
+          </div>
+        </div>
+        <div className='container-row'>
+          <div>
+            <h3>Locations</h3>
+            <p>{instructor.locations.join(', ')}</p>
+          </div>
+          <div>
+            <h3>Pass Rate</h3>
+            <p>{instructor.passRate}</p>
+          </div>
+        </div>
+        <div className='container-row'>
+          <div>
+            <h3>Lesson Duration</h3>
+            <p>{instructor.lessonDuration}</p>
+          </div>
+          <div>
+            <h3>Lesson Fee</h3>
+            <p>{instructor.lessonFee}</p>
+          </div>
+        </div>
+        <div className='container-row'>
+          <div>
+            <h3>Enrolment Fee</h3>
+            <p>{instructor.enrolmentFee}</p>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div className='buttons-container'>
+        <button className='book-button' onClick={handleEnrolClick}>Enrol Now</button>
+        <button className='book-button' onClick={togglePopup}>Close</button>
+      </div>
+    </div>
+  );
+};
 
 const Dashboard = () => {
   const [instructors, setInstructors] = useState([]);
+  const [profileData, setProfileData] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+          throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setProfileData(response.data.data);
+      } catch (error) {
+        console.error('Error fetching profileData:', error);
+        setError(`Network Error: ${error.message}`);
+      }
+    };
+
+    fetchProfileData();
+  }, []);
 
   useEffect(() => {
     const fetchInstructors = async () => {
@@ -29,7 +176,7 @@ const Dashboard = () => {
 
   const renderContent = () => {
     const cards = instructors.map((instructor, index) => (
-      <CardManual key={index} instructor={instructor} />
+      <CardManual key={index} instructor={instructor} profileData={profileData} />
     ));
 
     return (
@@ -52,14 +199,20 @@ const Dashboard = () => {
       <Navbar />
       <div className="dashboard-container">
         <h2>Private Instructors</h2>
-        <div className="instructor-class" style ={{fontSize: '18px'}}>Class 3 Instructors</div>
+        <div className="instructor-class" style ={{ fontSize: '18px'}}>Class 3 Instructors</div>
         {renderContent()}
       </div>
     </div>
   );
 };
 
-const CardManual = ({ instructor }) => {
+const CardManual = ({ instructor, profileData }) => {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
   return (
     <div className="card">
       <div className="card-container">
@@ -69,7 +222,7 @@ const CardManual = ({ instructor }) => {
           </h3>
           <div className="profile-container">
             <div className="profile-picture-container">
-              <img src="profile.jpg" className="profile-picture" alt="Profile" />
+              <img src={instructor.profileImage} className="profile-picture" alt="Profile" />
             </div>
           </div>
           <div>
@@ -77,8 +230,11 @@ const CardManual = ({ instructor }) => {
             <span>Lesson Fee: ${instructor.lessonFee}</span>
             <br />
           </div>
+          <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
+            <InstructorDetails togglePopup={togglePopup} instructor={instructor} />
+          </div>
         </div>
-        <button className="book-button" style={{ fontSize: '15px'}}>View Details</button>
+        <button onClick={togglePopup} className="book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
       </div>
       <div className="inner-card-container">
         <CardManualDetails instructor={instructor} />

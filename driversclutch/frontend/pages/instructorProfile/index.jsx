@@ -8,7 +8,7 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
 import { storage } from '../../src/app/firebase/firebase_config';
-import { ref, uploadBytes } from 'firebase/storage';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 
 const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
@@ -264,6 +264,7 @@ const Dashboard = () => {
     const [isPictureVisible, setIsPictureVisible] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [profileData, setProfileData] = useState(null);
+    const [profilePic, setProfilePic] = useState(null);
     const [error, setError] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
 
@@ -289,8 +290,23 @@ const Dashboard = () => {
       }
     };
 
+    const fetchProfilePic = async () => {
+      try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+          throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`http://localhost:8001/instructors/profile/getPicture/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setProfilePic(response.data);
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
     useEffect(() => {
       fetchProfileData();
+      fetchProfilePic();
     }, []);
 
   const handleFileChange = (event) => {
@@ -304,26 +320,40 @@ const Dashboard = () => {
     }
 
     const imageRef = ref(storage, `images/${selectedFile.name + v4()}`);
-    uploadBytes(imageRef, selectedFile).then(() => {
-      console.log("image uploaded successfully");
-      alert("Image Uploaded");
-    });
+    const userDocID = localStorage.getItem('userDocID');
+    console.log(profilePic.profilePicURL);
+    try{
+      await uploadBytes(imageRef, selectedFile).then(() => {
+        console.log("image uploaded successfully");
+        alert("Image Uploaded");
+      });
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
+      // Get the download URL
+      const downloadURL = await getDownloadURL(imageRef);
+      console.log("File available at", downloadURL);
+      // alert(`File available at ${downloadURL}`);
 
-    try {
-        const userDocID = localStorage.getItem('userDocID');
-        const response = await axios.post(`http://localhost:8001/instructors/profile/picture/?id=${userDocID}`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-        console.log('Picture uploaded:', response.data);
-        fetchProfileData(); // Refresh profile data to show the new picture
-        setIsPictureVisible(false);
+      const profilePicURLS = {
+        oldImageURL: profilePic.profilePicURL,
+        newImageURL: downloadURL,
+        instructorID: userDocID
+      }
+
+      try {
+          const response = await axios.post(`http://localhost:8001/instructors/profile/updatePicture`, profilePicURLS, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+          });
+          console.log('Picture uploaded:', response.data);
+          fetchProfileData(); // Refresh profile data to show the new picture
+          setIsPictureVisible(false);
+        } catch (error) {
+            console.log('Error uploading picture:', error);
+        }
     } catch (error) {
-        console.log('Error uploading picture:', error);
+      console.error("Error uploading image: ", error);
+      alert("Error uploading image");
     }
 }
  
@@ -338,7 +368,7 @@ const Dashboard = () => {
           <div className="profile-container">
             <div className='profile-container-row'>
               <div className="profile-picture-container profile-container-content">
-                  <img src={profileData.profileImage} class="profile-picture"/>
+                  <img src={profilePic.profilePicURL} class="profile-picture"/>
                   <div className="overlay">
                     <div className="edit-icon" onClick={togglePicture}>✎</div>
                   </div>
@@ -429,6 +459,7 @@ const Dashboard = () => {
               </div>
               <div className='buttons-container'>
                 <button className='book-button' onClick={handleUploadPicture}>Upload Picture</button>
+                <button className='book-button' onClick={togglePicture}>Cancel</button>
               </div>
             </div>
           </div>
