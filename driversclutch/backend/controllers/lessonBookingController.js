@@ -15,19 +15,12 @@ const getInstructorTimeslots = async (req, res) => {
         if (instructorQuerySnapshot.empty) {
             return res.status(404).json({code: 404, message: 'No instructor found for the given student email.'});
         }
-
         // Assuming only one document contains the specific student email
         const instructorDoc = instructorQuerySnapshot.docs[0];
 
         //retrieve only specified fields
         const { firstName, lastName, workStart, workEnd, lessonDuration, unavailableTimeslots = []} = instructorDoc.data();
 
-        //get instructor fullname accounting for chi/eng name but probs nid to edit function / just dc
-        // if (firstName.indexOf(' ') == -1) {
-        //     const fullname = `${firstName} ${lastName}`;
-        // } else {
-        //     const fullname = `${lastName} ${firstName}`;
-        // }
         const fullname = `${lastName} ${firstName}`;
 
         // Convert Firestore Timestamps to ISO 8601 strings

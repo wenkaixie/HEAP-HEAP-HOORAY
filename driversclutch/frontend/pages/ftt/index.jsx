@@ -8,7 +8,7 @@ import axios from 'axios';
 
 const Dashboard = () => {
     // const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
-    const numOfQnsToDisplay = 2; // Number of questions to display in the quiz
+    const numOfQnsToDisplay = 10; // Number of questions to display in the quiz
 
     const [totalQuestions, setTotalQuestions] = useState(0);
     const [numOfQuestionsInDB, setNumOfQuestionsInDB] = useState(null);

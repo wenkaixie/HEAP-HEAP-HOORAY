@@ -8,67 +8,6 @@ import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
 
-// const ChangePasswordInfo = () => {
-//   const [oldPassword, setOldPassword] = useState("");
-//   const [newPassword, setNewPassword] = useState("");
-//   const [newPasswordConfirmed, setNewPasswordConfirmed] = useState("");
-
-//   const handleOldPasswordChange = (event) => {
-//     setOldPassword(event.target.value);
-//   };
-
-//   const handleNewPasswordChange = (event) => {
-//     setNewPassword(event.target.value);
-//   };
-
-//   const handleNewPasswordConfirmedChange = (event) => {
-//     setNewPasswordConfirmed(event.target.value);
-//   };
-
-//   return (
-//     <div className='profile-container'>
-//       <div className='profile-container-row'>
-//         <h2>Change Password</h2>
-//       </div>
-//       <div className='profile-container-row'>
-//         <div>
-//           <h3>Old Password</h3>
-//           <input 
-//             type="password"
-//             required
-//             value={oldPassword}
-//             onChange={handleOldPasswordChange}
-//             className='large-input'
-//           />
-//         </div>
-//       </div>
-//       <div className='profile-container-row'>
-//         <div>
-//           <h3>New Password</h3>
-//           <input 
-//             type="password"
-//             required
-//             value={newPassword}
-//             onChange={handleNewPasswordChange}
-//             className='large-input'
-//           />
-//         </div>
-//         <div>
-//           <h3>Confirm New Password</h3>
-//           <input 
-//             type="password"
-//             required
-//             value={newPasswordConfirmed}
-//             onChange={handleNewPasswordConfirmedChange}
-//             className='large-input'
-//           />
-//         </div>
-//       </div>
-//       <br />
-//     </div>
-//   )
-// }
-
 const Dashboard = () => {
   const [isPictureVisible, setIsPictureVisible] = useState(false);
   const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -84,23 +23,47 @@ const Dashboard = () => {
     setIsPopupVisible(!isPopupVisible);
   }
 
-  const fetchProfileData = async () => {
-    try {
-      const userDocID = localStorage.getItem('userDocID');
-      if (!userDocID) {
-        throw new Error('User document ID not found in localStorage');
-      }
-      const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
-      console.log('API Response:', response.data);
-      setProfileData(response.data.data);
+  // const fetchProfileData = async () => {
+  //   try {
+  //     const userDocID = localStorage.getItem('userDocID');
+  //     if (!userDocID) {
+  //       throw new Error('User document ID not found in localStorage');
+  //     }
+  //     const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+  //     console.log('API Response:', response.data);
+  //     setProfileData(response.data.data);
 
       
 
-      setInstructorName(response.data.data.instructor);
+  //     setInstructorName(response.data.data.instructorFullName);
+  //     console.log('Instructor Name:', instructorFullName);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+
+  const fetchProfileData = async () => {
+    try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+            throw new Error('User document ID not found in localStorage');
+        }
+
+        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+
+        const profileData = response.data.data;
+        setProfileData(profileData);
+
+        if (profileData.instructorFullName) {
+            setInstructorName(profileData.instructorFullName);
+            console.log('Instructor Name:', profileData.instructorFullName);
+        }
     } catch (error) {
-      setError(error.message);
+        setError(error.message);
     }
   };
+
 
   useEffect(() => {
     fetchProfileData();

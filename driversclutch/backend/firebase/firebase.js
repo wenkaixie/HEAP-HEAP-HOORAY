@@ -28,17 +28,3 @@ const storage = admin.storage();
 const bucket = admin.storage().bucket();
 
 module.exports = { admin, db, storage, bucket };
-
-
-// const {initializeApp, cert} = require("firebase-admin/app")
-// const {getFirestore} = require("firebase-admin/firestore")
-
-// const serviceAccount = require('./creds.json')
-
-// initializeApp( {
-//     credential: cert(serviceAccount)
-// })
-
-// const db = getFirestore()
-
-// module.exports = { db }

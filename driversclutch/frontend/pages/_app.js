@@ -36,8 +36,11 @@ import StudentRoute from '../src/app/components/routeProtection/studentRoute'; /
 import InstructorRoute from '../src/app/components/routeProtection/InstructorRoute'; // Adjust the path as necessary
 import '../src/app/components/routeProtection/popup.css'; // Import the popup styles
 
-const noAuthRequired = ['/', '/login']; // Define routes that don't require authentication
+// routes that don't require authentication
+const noAuthRequired = ['/', '/login']; 
+// routes that require instructor authentication
 const instructorRoutes = ['/instructorHome', '/instructorProfile', '/instructorAvailability', '/instructorStudents']; // Define instructor-specific routes
+// routes that require student authentication
 const studentRoutes = ['/home', '/profile', '/booking', '/paymentBooking', '/balance', '/btt', '/ftt', '/auto', '/manual', '/bookingList']; // Define student-specific routes
 
 function MyApp({ Component, pageProps }) {
