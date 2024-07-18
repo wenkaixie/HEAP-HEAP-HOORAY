@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-import '@/app/components/card/card.css';
-import '@/app/components/background/background.css';
+
 import '@/app/components/dashboard/dashboard.css';
 import Image from 'next/image';
 import axios from 'axios';
@@ -153,13 +152,13 @@ const LessonCard = ({ index, lesson, lessonDuration }) => {
           <p>{formattedStartTime} - {formattedEndTime}</p>
         </div>
       </div>
-      <div className="card-content card-image">
+      {/* <div className="card-content card-image">
         <Image
           src='/assets/practical-driving.png'
           width={100}
           height={100}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

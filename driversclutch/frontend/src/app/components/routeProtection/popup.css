@@ -17,6 +17,8 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    max-height: 80vh; /* Limit the height of the popup content */
+    overflow-y: auto; /* Add vertical scrolling if content exceeds the max-height */
 }
 
 .popup-content h2 {
@@ -36,3 +38,4 @@
 .popup-content button:hover {
     background: #2980b9;
 }
+

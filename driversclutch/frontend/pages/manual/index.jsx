@@ -225,7 +225,7 @@ const CardManual = ({ instructor, profileData }) => {
             </div>
           </div>
           <div>
-            <span>Enrollment Fee: ${instructor.enrollmentFee}</span>
+            <span>Enrolment Fee: ${instructor.enrolmentFee}</span>
             <span>Lesson Fee: ${instructor.lessonFee}</span>
             <br />
           </div>

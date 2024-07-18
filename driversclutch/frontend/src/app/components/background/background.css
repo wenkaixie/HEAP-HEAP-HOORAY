@@ -1,3 +1,4 @@
+/* background.css */
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
@@ -6,6 +7,7 @@ body {
   background-image: url('/assets/drive-background.jpg');
   background-size: cover; 
   background-position: center; 
-  background-repeat: no-repeat;
-  min-height: 100vh; /* Ensure the body is at least the height of the viewport */
+  background-attachment: fixed; /* Keeps the background fixed while scrolling */
+  min-height: 100vh;
 }
+

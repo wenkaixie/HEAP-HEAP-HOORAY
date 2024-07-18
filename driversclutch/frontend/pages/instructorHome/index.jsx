@@ -1,6 +1,5 @@
 import Navbar from "@/app/components/instructorNavbar/navbar";
 import './page.css';
-import '@/app/components/card/card.css';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
 
