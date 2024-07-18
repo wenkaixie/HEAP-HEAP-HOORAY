@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
 import './page.css';
-import '@/app/components/card/card.css';
+
 import '@/app/components/background/background.css';
-import '@/app/components/dashboard/dashboard.css';
+
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import axios from 'axios';

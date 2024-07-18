@@ -1,12 +1,9 @@
 "use client";
-
+import '@/app/components/background/background.css';
 import React, { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import axios from 'axios';
 import './page.css';
-import '@/app/components/card/card.css';
-import '@/app/components/background/background.css';
-import '@/app/components/dashboard/dashboard.css';
 
 const Dashboard = () => {
   const [instructors, setInstructors] = useState([]);
@@ -52,7 +49,7 @@ const Dashboard = () => {
       <Navbar />
       <div className="dashboard-container">
         <h2>Private Instructors</h2>
-        <div className="instructor-class" style ={{fontSize: '18px'}}>Class 3A Instructors</div>
+        <div className="instructor-class" style={{ fontSize: '18px' }}>Class 3A Instructors</div>
         {renderContent()}
       </div>
     </div>
@@ -78,16 +75,16 @@ const CardAuto = ({ instructor }) => {
             <br />
           </div>
         </div>
-        <button className="book-button" style={{ fontSize: '15px'}}>View Details</button>
       </div>
       <div className="inner-card-container">
         <CardAutoDetails instructor={instructor} />
+        <div>
+        <button className="book-button" style={{ fontSize: '15px' }}>View Details</button>
+        </div>
       </div>
     </div>
   );
 };
-
-
 
 const CardAutoDetails = ({ instructor }) => {
   return (

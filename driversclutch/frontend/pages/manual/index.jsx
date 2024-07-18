@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import axios from 'axios';
 import './page.css';
-import '@/app/components/card/card.css';
 import '@/app/components/background/background.css';
-import '@/app/components/dashboard/dashboard.css';
 import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
 import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
 

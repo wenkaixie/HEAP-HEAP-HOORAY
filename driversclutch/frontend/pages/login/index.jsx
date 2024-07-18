@@ -124,7 +124,7 @@ const Login = () => {
 	};
 
   return (
-    <div className="container">
+    <div className="login-wrapper">
       <div className="login-form">
         <img src="/assets/logo_black.png" alt="Drivers Clutch Logo" className="applogo" />
         <div className="notification">
@@ -179,3 +179,4 @@ const Login = () => {
 };
 
 export default Login;
+

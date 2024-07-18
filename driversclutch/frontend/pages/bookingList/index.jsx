@@ -3,9 +3,7 @@ import { useState, useEffect } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-import '@/app/components/card/card.css';
 import '@/app/components/background/background.css';
-import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
 
 const Dashboard = () => {
