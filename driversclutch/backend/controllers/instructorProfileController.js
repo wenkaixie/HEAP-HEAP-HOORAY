@@ -101,20 +101,31 @@ const getProfilePicture = async (req, res) => {
 }
 
 
+// function getFilePathFromUrl(url) {
+//     const decodedUrl = decodeURIComponent(url);
+//     const regex = /storage\.googleapis\.com\/driversclutch\.appspot\.com\/([^?]+)/; 
+//     const match = decodedUrl.match(regex);
+//     if (match) {
+//         return match[1]; // This is the file path
+//     } else {
+//         throw new Error('Invalid URL format');
+//     }
+// }
+
 function getFilePathFromUrl(url) {
     const decodedUrl = decodeURIComponent(url);
-    const regex = /storage\.googleapis\.com\/driversclutch\.appspot\.com\/([^?]+)/; 
+    const regex = /firebasestorage\.googleapis\.com\/v0\/b\/driversclutch\.appspot\.com\/o\/(.+?)\?alt=media/;
     const match = decodedUrl.match(regex);
     if (match) {
-        return match[1]; // This is the file path
+        return match[1].replace(/%2F/g, '/'); // Replace %2F with /
     } else {
         throw new Error('Invalid URL format');
     }
 }
 
-
 const updateProfilePicture = async (req, res) => {
     const { oldImageURL, newImageURL, instructorID } = req.body;
+    console.log("update profile picture");
 
     try {
         if (oldImageURL != "") {
@@ -128,6 +139,7 @@ const updateProfilePicture = async (req, res) => {
         return res.status(200).send('Old profile image deleted from storage and new profile image updated successfully');
     }
     catch (error) {
+        console.error('Error during profile picture update:', error);
         return res.status(500).send('Failed to delete image: ' + error.message);
     }
 }
@@ -136,5 +148,5 @@ module.exports = {
     getInfo,
     updateInfo,
     getProfilePicture,
-    updateProfilePicture
+    updateProfilePicture,
 }

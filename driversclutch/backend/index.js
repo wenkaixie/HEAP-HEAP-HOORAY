@@ -62,3 +62,6 @@ app.use('/students/balance', require('./routes/balanceRouter.js'));
 
 // for path /students/theoryTest
 app.use('/students/theoryTest', require('./routes/theoryTestRouter.js'));
+
+app.use('/webscraping', require('./routes/bookingRouter.js'));
+

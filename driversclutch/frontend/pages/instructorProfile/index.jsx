@@ -264,9 +264,10 @@ const Dashboard = () => {
     const [isPictureVisible, setIsPictureVisible] = useState(false);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [profileData, setProfileData] = useState(null);
-    const [profilePic, setProfilePic] = useState(null);
+    const [profilePic, setProfilePic] = useState("");
     const [error, setError] = useState(null);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const togglePicture = () => {
       setIsPictureVisible(!isPictureVisible);
@@ -275,7 +276,7 @@ const Dashboard = () => {
     const togglePopup = () => {
         setIsPopupVisible(!isPopupVisible);
     }
-
+    
     const fetchProfileData = async () => {
       try {
         const userDocID = localStorage.getItem('userDocID');
@@ -285,6 +286,7 @@ const Dashboard = () => {
         const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setProfileData(response.data.data);
+        setIsLoading(false)
       } catch (error) {
         setError(error.message);
       }
@@ -298,12 +300,13 @@ const Dashboard = () => {
         }
         const response = await axios.get(`http://localhost:8001/instructors/profile/getPicture/?id=${userDocID}`);
         console.log('API Response:', response.data);
-        setProfilePic(response.data);
+        setProfilePic(response.data.profilePicURL);
+        setIsLoading(false)
       } catch (error) {
         setError(error.message);
       }
     };
-
+    
     useEffect(() => {
       fetchProfileData();
       fetchProfilePic();
@@ -321,23 +324,33 @@ const Dashboard = () => {
 
     const imageRef = ref(storage, `images/${selectedFile.name + v4()}`);
     const userDocID = localStorage.getItem('userDocID');
-    console.log(profilePic.profilePicURL);
+    //console.log(profilePic.profilePicURL);
     try{
       await uploadBytes(imageRef, selectedFile).then(() => {
         console.log("image uploaded successfully");
         alert("Image Uploaded");
       });
 
+      // // Get the download URL
+      // const downloadURL = await getDownloadURL(imageRef);
+      // console.log("File available at", downloadURL);
+      // // alert(`File available at ${downloadURL}`);
+
       // Get the download URL
       const downloadURL = await getDownloadURL(imageRef);
-      console.log("File available at", downloadURL);
-      // alert(`File available at ${downloadURL}`);
+
+      // // Remove the "https://" part from the download URL
+      // if (downloadURL.startsWith("https://")) {
+      //     downloadURL = downloadURL.replace("https://", "");
+      // }
 
       const profilePicURLS = {
-        oldImageURL: profilePic.profilePicURL,
+        oldImageURL: profilePic,
         newImageURL: downloadURL,
         instructorID: userDocID
       }
+
+      console.log("File available at", profilePicURLS);
 
       try {
           const response = await axios.post(`http://localhost:8001/instructors/profile/updatePicture`, profilePicURLS, {
@@ -346,9 +359,10 @@ const Dashboard = () => {
               },
           });
           console.log('Picture uploaded:', response.data);
-          fetchProfileData(); // Refresh profile data to show the new picture
+          await fetchProfileData(); // Refresh profile data to show the new picture
           setTimeout(() => {
-            togglePicture(); 
+            togglePicture();
+            window.location.reload(); 
           }, 1000);
         } catch (error) {
             console.log('Error uploading picture:', error);
@@ -363,6 +377,12 @@ const Dashboard = () => {
       return null;
     }
 
+    if (isLoading) {
+      return <div>Loading...</div>
+    }
+
+    console.log('Profile Pic:', profilePic);
+
     return (
       <div className="dashboard">
         <div className="dashboard-container">
@@ -370,7 +390,7 @@ const Dashboard = () => {
           <div className="profile-container">
             <div className='profile-container-row'>
               <div className="profile-picture-container profile-container-content">
-                  <img src={profilePic.profilePicURL} class="profile-picture"/>
+                  <img src={profilePic ?? ""} className="profile-picture"/>
                   <div className="overlay">
                     <div className="edit-icon" onClick={togglePicture}>✎</div>
                   </div>
@@ -454,7 +474,7 @@ const Dashboard = () => {
             <div className='picture-box'>
               <h3>Change Photo</h3>
               <div className="profile-picture-container">
-                <img src={profileData.profileImage} class="profile-picture"/>
+                <img src={profilePic ?? ""} className="profile-picture"/>
               </div>
               <div>
                 <input className='custom-file-input' type="file" onChange={handleFileChange} />
