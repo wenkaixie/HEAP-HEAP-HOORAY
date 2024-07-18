@@ -347,7 +347,9 @@ const Dashboard = () => {
           });
           console.log('Picture uploaded:', response.data);
           fetchProfileData(); // Refresh profile data to show the new picture
-          setIsPictureVisible(false);
+          setTimeout(() => {
+            togglePicture(); 
+          }, 1000);
         } catch (error) {
             console.log('Error uploading picture:', error);
         }

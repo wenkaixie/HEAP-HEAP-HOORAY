@@ -15,7 +15,6 @@ const InstructorDetails = ({ togglePopup, instructor }) => {
 
   const fullyEnrol = async (event) => {
     event.preventDefault();
-    const instructorEmail = instructor.email;
 
     const instructorQuery = query(collection(FirestoreDB, 'instructors'), where('email', '==', instructor.email));
 		const instructorSnapshot = await getDocs(instructorQuery);
@@ -63,18 +62,18 @@ const InstructorDetails = ({ togglePopup, instructor }) => {
       fullyEnrol(event);
       setTimeout(() => {
         togglePopup(); 
-      }, 2000);
+      }, 1000);
     } catch (error) {
       console.log('Error in deduct balance: ', error);
     }
   };
   
   const handleEnrolClick = (event) => {
-    // if (profileData.instructor) {
-    //   alert('Already enrolled to an instructor');
-    // } else {
+    if (profileData.instructor) {
+      alert('Already enrolled to an instructor');
+    } else {
       handleEnrolment(event);
-    // }
+    }
   };
 
   return (
