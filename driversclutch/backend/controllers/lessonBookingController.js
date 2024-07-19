@@ -116,19 +116,25 @@ const bookedTimeslotInstructor = async (req, res) => {
     try {
         const timestamps = timeslots.map(ts => admin.firestore.Timestamp.fromDate(new Date(ts)));
 
-        const lessonData = {
-            student: studentID,
-            timeslots: timestamps
-        };
-
         const studentDoc = await db.collection("students").doc(studentID).get();
         const instructorID = studentDoc.data().instructor;
 
-        
-        await db.collection('instructors')
+        const instructorLessonsRef = db.collection('instructors')
             .doc(instructorID)
-            .collection('upcomingLessons')
-            .add(lessonData);
+            .collection('upcomingLessons');
+
+        const batch = db.batch();
+
+        timestamps.forEach(timestamp => {
+            const lessonData = {
+                student: studentID,
+                timeslot: timestamp
+            };
+            const lessonDocRef = instructorLessonsRef.doc();
+            batch.set(lessonDocRef, lessonData);
+        });
+
+        await batch.commit();
 
         return res.status(200).json({code: 200, message: 'Upcoming lesson added successfully'});
     }
