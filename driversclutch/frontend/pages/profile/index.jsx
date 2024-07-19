@@ -62,14 +62,6 @@ const Dashboard = () => {
         <div className="profile-container">
           <div className='profile-container-row'>
             <div>
-              <div className="profile-picture-container">
-                <img src="profile.jpg" className="profile-picture" />
-                <div className="overlay">
-                  <div className="edit-icon" onClick={togglePicture}>✎</div>
-                </div>
-              </div>
-            </div>
-            <div>
               <h3>First Name</h3>
               <p>{profileData.firstName}</p>
             </div>
@@ -112,15 +104,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
-          <div className='popup-box'>
-            <ChangePasswordInfo />
-            <div className='buttons-container'>
-              <button className='book-button' onClick={togglePopup}>Cancel</button>
-              <button className='book-button' onClick={togglePopup}>Change Password</button>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

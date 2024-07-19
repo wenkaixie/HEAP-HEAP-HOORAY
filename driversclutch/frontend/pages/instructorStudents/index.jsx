@@ -56,7 +56,7 @@ const Dashboard = () => {
 };
 
 const Card = ({ student, lessonDuration }) => {
-  const [showUpcoming, setShowUpcoming] = useState(false);
+  const [showUpcoming, setShowUpcoming] = useState(true);
   const [showCompleted, setShowCompleted] = useState(false);
 
   return (
@@ -99,7 +99,7 @@ const InnerCard = ({ index, lesson, lessonDuration }) => {
   const startDate = new Date(lesson);
   const endDate = new Date(startDate.getTime() + lessonDuration * 60 * 60 * 1000);
 
-  const formattedStartDate = startDate.toLocaleDateString('en-US', {
+  const formattedStartDate = startDate.toLocaleDateString('en-GB', {
     year: 'numeric',
     month: 'long',
     day: 'numeric'
@@ -119,8 +119,8 @@ const InnerCard = ({ index, lesson, lessonDuration }) => {
     <div className='card'>
       <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
       <br></br>
-      <h3>{formattedStartDate}</h3>
-      <h3>{formattedStartTime} - {formattedEndTime}</h3>
+      <p>{formattedStartDate}</p>
+      <p>{formattedStartTime} - {formattedEndTime}</p>
     </div>
   );
 };

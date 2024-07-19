@@ -12,17 +12,17 @@ const getUpcomingLessons = async (req, res) => {
         const lessonsSnapshot = await db.collection("instructors").doc(instructorID).collection("upcomingLessons").get();
         const lessons = await Promise.all(lessonsSnapshot.docs.map(async (doc) => {
             const lessonData = doc.data();
-            const timeslots = lessonData.timeslots;
+            const timeslot = lessonData.timeslot;
             const studentDoc = await db.collection("students").doc(lessonData.student).get();
             const studentFirstName = studentDoc.exists ? studentDoc.data().firstName : null;
             const studentLastName = studentDoc.exists ? studentDoc.data().lastName : null;
             const studentName = studentFirstName + " " + studentLastName;
             
-            const timeslotsISO = timeslots.map(ts => ts.toDate().toISOString());
+            const timeslotISO = timeslot.toDate().toISOString();
 
             return {
                 id: doc.id,
-                timeslots: timeslotsISO,
+                timeslot: timeslotISO,
                 studentID: lessonData.student,
                 studentName: studentName
             };
