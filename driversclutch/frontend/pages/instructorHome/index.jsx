@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
-  // const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState(null);
   const [error, setError] = useState(null);
 
   const fetchBookingsData = async () => {
@@ -25,23 +25,23 @@ const Dashboard = () => {
   }
   };
 
-  // const fetchProfileData = async () => {
-  //   try {
-  //       const userDocID = localStorage.getItem('userDocID');
-  //       if (!userDocID) {
-  //       throw new Error('User document ID not found in localStorage');
-  //       }
-  //       const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
-  //       console.log('API Response:', response.data);
-  //       setProfileData(response.data.data);
-  //   } catch (error) {
-  //       setError(error.message);
-  //   }
-  //   };
+  const fetchProfileData = async () => {
+    try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
+        console.log('API Response:', response.data);
+        setProfileData(response.data.data);
+    } catch (error) {
+        setError(error.message);
+    }
+    };
 
   useEffect(() => {
     fetchBookingsData();
-    // fetchProfileData();
+    fetchProfileData();
   }, []);
 
   if (!bookingsData) {
@@ -51,24 +51,28 @@ const Dashboard = () => {
   const renderBookings = () => {
     const cards = [];
     bookingsData.upcomingLessons.sort((a, b) => a.timeslots - b.timeslots);
-    console.log(bookingsData.upcomingLessons[1]);
     for (let i = 0; i < bookingsData.upcomingLessons.length; i++) {
       if (i >= 3) {
         break;
       }
-      cards.push(<LessonCard key={i} index={i + bookingsData.lessonCount} lesson={bookingsData.upcomingLessons[i]} lessonDuration={bookingsData.lessonDuration} />);
+      cards.push(
+        <LessonCard
+          key={i}
+          studentName={bookingsData.upcomingLessons[i].studentName}
+          lesson={bookingsData.upcomingLessons[i].timeslot}
+          lessonDuration={profileData.lessonDuration}
+        />
+      );
     }
-
+  
     return (
       <div className="dashboard-details">
         {error ? (
           <p>{error}</p>
+        ) : bookingsData.upcomingLessons.length > 0 ? (
+          cards
         ) : (
-          bookingsData.upcomingLessons.length > 0 ? (
-            cards
-          ) : (
-            <p>Loading...</p>
-          )
+          <p>No upcoming bookings</p>
         )}
       </div>
     );
@@ -81,14 +85,28 @@ const Dashboard = () => {
           <div className="dashboard-details">
             {renderBookings()}
           </div>
-          <Link href="/bookingList" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
+          <Link href="/instructorStudents" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
+        </div>
+        <div className='dashboard-container'>
+          <div>
+            <h2>Set Lesson Availablity</h2>
+            <p>Edit your available timeslots</p>
+            <Link href="/instructorAvailability" className="book-button" style={{ textDecoration: "none"}}>Lesson Availability</Link>
+          </div>
+          <br></br>
+          <br></br>
+          <div>
+            <h2>My Profile</h2>
+            <p>View and edit your profile info</p>
+            <Link href="/instructorProfile" className="book-button" style={{ textDecoration: "none"}}>Manage Account</Link>
+          </div>
         </div>
       </div>
     );
   };
   
 
-  const LessonCard = ({ index, lesson, lessonDuration }) => {
+  const LessonCard = ({ studentName, lesson, lessonDuration }) => {
     const startDate = new Date(lesson);
     const endDate = new Date(startDate.getTime() + lessonDuration * 60 * 60 * 1000);
   
@@ -111,7 +129,7 @@ const Dashboard = () => {
     return (
       <div className='card'>
         <div className="card-content">
-          <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
+          <h2 style={{ fontSize: '25px' }}>Practical Lesson ({studentName})</h2>
           <br></br>
           <div className="card-details">
             <p>{formattedStartDate}</p>
