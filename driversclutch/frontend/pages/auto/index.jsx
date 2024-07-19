@@ -7,6 +7,8 @@ import './page.css';
 import '@/app/components/background/background.css';
 import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
 import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
+import { url } from '../../src/app/firebase/firebase_config';
+
 const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
   const userDocID = localStorage.getItem('userDocID');
 
@@ -26,7 +28,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
       
       try {
         console.log('trying to post', details);
-        const response = await axios.post('http://localhost:8001/students/privateInstructors/selected', details, {
+        const response = await axios.post(`${url}/students/privateInstructors/selected`, details, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -49,7 +51,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
     
     try {
       console.log('trying to pay', deductValue);
-      const response = await axios.put('http://localhost:8001/students/balance/payment', deductValue, {
+      const response = await axios.put(`${url}/students/balance/payment`, deductValue, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -138,7 +140,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+      const response = await axios.get(`${url}/students/profile/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setProfileData(response.data.data);
     } catch (error) {
@@ -154,7 +156,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
-        const response = await axios.get('http://localhost:8001/students/privateInstructors/auto');
+        const response = await axios.get(`${url}/students/privateInstructors/auto`);
         console.log('API Response:', response.data);
         setInstructors(response.data.data);
       } catch (error) {

@@ -1,10 +1,10 @@
-
 "use client";
 import React, { useState, useEffect } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
 import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
     // const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
@@ -17,7 +17,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchTotalQuestions = async () => {
             try {
-                const response = await axios.get('http://localhost:8001/students/theoryTest/totalBTTQuestions');
+                const response = await axios.get(`${url}/students/theoryTest/totalBTTQuestions`);
                 setNumOfQuestionsInDB(response.data.totalQuestions);  // Assuming response.data has a totalQuestions field
             } catch (error) {
                 console.error('Error fetching total questions:', error);
@@ -81,7 +81,7 @@ const Dashboard = () => {
             const fetchQnData = async () => {
                 try {
                     const serialNum = randomSN[questionNum];
-                    const response = await axios.get(`http://localhost:8001/students/theoryTest/basicTheoryTest/?sn=${serialNum}`);
+                    const response = await axios.get(`${url}/students/theoryTest/basicTheoryTest/?sn=${serialNum}`);
                     setQuestionData(response.data);
                 } catch (error) {
                     console.error('Error fetching question data:', error);
@@ -270,4 +270,3 @@ const BttPractice = () => {
 };
 
 export default BttPractice;
-

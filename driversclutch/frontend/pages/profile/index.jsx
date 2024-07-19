@@ -3,10 +3,9 @@
 import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-
 import '@/app/components/background/background.css';
-
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
   const [isPictureVisible, setIsPictureVisible] = useState(false);
@@ -30,7 +29,7 @@ const Dashboard = () => {
             throw new Error('User document ID not found in localStorage');
         }
 
-        const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/profile/?id=${userDocID}`);
+        const response = await axios.get(`${url}/students/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
 
         const profileData = response.data.data;

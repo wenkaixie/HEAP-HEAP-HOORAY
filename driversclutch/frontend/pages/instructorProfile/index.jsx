@@ -10,6 +10,7 @@ import axios from 'axios';
 import { storage } from '../../src/app/firebase/firebase_config';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
   const [carModel, setCarModel] = useState("");
@@ -83,7 +84,7 @@ const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
 
     try {
       console.log('Trying to postt', updatedProfileData);
-      const response = await axios.put('http://localhost:8001/instructors/profile/update', updatedProfileData, {
+      const response = await axios.put(`${url}/instructors/profile/update`, updatedProfileData, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -283,7 +284,7 @@ const Dashboard = () => {
         if (!userDocID) {
           throw new Error('User document ID not found in localStorage');
         }
-        const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
+        const response = await axios.get(`${url}/instructors/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setProfileData(response.data.data);
         setIsLoading(false)
@@ -298,7 +299,7 @@ const Dashboard = () => {
         if (!userDocID) {
           throw new Error('User document ID not found in localStorage');
         }
-        const response = await axios.get(`http://localhost:8001/instructors/profile/getPicture/?id=${userDocID}`);
+        const response = await axios.get(`${url}/instructors/profile/getPicture/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setProfilePic(response.data.profilePicURL);
         setIsLoading(false);
@@ -354,7 +355,7 @@ const Dashboard = () => {
       console.log("File available at", profilePicURLS);
 
       try {
-          const response = await axios.post(`http://localhost:8001/instructors/profile/updatePicture`, profilePicURLS, {
+          const response = await axios.post(`${url}/instructors/profile/updatePicture`, profilePicURLS, {
               headers: {
                 'Content-Type': 'application/json',
               },

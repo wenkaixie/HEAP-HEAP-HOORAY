@@ -6,6 +6,7 @@ import '@/app/components/card/card.css';
 import '@/app/components/background/background.css';
 import '@/app/components/dashboard/dashboard.css';
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
   const [studentsData, setStudentsData] = useState(null);
@@ -17,7 +18,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/instructors/studentList/?id=${userDocID}`);
+      const response = await axios.get(`${url}/instructors/studentList/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setStudentsData(response.data);
     } catch (error) {

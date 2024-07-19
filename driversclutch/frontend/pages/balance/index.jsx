@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
 import './page.css';
-
 import '@/app/components/background/background.css';
-
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -39,25 +38,9 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
 
     setLoading(true);
 
-    // const res = await fetch('/api/create-payment-intent', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ amount: amount * 100 }), // amount in cents
-    // });
-
-    // const { clientSecret } = await res.json();
-
-    // const result = await stripe.confirmCardPayment(clientSecret, {
-    //   payment_method: {
-    //     card: elements.getElement(CardElement),
-    //   },
-    // });
-
     try {
       console.log('trying to put', topUpValue);
-      const response = await axios.put('http://localhost:8001/students/balance/topup', topUpValue, {
+      const response = await axios.put(`${url}/students/balance/topup`, topUpValue, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -138,7 +121,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/students/balance/?id=${userDocID}`);
+      const response = await axios.get(`${url}/students/balance/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setBalanceData(response.data);
     } catch (error) {
