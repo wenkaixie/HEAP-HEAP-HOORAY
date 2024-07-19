@@ -219,6 +219,7 @@ const CardManual = ({ instructor, profileData }) => {
           </div>
           <div>
             <span>Enrolment Fee: ${instructor.enrolmentFee}</span>
+            <br />
             <span>Lesson Fee: ${instructor.lessonFee}</span>
             <br />
           </div>
@@ -226,14 +227,17 @@ const CardManual = ({ instructor, profileData }) => {
             <InstructorDetails togglePopup={togglePopup} instructor={instructor} profileData={profileData} />
           </div>
         </div>
-        <button onClick={togglePopup} className="book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
       </div>
       <div className="inner-card-container">
         <CardManualDetails instructor={instructor} />
+        
+          <button onClick={togglePopup} className="book-button">View Details</button>
+        
       </div>
     </div>
   );
 };
+
 
 
 
