@@ -37,7 +37,7 @@ import InstructorRoute from '../src/app/components/routeProtection/InstructorRou
 import '../src/app/components/routeProtection/popup.css'; // Import the popup styles
 
 // routes that don't require authentication
-const noAuthRequired = ['/', '/login']; 
+const noAuthRequired = ['/', '/login', '/bbdc']; 
 // routes that require instructor authentication
 const instructorRoutes = ['/instructorHome', '/instructorProfile', '/instructorAvailability', '/instructorStudents']; // Define instructor-specific routes
 // routes that require student authentication

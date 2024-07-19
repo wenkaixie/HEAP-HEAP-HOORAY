@@ -1,0 +1,286 @@
+/* page.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  .navbar {
+    background-color: #f0f0f0;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .sidebar {
+    background-color: #e0e0e0;
+    padding: 20px;
+    width: 250px;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu ul li {
+    margin: 10px 0;
+    cursor: pointer;
+  }
+  
+  .profile {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  button {
+    margin-top: 10px;
+    padding: 5px 10px;
+  }
+  
+  .calendar {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .monthButtons button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .monthButtons button.selected {
+    background-color: #0056b3;
+  }
+  
+  .calendarContainer {
+    background-color: #f9f9f9;
+    padding: 10px;
+  }
+  
+  .monthSelector {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+  }
+  
+  .days div {
+    padding: 5px;
+  }
+  
+  .selected-date {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .selected-date p {
+    margin-bottom: 10px;
+  }
+  
+  .selected-date button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .selected-date button.selected {
+    background-color: #0056b3;
+  }
+  
+  .day {
+    cursor: pointer;
+  }
+  
+  .day.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .slotContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .slot {
+    background-color: #f9f9f9;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .slot.selected {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .summary {
+    flex: 1;
+    padding: 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+  }
+  
+  .summary-item {
+    background-color: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .mainContent {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .dashboard {
+    width: 100%;
+  }
+  
+  .dashboard-container {
+    padding: 20px;
+  }
+  
+  .profile-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .profile-container-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  .profile-picture {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+  
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  .profile-picture-container:hover .overlay {
+    opacity: 1;
+  }
+  
+  .edit-icon {
+    cursor: pointer;
+  }
+  
+  .picture-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .picture-overlay.show {
+    display: flex;
+  }
+  
+  .picture-box {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .custom-file-input {
+    margin-top: 10px;
+  }
+  
+  .buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .book-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .book-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .confirm-button-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .confirm-button {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .confirm-button:hover {
+    background-color: #0056b3;
+  }
+  
