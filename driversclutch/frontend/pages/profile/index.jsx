@@ -59,6 +59,7 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="dashboard-container">
         <h2>Profile</h2>
+        <br></br>
         <div className="profile-container">
           <div className='profile-container-row'>
             <div>
