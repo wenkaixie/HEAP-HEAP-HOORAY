@@ -50,7 +50,8 @@ const Dashboard = () => {
 
   const renderBookings = () => {
     const cards = [];
-    bookingsData.upcomingLessons.sort();
+    bookingsData.upcomingLessons.sort((a, b) => a.timeslots - b.timeslots);
+    console.log(bookingsData.upcomingLessons[1]);
     for (let i = 0; i < bookingsData.upcomingLessons.length; i++) {
       if (i >= 3) {
         break;
@@ -76,63 +77,47 @@ const Dashboard = () => {
     return (
       <div className="dashboard">
         <div className="dashboard-container">
-          <h2>Calendar</h2>
-          <p>Use this area to describe one of your services.</p>
-          <div className="dashboard-details">
-            <span>1 hr</span>
-            <span>$70</span>
-          </div>
-          <button className="book-button">Book Now</button>
-        </div>
-        <div className="dashboard-container">
           <h2>Upcoming Bookings</h2>
           <div className="dashboard-details">
-            <div>
-              <Card1 />
-              <Card2 />
-              <Card3 />
-            </div>
+            {renderBookings()}
+          </div>
+          <Link href="/bookingList" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
+        </div>
+      </div>
+    );
+  };
+  
+
+  const LessonCard = ({ index, lesson, lessonDuration }) => {
+    const startDate = new Date(lesson);
+    const endDate = new Date(startDate.getTime() + lessonDuration * 60 * 60 * 1000);
+  
+    const formattedStartDate = startDate.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  
+    const formattedStartTime = startDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  
+    const formattedEndTime = endDate.toLocaleTimeString('en-US', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  
+    return (
+      <div className='card'>
+        <div className="card-content">
+          <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
+          <br></br>
+          <div className="card-details">
+            <p>{formattedStartDate}</p>
+            <p>{formattedStartTime} - {formattedEndTime}</p>
           </div>
         </div>
-      </div>
-    );
-  };
-  
-  const Card1 = () => {
-    return (
-      <div className="card">
-        <h3>Practical Driving Lesson (4)</h3>
-        <div className="card-details">
-          <span>8 Oct 2024</span>
-          <h3>1900H - 2100H</h3>
-        </div>
-        <button className="book-button">View Details</button>
-      </div>
-    );
-  };
-  
-  const Card2 = () => {
-    return (
-      <div className="card">
-        <h3>Practical Driving Lesson (5)</h3>
-        <div className="card-details">
-          <span>10 Oct 2024</span>
-          <h3>1900H - 2100H</h3>
-        </div>
-        <button className="book-button">View Details</button>
-      </div>
-    );
-  };
-  
-  const Card3 = () => {
-    return (
-      <div className="card">
-        <h3>Practical Driving Lesson (6)</h3>
-        <div className="card-details">
-          <span>12 Oct 2024</span>
-          <h3>1900H - 2100H</h3>
-        </div>
-        <button className="book-button">View Details</button>
       </div>
     );
   };

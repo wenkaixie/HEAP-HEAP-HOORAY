@@ -95,8 +95,6 @@ const InstructorDetails = ({ togglePopup, instructor }) => {
             <h3>Email</h3>
             <p>{instructor.email}</p>
           </div>
-        </div>
-        <div className='container-row'>
           <div>
             <h3>Locations</h3>
             <p>{instructor.locations.join(', ')}</p>
@@ -115,8 +113,6 @@ const InstructorDetails = ({ togglePopup, instructor }) => {
             <h3>Lesson Fee</h3>
             <p>{instructor.lessonFee}</p>
           </div>
-        </div>
-        <div className='container-row'>
           <div>
             <h3>Enrolment Fee</h3>
             <p>{instructor.enrolmentFee}</p>
@@ -137,22 +133,22 @@ const Dashboard = () => {
   const [profileData, setProfileData] = useState([]);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const userDocID = localStorage.getItem('userDocID');
-        if (!userDocID) {
-          throw new Error('User document ID not found in localStorage');
-        }
-        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
-        console.log('API Response:', response.data);
-        setProfileData(response.data.data);
-      } catch (error) {
-        console.error('Error fetching profileData:', error);
-        setError(`Network Error: ${error.message}`);
+  const fetchProfileData = async () => {
+    try {
+      const userDocID = localStorage.getItem('userDocID');
+      if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
       }
-    };
+      const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+      console.log('API Response:', response.data);
+      setProfileData(response.data.data);
+    } catch (error) {
+      console.error('Error fetching profileData:', error);
+      setError(`Network Error: ${error.message}`);
+    }
+  };
 
+  useEffect(() => {
     fetchProfileData();
   }, []);
 
