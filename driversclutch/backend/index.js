@@ -28,9 +28,10 @@ app.listen(PORT, (error) => {
 });
 
 //routes
-app.get("/", () => {
-	res.send("Express on Vercel");
+app.get("/", (req, res) => {
+	res.status(200).json("Welcome, your app is working well");
 });
+
 //authentication
 app.use("/auth", require("./routes/auth"));
 
