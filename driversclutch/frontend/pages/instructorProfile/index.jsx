@@ -314,6 +314,7 @@ const Dashboard = () => {
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
+    console.log("selected file");
   };
 
   const handleUploadPicture = async () => {
@@ -376,11 +377,7 @@ const Dashboard = () => {
       return null;
     }
 
-    if (isLoading) {
-      return <div>Loading...</div>
-    }
-
-    console.log('Profile Pic:', profilePic);
+    
 
     return (
       <div className="dashboard">
@@ -477,6 +474,7 @@ const Dashboard = () => {
               </div>
               <div>
                 <input className='custom-file-input' type="file" onChange={handleFileChange} />
+                {selectedFile && <p>File Chosen</p>}
               </div>
               <div className='buttons-container'>
                 <button className='book-button' onClick={handleUploadPicture}>Upload Picture</button>
