@@ -146,13 +146,6 @@ const LessonCard = ({ index, lesson, lessonDuration }) => {
           <p>{formattedStartTime} - {formattedEndTime}</p>
         </div>
       </div>
-      {/* <div className="card-content card-image">
-        <Image
-          src='/assets/practical-driving.png'
-          width={100}
-          height={100}
-        />
-      </div> */}
     </div>
   );
 };
