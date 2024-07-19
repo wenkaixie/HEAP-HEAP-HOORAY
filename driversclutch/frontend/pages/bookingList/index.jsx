@@ -46,7 +46,7 @@ const Dashboard = () => {
     }
 
     return (
-      <div className="dashboard-details">
+      <div className="list-dashboard-details">
         {error ? (
           <p>{error}</p>
         ) : (
@@ -68,7 +68,7 @@ const Dashboard = () => {
     }
 
     return (
-      <div className="dashboard-details">
+      <div className="list-dashboard-details">
         {error ? (
           <p>{error}</p>
         ) : (
@@ -83,21 +83,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-container">
+    <div className="list-dashboard">
+      <div className="list-dashboard-container">
         <h2>My Bookings</h2>
         <br></br>
         <h2 onClick={() => setShowUpcoming(!showUpcoming)} style={{ cursor: 'pointer', fontSize: '25px' }}>
           Upcoming Bookings ({bookingsData.upcomingLessons.length}) {showUpcoming ? <FaChevronUp /> : <FaChevronDown />}
         </h2>
-        <div className="dashboard-details">
+        <div className="list-dashboard-details">
           {showUpcoming && renderUpcomingBookings()}
         </div>
         <br></br>
         <h2 onClick={() => setShowCompleted(!showCompleted)} style={{ cursor: 'pointer', fontSize: '25px' }}>
           Completed Bookings ({bookingsData.completedLessons.length}) {showCompleted ? <FaChevronUp /> : <FaChevronDown />}
         </h2>
-        <div className="dashboard-details">
+        <div className="list-dashboard-details">
           {showCompleted && renderCompletedBookings()}
         </div>
       </div>
@@ -127,11 +127,11 @@ const LessonCard = ({ index, lesson, lessonDuration }) => {
   });
 
   return (
-    <div className='card'>
-      <div className="card-content">
+    <div className='list-card'>
+      <div className="list-card-content">
         <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
         <br></br>
-        <div className="card-details">
+        <div className="list-card-details">
           <p>{formattedStartDate}</p>
           <p>{formattedStartTime} - {formattedEndTime}</p>
         </div>

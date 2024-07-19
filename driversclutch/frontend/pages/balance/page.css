@@ -1,4 +1,4 @@
-.popup-overlay {
+.balance-popup-overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -11,11 +11,11 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  .popup-overlay.show {
+  .balance-popup-overlay.show {
     display: flex;
   }
 
-  .popup-box {
+  .balance-popup-box {
     background-color: white;
     padding: 20px 40px;
     border-radius: 8px;
@@ -35,7 +35,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0; 
 }
 
-.large-input {
+.balance-large-input {
     width: 200px;
     height: 24px;
     font-size: 15px; 
@@ -45,7 +45,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
 
-.container {
+.balance-container {
     position: relative;
     display: flex;
     min-width: 320px;
@@ -57,7 +57,7 @@ input[type=number]::-webkit-outer-spin-button {
     flex-direction: column;
   }
   
-  .container-row {
+  .balance-container-row {
     height: auto;
     min-width: 280px;
     display: flex;
@@ -66,18 +66,18 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
   }
   
-  .container-row div {
+  .balance-container-row div {
     flex: 1;
   }
 
-  .buttons-container {
+  .balance-buttons-container {
     width: auto;
     display: flex;
     flex-direction: row;
     gap: 20px;
   }
 
-  .dashboard {
+  .balance-dashboard {
     background-color: rgba(255, 255, 255, 0.654);
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -96,34 +96,34 @@ input[type=number]::-webkit-outer-spin-button {
     flex-wrap: wrap;
   }
   
-  .dashboard-container {
+  .balance-dashboard-container {
   text-align: left;
   flex: 1;
   margin-bottom: 20px;
   }
   
-  .dashboard-container h2{
+  .balance-dashboard-container h2{
   font-size: 38px;
   margin-top: 10px;
   margin-bottom: 10px;
   }
   
-  .dashboard-container p {
+  .balance-dashboard-container p {
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
   }
   
-  .dashboard-details {
+  .balance-dashboard-details {
   font-size: 18px;
   margin: 20px 0px;
   }
 
-  .dashboard-details span {
+  .balance-dashboard-details span {
   display: block;
   }
   
-  .book-button {
+  .balance-book-button {
   background-color: rgb(60, 79, 110);
   color: white;
   border: none;
@@ -133,17 +133,17 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: pointer;
   }
   
-  .book-button:hover {
+  .balance-book-button:hover {
   background-color: #333;
   }
 
   @media (max-width: 768px) {
-    .dashboard {
+    .balance-dashboard {
       flex-direction: column;
     }
   }
 
-  .card {
+  .balance-card {
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -153,28 +153,28 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: 20px;
   }
   
-  .card h2 {
+  .balance-card h2 {
     font-size: 24px;
     margin-top: 0px;
   }
 
-  .card h3 {
+  .balance-card h3 {
     font-size: 20px;
     margin-top: 10px;
   }
   
-  .card p {
+  .balance-card p {
     font-size: 16px;
     color: #666;
     margin-bottom: 20px;
   }
   
-  .card-details {
+  .balance-card-details {
     font-size: 18px;
     margin-bottom: 20px;
   }
   
-  .card-details span {
+  .balance-card-details span {
     display: block;
   }
   

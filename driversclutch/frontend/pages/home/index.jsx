@@ -68,7 +68,7 @@ const Dashboard = () => {
     }
   
     return (
-      <div className="dashboard-details">
+      <div className="home-dashboard-details">
         {error ? (
           <p>{error}</p>
         ) : bookingsData.upcomingLessons.length > 0 ? (
@@ -81,21 +81,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-container">
+    <div className="home-dashboard">
+      <div className="home-dashboard-container">
         <h2>Upcoming Bookings</h2>
-        <div className="dashboard-details">
+        <div className="home-dashboard-details">
           {renderBookings()}
         </div>
         <br></br>
-        <Link href="/bookingList" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
+        <Link href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
       </div>
-      <div className="dashboard-container">
+      <div className="home-dashboard-container">
         <div>
           <h2>Make a New Booking</h2>
           <p>Book a practical lesson</p>
           <br></br>
-          <Link href="/booking" className="book-button" style={{ textDecoration: "none"}}>Book Now</Link>
+          <Link href="/booking" className="home-book-button" style={{ textDecoration: "none"}}>Book Now</Link>
         </div>
         <br></br>
         <br></br>
@@ -103,7 +103,7 @@ const Dashboard = () => {
           <h2>Theory Practice</h2>
           <p>Test your knowledge with a mock theory test</p>
           <br></br>
-          <Link href="/btt" className="book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
+          <Link href="/btt" className="home-book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
         </div>
         <br></br>
         <br></br>
@@ -111,7 +111,7 @@ const Dashboard = () => {
           <h2>Top-up Credit Balance</h2>
           <p>Credit Balance: {profileData.balance}</p>
           <br></br>
-          <Link href="/balance" className="book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
+          <Link href="/balance" className="home-book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
         </div>
         <br></br>
         <br></br>
@@ -119,7 +119,7 @@ const Dashboard = () => {
           <h2>Manage Profile</h2>
           <p>View and edit your profile</p>
           <br></br>
-          <Link href="/profile" className="book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
+          <Link href="/profile" className="home-book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
         </div>
       </div>
     </div>
@@ -148,11 +148,11 @@ const LessonCard = ({ index, lesson, lessonDuration }) => {
   });
 
   return (
-    <div className='card'>
-      <div className="card-content">
+    <div className='home-card'>
+      <div className="home-card-content">
         <h2 style={{ fontSize: '25px' }}>Practical Lesson {index + 1}</h2>
         <br></br>
-        <div className="card-details">
+        <div className="home-card-details">
           <p>{formattedStartDate}</p>
           <p>{formattedStartTime} - {formattedEndTime}</p>
         </div>

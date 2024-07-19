@@ -1,4 +1,4 @@
-.dashboard {
+.list-dashboard {
     background-color: rgba(255, 255, 255, 0.654);
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -17,34 +17,34 @@
     flex-wrap: wrap;
   }
   
-  .dashboard-container {
+  .list-dashboard-container {
   text-align: left;
   flex: 1;
   margin-bottom: 20px;
   }
   
-  .dashboard-container h2{
+  .list-dashboard-container h2{
   font-size: 38px;
   margin-top: 10px;
   margin-bottom: 10px;
   }
   
-  .dashboard-container p {
+  .list-dashboard-container p {
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
   }
   
-  .dashboard-details {
+  .list-dashboard-details {
   font-size: 18px;
   margin: 20px 0px;
   }
 
-  .dashboard-details span {
+  .list-dashboard-details span {
   display: block;
   }
   
-  .book-button {
+  .list-book-button {
   background-color: rgb(60, 79, 110);
   color: white;
   border: none;
@@ -54,11 +54,11 @@
   cursor: pointer;
   }
   
-  .book-button:hover {
+  .list-book-button:hover {
   background-color: #333;
   }
 
-  .card {
+  .list-card {
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -68,34 +68,34 @@
     margin-bottom: 20px;
   }
   
-  .card h2 {
+  .list-card h2 {
     font-size: 24px;
     margin-top: 0px;
   }
 
-  .card h3 {
+  .list-card h3 {
     font-size: 20px;
     margin-top: 10px;
   }
   
-  .card p {
+  .list-card p {
     font-size: 16px;
     color: #666;
     margin-bottom: 20px;
   }
   
-  .card-details {
+  .list-card-details {
     font-size: 18px;
     margin-bottom: 20px;
   }
   
-  .card-details span {
+  .list-card-details span {
     display: block;
   }
   
 
   @media (max-width: 768px) {
-    .dashboard {
+    .list-dashboard {
       flex-direction: column;
     }
   }

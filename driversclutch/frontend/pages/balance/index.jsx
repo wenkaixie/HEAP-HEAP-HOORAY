@@ -86,8 +86,8 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="container">
-        <div className="container-row">
+      <div className="balance-container">
+        <div className="balance-container-row">
           <div>
             <h3>Amount</h3>
           </div>
@@ -99,19 +99,19 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
               min="1"
               step="any"
               inputMode="numeric"
-              className="large-input"
+              className="balance-large-input"
             />
           </div>
         </div>
-        <div className='container-row'>
+        <div className='balance-container-row'>
           <CardElement />
         </div>
-        <div className='container-row'>
-          <div className="buttons-container">
-            <button className="book-button" type="submit" disabled={!stripe || loading}>
+        <div className='balance-container-row'>
+          <div className="balance-buttons-container">
+            <button className="balance-book-button" type="submit" disabled={!stripe || loading}>
               {loading ? 'Processing...' : 'Top Up'}
             </button>
-            <button className="book-button" type="button" onClick={handleCancel}>
+            <button className="balance-book-button" type="button" onClick={handleCancel}>
               Cancel
             </button>
           </div>
@@ -159,17 +159,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-container">
+    <div className="balance-dashboard">
+      <div className="balance-dashboard-container">
         <h2>Top-up Balance</h2>
         <p>Add credits to your account</p>
         <h3>Current Credit Balance: ${balanceData.balance}</h3>
         <br></br>
-        <button className="book-button" onClick={ togglePopup }>
+        <button className="balance-book-button" onClick={ togglePopup }>
           Add Credits
         </button>
-        <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
-          <div className="popup-box">
+        <div id="balance-popupOverlay" className={`balance-popup-overlay ${isPopupVisible ? 'show' : ''}`}>
+          <div className="balance-popup-box">
             <Elements stripe={stripePromise}>
               <TopUpForm setIsPopupVisible={setIsPopupVisible} isPopupVisible={isPopupVisible} fetchBalanceData={fetchBalanceData}/>
             </Elements>
