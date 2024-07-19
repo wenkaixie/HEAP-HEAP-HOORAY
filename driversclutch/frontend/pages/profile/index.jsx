@@ -30,7 +30,7 @@ const Dashboard = () => {
             throw new Error('User document ID not found in localStorage');
         }
 
-        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
 
         const profileData = response.data.data;
