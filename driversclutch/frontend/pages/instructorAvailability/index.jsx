@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import axios from 'axios'; // Import axios
+import { url } from '../../src/app/firebase/firebase_config';
 
 // Dynamically import components
 const Navbar = dynamic(() => import('@/app/components/instructorNavbar/navbar'));
@@ -74,12 +75,12 @@ const Dashboard = () => {
         datetimes: formattedData
       };
 
-      const response = await axios.post('http://localhost:8001/instructors/availability', requestData, {
+      const response = await axios.post(`${url}/instructors/availability`, requestData, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
-
+      
       if (response.status === 200) {
         setIsPopupVisible(true);
       } else {

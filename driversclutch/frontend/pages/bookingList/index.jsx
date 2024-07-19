@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
@@ -18,7 +18,7 @@ const Dashboard = () => {
       if (!userDocID) {
       throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/students/homepage/lessons/?studentID=${userDocID}`);
+      const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
       console.log('API Response:', response.data);
       setBookingsData(response.data);
   } catch (error) {

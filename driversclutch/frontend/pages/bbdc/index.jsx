@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { v4 } from 'uuid';
 import './page.css';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Navbar = () => (
   <div className="navbar">
@@ -167,7 +168,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
+      const response = await axios.get(`${url}/instructors/profile/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setProfileData(response.data.data);
       setIsLoading(false);
@@ -182,7 +183,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/instructors/profile/getPicture/?id=${userDocID}`);
+      const response = await axios.get(`${url}/instructors/profile/getPicture/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setProfilePic(response.data.profilePicURL);
       setIsLoading(false);
@@ -226,7 +227,7 @@ const Dashboard = () => {
       console.log("File available at", profilePicURLS);
 
       try {
-        const response = await axios.post(`http://localhost:8001/instructors/profile/updatePicture`, profilePicURLS, {
+        const response = await axios.post(`${url}/instructors/profile/updatePicture`, profilePicURLS, {
           headers: {
             'Content-Type': 'application/json',
           },

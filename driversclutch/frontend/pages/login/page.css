@@ -17,7 +17,7 @@ body {
   overflow: hidden; /* Prevent scrolling */
   height: 100vh;
   width: 100vw; /* Ensure it takes the full width */
-  background: linear-gradient(rgb(60, 156, 246), rgb(117, 186, 255), rgb(176, 221, 255));
+  background: linear-gradient(rgb(108, 178, 244), rgb(164, 203, 241), rgb(204, 230, 249));
 }
 
 

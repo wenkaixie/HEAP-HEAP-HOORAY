@@ -5,6 +5,7 @@ import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
 import axios from 'axios';
 import Link from "next/link";
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
@@ -17,7 +18,7 @@ const Dashboard = () => {
       if (!userDocID) {
       throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/instructors/homepage/?id=${userDocID}`);
+      const response = await axios.get(`${url}/instructors/homepage/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setBookingsData(response.data);
   } catch (error) {
@@ -31,7 +32,7 @@ const Dashboard = () => {
         if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
         }
-        const response = await axios.get(`http://localhost:8001/instructors/profile/?id=${userDocID}`);
+        const response = await axios.get(`${url}/instructors/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setProfileData(response.data.data);
     } catch (error) {

@@ -5,6 +5,7 @@ import Navbar from '@/app/components/navbar/navbar';
 import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
     // const numOfQuestionsInDB = 30; // Hardcoded number of questions in DB
@@ -17,7 +18,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchTotalQuestions = async () => {
             try {
-                const response = await axios.get('http://localhost:8001/students/theoryTest/totalFTTQuestions');
+                const response = await axios.get(`${url}/students/theoryTest/totalFTTQuestions`);
                 setNumOfQuestionsInDB(response.data.totalQuestions);  // Assuming response.data has a totalQuestions field
             } catch (error) {
                 console.error('Error fetching total questions:', error);
@@ -81,7 +82,7 @@ const Dashboard = () => {
             const fetchQnData = async () => {
                 try {
                     const serialNum = randomSN[questionNum];
-                    const response = await axios.get(`http://localhost:8001/students/theoryTest/finalTheoryTest/?sn=${serialNum}`);
+                    const response = await axios.get(`${url}/students/theoryTest/finalTheoryTest/?sn=${serialNum}`);
                     setQuestionData(response.data);
                 } catch (error) {
                     console.error('Error fetching question data:', error);

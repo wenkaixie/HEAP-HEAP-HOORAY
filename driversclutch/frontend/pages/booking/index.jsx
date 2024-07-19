@@ -12,6 +12,7 @@ import '@/app/components/dashboard/dashboard.css';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import { url } from '../../src/app/firebase/firebase_config';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -35,7 +36,7 @@ const Dashboard = () => {
           throw new Error('User document ID not found in localStorage');
         }
         console.log(`Fetching student data for userDocID: ${userDocID}`);
-        const response = await axios.get(`http://localhost:8001/students/booking/?id=${userDocID}`);
+        const response = await axios.get(`${url}/students/booking/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setStudentData(response.data);
       } catch (error) {

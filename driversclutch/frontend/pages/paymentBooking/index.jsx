@@ -10,6 +10,7 @@ import axios from 'axios';
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import { url } from '../../src/app/firebase/firebase_config';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -30,7 +31,7 @@ const Dashboard = () => {
           throw new Error('User document ID not found in localStorage');
         }
         console.log(`Fetching student data for userDocID: ${userDocID}`);
-        const response = await axios.get(`http://localhost:8001/students/balance/?id=${userDocID}`);
+        const response = await axios.get(`${url}/students/balance/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setStudentData(response.data);
       } catch (error) {
@@ -97,7 +98,7 @@ const updateDatabaseStudent = async () => {
       };
       console.log("Sending data to server:", requestData);
 
-      const response = await axios.post('http://localhost:8001/students/booking/updateStudent', requestData, {
+      const response = await axios.post(`${url}/students/booking/updateStudent`, requestData, {
         headers: {
           'Content-Type': 'application/json'
         },
@@ -127,7 +128,7 @@ const updateDatabaseInstructor = async () => {
       };
       console.log("Sending data to server:", requestData); // Log the request data
 
-      const response = await axios.post('http://localhost:8001/students/booking/updateInstructor', requestData, {
+      const response = await axios.post(`${url}/students/booking/updateInstructor`, requestData, {
         headers: {
           'Content-Type': 'application/json',
         },
