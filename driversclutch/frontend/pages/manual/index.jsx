@@ -83,7 +83,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
       <div className='container'>
         <div className="profile-container">
           <div className="profile-picture-container">
-            <img src={instructor.profileImage} className="profile-picture" alt="Profile" />
+            <img src={instructor.profileImage} className="profile-picture" />
           </div>
         </div>
         <div className='container-row'>
@@ -215,7 +215,7 @@ const CardManual = ({ instructor, profileData }) => {
           </h3>
           <div className="profile-container">
             <div className="profile-picture-container">
-              <img src={instructor.profileImage} className="profile-picture" alt="Profile" />
+              <img src={instructor.profileImage} className="profile-picture" />
             </div>
           </div>
           <div>

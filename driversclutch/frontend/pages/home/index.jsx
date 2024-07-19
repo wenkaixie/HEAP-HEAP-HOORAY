@@ -5,6 +5,7 @@ import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
 import Link from "next/link";
+import url from '@app/firebase/firebase_config.js'
 
 
 const Dashboard = () => {
@@ -18,7 +19,7 @@ const Dashboard = () => {
       if (!userDocID) {
       throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/homepage/lessons/?studentID=${userDocID}`);
+      const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
       console.log('API Response:', response.data);
       setBookingsData(response.data);
   } catch (error) {
@@ -48,7 +49,7 @@ const Dashboard = () => {
   if (!bookingsData || !profileData) {
       return null;
   }
-  
+
   const renderBookings = () => {
     const cards = [];
     bookingsData.upcomingLessons.sort();
@@ -86,12 +87,14 @@ const Dashboard = () => {
         <div className="dashboard-details">
           {renderBookings()}
         </div>
+        <br></br>
         <Link href="/bookingList" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
       </div>
       <div className="dashboard-container">
         <div>
           <h2>Make a New Booking</h2>
           <p>Book a practical lesson</p>
+          <br></br>
           <Link href="/booking" className="book-button" style={{ textDecoration: "none"}}>Book Now</Link>
         </div>
         <br></br>
@@ -99,6 +102,7 @@ const Dashboard = () => {
         <div>
           <h2>Theory Practice</h2>
           <p>Test your knowledge with a mock theory test</p>
+          <br></br>
           <Link href="/btt" className="book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
         </div>
         <br></br>
@@ -106,6 +110,7 @@ const Dashboard = () => {
         <div>
           <h2>Top-up Credit Balance</h2>
           <p>Credit Balance: {profileData.balance}</p>
+          <br></br>
           <Link href="/balance" className="book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
         </div>
         <br></br>
@@ -113,6 +118,7 @@ const Dashboard = () => {
         <div>
           <h2>Manage Profile</h2>
           <p>View and edit your profile</p>
+          <br></br>
           <Link href="/profile" className="book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
         </div>
       </div>

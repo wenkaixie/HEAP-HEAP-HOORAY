@@ -7,7 +7,7 @@
   .profile-container {
     position: relative;
     display: flex;
-    min-width: 320px;
+    min-width: auto;
     gap: 40px;
     margin: auto;
     justify-content: flex-start;
@@ -17,13 +17,12 @@
 
   .profile-container-row {
     height: auto;
-    min-width: 280px;
+    min-width: auto;
     display: flex;
     gap: 40px;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    min-width: 320px;
   }
 
   .profile-container-row div {
