@@ -32,6 +32,7 @@ const getInfo = async (req, res) => {
 			.doc(instructor)
 			.get();
 
+		// console.log(instructor);
 		if (!instructorDoc.exists) {
 			// return res.status(404).json({ code: 404, message: "Instructor not found" });
 			fullname = "";
