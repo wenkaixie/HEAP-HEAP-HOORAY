@@ -54,7 +54,7 @@ const deductBalance = async (req, res) => {
         const studentDoc = await db.collection("students").doc(studentID).get();
         const currentBalance = studentDoc.data().balance;
         let newBalance = currentBalance;
-        if (currentBalance >  amount) {
+        if (currentBalance >= amount) {
             newBalance = currentBalance - amount;
         }
         else {
