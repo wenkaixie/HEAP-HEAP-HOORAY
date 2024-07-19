@@ -23,25 +23,6 @@ const Dashboard = () => {
     setIsPopupVisible(!isPopupVisible);
   }
 
-  // const fetchProfileData = async () => {
-  //   try {
-  //     const userDocID = localStorage.getItem('userDocID');
-  //     if (!userDocID) {
-  //       throw new Error('User document ID not found in localStorage');
-  //     }
-  //     const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
-  //     console.log('API Response:', response.data);
-  //     setProfileData(response.data.data);
-
-      
-
-  //     setInstructorName(response.data.data.instructorFullName);
-  //     console.log('Instructor Name:', instructorFullName);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-
   const fetchProfileData = async () => {
     try {
         const userDocID = localStorage.getItem('userDocID');

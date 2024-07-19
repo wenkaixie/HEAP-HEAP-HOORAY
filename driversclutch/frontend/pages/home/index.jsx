@@ -2,8 +2,7 @@
 import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-import '@/app/components/background/background.css'
-import Image from 'next/image';
+import '@/app/components/background/background.css';
 import axios from 'axios';
 import Link from "next/link";
 
@@ -48,10 +47,6 @@ const Dashboard = () => {
 
   if (!bookingsData) {
       return null;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
   }
 
   const renderBookings = () => {

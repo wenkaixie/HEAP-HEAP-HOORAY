@@ -1,9 +1,78 @@
+import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/instructorNavbar/navbar";
 import './page.css';
 import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
+import axios from 'axios';
+import Link from "next/link";
 
 const Dashboard = () => {
+  const [bookingsData, setBookingsData] = useState(null);
+  // const [profileData, setProfileData] = useState(null);
+  const [error, setError] = useState(null);
+
+  const fetchBookingsData = async () => {
+  try {
+      const userDocID = localStorage.getItem('userDocID');
+      if (!userDocID) {
+      throw new Error('User document ID not found in localStorage');
+      }
+      const response = await axios.get(`http://localhost:8001/instructors/homepage/?id=${userDocID}`);
+      console.log('API Response:', response.data);
+      setBookingsData(response.data);
+  } catch (error) {
+      setError(error.message);
+  }
+  };
+
+  // const fetchProfileData = async () => {
+  //   try {
+  //       const userDocID = localStorage.getItem('userDocID');
+  //       if (!userDocID) {
+  //       throw new Error('User document ID not found in localStorage');
+  //       }
+  //       const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+  //       console.log('API Response:', response.data);
+  //       setProfileData(response.data.data);
+  //   } catch (error) {
+  //       setError(error.message);
+  //   }
+  //   };
+
+  useEffect(() => {
+    fetchBookingsData();
+    // fetchProfileData();
+  }, []);
+
+  if (!bookingsData) {
+      return null;
+  }
+
+  const renderBookings = () => {
+    const cards = [];
+    bookingsData.upcomingLessons.sort();
+    for (let i = 0; i < bookingsData.upcomingLessons.length; i++) {
+      if (i >= 3) {
+        break;
+      }
+      cards.push(<LessonCard key={i} index={i + bookingsData.lessonCount} lesson={bookingsData.upcomingLessons[i]} lessonDuration={bookingsData.lessonDuration} />);
+    }
+
+    return (
+      <div className="dashboard-details">
+        {error ? (
+          <p>{error}</p>
+        ) : (
+          bookingsData.upcomingLessons.length > 0 ? (
+            cards
+          ) : (
+            <p>Loading...</p>
+          )
+        )}
+      </div>
+    );
+  };
+
     return (
       <div className="dashboard">
         <div className="dashboard-container">

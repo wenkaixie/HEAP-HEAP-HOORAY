@@ -301,7 +301,7 @@ const Dashboard = () => {
         const response = await axios.get(`http://localhost:8001/instructors/profile/getPicture/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setProfilePic(response.data.profilePicURL);
-        setIsLoading(false)
+        setIsLoading(false);
       } catch (error) {
         setError(error.message);
       }
@@ -359,10 +359,9 @@ const Dashboard = () => {
               },
           });
           console.log('Picture uploaded:', response.data);
-          await fetchProfileData(); // Refresh profile data to show the new picture
           setTimeout(() => {
-            togglePicture();
-            window.location.reload(); 
+          setIsPictureVisible(false);
+          fetchProfilePic();
           }, 1000);
         } catch (error) {
             console.log('Error uploading picture:', error);
