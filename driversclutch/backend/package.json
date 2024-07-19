@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "firebase.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
