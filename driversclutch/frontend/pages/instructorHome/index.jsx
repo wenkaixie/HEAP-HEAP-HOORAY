@@ -92,7 +92,7 @@ const Dashboard = () => {
     const startDate = new Date(lesson);
     const endDate = new Date(startDate.getTime() + lessonDuration * 60 * 60 * 1000);
   
-    const formattedStartDate = startDate.toLocaleDateString('en-US', {
+    const formattedStartDate = startDate.toLocaleDateString('en-GB', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
