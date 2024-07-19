@@ -8,7 +8,7 @@ import '@/app/components/background/background.css';
 import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
 import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
 
-const InstructorDetails = ({ togglePopup, instructor }) => {
+const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
   const userDocID = localStorage.getItem('userDocID');
 
   const fullyEnrol = async (event) => {
@@ -224,7 +224,7 @@ const CardManual = ({ instructor, profileData }) => {
             <br />
           </div>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
-            <InstructorDetails togglePopup={togglePopup} instructor={instructor} />
+            <InstructorDetails togglePopup={togglePopup} instructor={instructor} profileData={profileData} />
           </div>
         </div>
         <button onClick={togglePopup} className="book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
