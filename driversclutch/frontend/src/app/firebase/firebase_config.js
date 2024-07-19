@@ -11,7 +11,6 @@ const firebaseConfig = {
 	messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 	appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 	measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
-	url: "https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -20,5 +19,7 @@ export const storage = getStorage(app);
 const FirestoreDB = getFirestore(app);
 
 export { FirestoreDB, auth };
+
+export const url= "https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app";
 
 export default app;

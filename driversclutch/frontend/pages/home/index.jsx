@@ -5,7 +5,7 @@ import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
 import Link from "next/link";
-import url from '@app/firebase/firebase_config.js'
+import { url } from '@app/firebase/firebase_config.js'
 
 
 const Dashboard = () => {
