@@ -1,22 +1,20 @@
-import { useState, useEffect } from 'react';
-// import axios from 'axios';
-// import { storage } from './firebase/firebase_config'; // Adjust the import path as necessary
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { v4 } from 'uuid';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './page.css';
 import { url } from '../../src/app/firebase/firebase_config';
 
 const Navbar = () => (
   <div className="navbar">
-    <h1>Theory Test Booking</h1>
+    Theory Test Booking
   </div>
 );
 
 const Sidebar = () => (
   <div className="sidebar">
     <div className="menu">
-      <h2>Booking</h2>
       <ul>
+        <li>Home</li>
+        <li>Booking</li>
         <li>Theory</li>
         <li>Practical</li>
         <li>Test</li>
@@ -38,91 +36,93 @@ const Sidebar = () => (
 );
 
 const Calendar = ({ selectedMonth, setSelectedMonth, selectedDate, setSelectedDate }) => {
-  const months = [
-    { name: 'JUL\'24', value: 7 },
-    { name: 'AUG\'24', value: 8 },
-    { name: 'SEP\'24', value: 9 },
-    { name: 'OCT\'24', value: 10 },
-    { name: 'NOV\'24', value: 11 },
-    { name: 'DEC\'24', value: 12 }
-  ];
-
-  const daysInMonth = (month, year) => new Date(year, month, 0).getDate();
-
-  const renderCalendarDays = (month, year) => {
-    const days = [];
-    const firstDay = new Date(year, month - 1, 1).getDay();
-    const totalDays = daysInMonth(month, year);
-
-    for (let i = 0; i < firstDay; i++) {
-      days.push(<div key={`empty-${i}`} className="empty"></div>);
-    }
-
-    for (let day = 1; day <= totalDays; day++) {
-      const fullDate = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-      days.push(
-        <div
-          key={day}
-          className={`day ${selectedDate === fullDate ? 'selected' : ''}`}
-          onClick={() => setSelectedDate(fullDate)}
-        >
-          {day}
-        </div>
-      );
-    }
-
-    return days;
+  const months = ['JUL\'24', 'AUG\'24', 'SEP\'24', 'OCT\'24', 'NOV\'24', 'DEC\'24'];
+  const daysInMonth = {
+    'JUL\'24': 31,
+    'AUG\'24': 31,
+    'SEP\'24': 30,
+    'OCT\'24': 31,
+    'NOV\'24': 30,
+    'DEC\'24': 31,
   };
 
-  const currentMonth = months.find(month => month.name === selectedMonth)?.value || 8;
+  const handleDateClick = (date) => {
+    if (selectedMonth === 'JUL\'24' && date < new Date().getDate()) {
+      return; // Do not allow selection of past dates in July
+    }
+    setSelectedDate(date);
+  };
 
   return (
     <div className="calendar">
-      <h2>CHOICE OF MONTH</h2>
-      <h3>Final Theory Evaluation FTE (English)</h3>
       <div className="monthButtons">
         {months.map(month => (
           <button
-            key={month.name}
-            className={selectedMonth === month.name ? 'selected' : ''}
-            onClick={() => setSelectedMonth(month.name)}
+            key={month}
+            className={month === selectedMonth ? 'selected' : ''}
+            onClick={() => {
+              setSelectedMonth(month);
+              setSelectedDate('');
+            }}
           >
-            {month.name}
+            {month}
           </button>
         ))}
       </div>
       <div className="calendarContainer">
-        <div className="monthSelector">
-          <span>&lt;</span> {selectedMonth} <span>&gt;</span>
-        </div>
         <div className="days">
-          <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-          {renderCalendarDays(currentMonth, 2024)} {/* Displaying selected month */}
+          {Array.from({ length: daysInMonth[selectedMonth] }, (_, index) => (
+            <div
+              key={index + 1}
+              className={`day ${selectedDate === index + 1 ? 'selected' : ''}`}
+              onClick={() => handleDateClick(index + 1)}
+            >
+              {index + 1}
+            </div>
+          ))}
         </div>
+      </div>
+      <div className="selected-date">
+        <p>The selected date</p>
+        <p>{selectedDate ? `2024-${selectedMonth.split('\'')[0]}-${String(selectedDate).padStart(2, '0')}` : 'None'}</p>
       </div>
     </div>
   );
 };
 
-const Slots = ({ selectedDate, selectedSlot, setSelectedSlot }) => {
-  const slots = [
-    'SESSION 1 07:30 - 08:15 $5.45',
-    'SESSION 2 08:25 - 09:10 $5.45',
-    'SESSION 3 09:20 - 10:05 $5.45',
-    'SESSION 4 10:15 - 11:00 $5.45',
-    'SESSION 5 11:30 - 12:15 $5.45',
-    'SESSION 6 12:25 - 13:10 $5.45',
-    'SESSION 7 13:20 - 14:05 $5.45',
-    'SESSION 8 14:15 - 15:00 $5.45',
-    'SESSION 9 15:20 - 16:05 $5.45',
-    'SESSION 10 16:15 - 17:00 $5.45',
-    'SESSION 11 17:10 - 17:55 $5.45',
-    'SESSION 12 18:05 - 18:50 $5.45'
+const generateRandomSlots = (selectedDate) => {
+  if (!selectedDate) return [];
+
+  const slots = [];
+  const slotTimes = [
+    '07:30 - 08:15',
+    '08:25 - 09:10',
+    '09:20 - 10:05',
+    '10:15 - 11:00',
+    '11:30 - 12:15',
+    '12:25 - 13:10',
+    '13:20 - 14:05',
+    '14:15 - 15:00',
+    '15:20 - 16:05',
+    '16:15 - 17:00',
+    '17:10 - 17:55',
+    '18:05 - 18:50',
+    '22:05 - 22:50',
   ];
+
+  for (let i = 0; i < 12; i++) {
+    const randomSlot = slotTimes[Math.floor(Math.random() * slotTimes.length)];
+    slots.push(`SESSION ${i + 1} ${randomSlot} $5.45`);
+  }
+
+  return slots;
+};
+
+const Slots = ({ selectedDate, selectedSlot, setSelectedSlot }) => {
+  const slots = generateRandomSlots(selectedDate);
 
   return (
     <div className="slots">
-      <h2>CHOOSE SLOTS</h2>
       <div className="slotContainer">
         {slots.map(slot => (
           <div
@@ -141,12 +141,10 @@ const Slots = ({ selectedDate, selectedSlot, setSelectedSlot }) => {
 const Summary = ({ selectedDate, selectedSlot }) => (
   <div className="summary">
     <h2>SUMMARY</h2>
-    {selectedDate && selectedSlot && (
-      <div className="summary-item">
-        <p>{selectedDate}</p>
-        <p>{selectedSlot}</p>
-      </div>
-    )}
+    <div className="summary-item">
+      <p>{selectedDate ? `2024-${String(selectedDate).padStart(2, '0')}` : 'No Date Selected'}</p>
+      <p>{selectedSlot || 'No Slot Selected'}</p>
+    </div>
   </div>
 );
 
@@ -363,7 +361,7 @@ const Dashboard = () => {
 };
 
 const BookingPage = () => {
-  const [selectedMonth, setSelectedMonth] = useState('AUG\'24');
+  const [selectedMonth, setSelectedMonth] = useState('JUL\'24');
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
 
@@ -398,7 +396,6 @@ export default function Home() {
   return (
     <div>
       <BookingPage />
-      <Dashboard />
     </div>
   );
 }
