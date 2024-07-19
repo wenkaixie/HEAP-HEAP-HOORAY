@@ -21,15 +21,17 @@ const getInfo = async (req, res) => {
     
         const studentInfo = studentDoc.data();
         const { upcomingLessons, completedLessons, instructor, ...filteredData } = studentInfo;
-    
+        
+        let fullname = "";
         // Fetch instructor document
         const instructorDoc = await db.collection("instructors").doc(instructor).get();
         if (!instructorDoc.exists) {
-            return res.status(404).json({ code: 404, message: "Instructor not found" });
+            // return res.status(404).json({ code: 404, message: "Instructor not found" });
+            fullname = "";
         }
     
         const { firstName, lastName = [] } = instructorDoc.data();
-        const fullname = `${lastName} ${firstName}`;
+        fullname = `${lastName} ${firstName}`;
     
         // Add instructor full name to the response data
         filteredData.instructorFullName = fullname;
