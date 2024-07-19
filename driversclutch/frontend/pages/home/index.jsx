@@ -45,10 +45,10 @@ const Dashboard = () => {
     fetchProfileData();
   }, []);
 
-  if (!bookingsData) {
+  if (!bookingsData || !profileData) {
       return null;
   }
-
+  
   const renderBookings = () => {
     const cards = [];
     bookingsData.upcomingLessons.sort();
@@ -56,19 +56,24 @@ const Dashboard = () => {
       if (i >= 3) {
         break;
       }
-      cards.push(<LessonCard key={i} index={i + bookingsData.lessonCount} lesson={bookingsData.upcomingLessons[i]} lessonDuration={bookingsData.lessonDuration} />);
+      cards.push(
+        <LessonCard
+          key={i}
+          index={i + bookingsData.lessonCount}
+          lesson={bookingsData.upcomingLessons[i]}
+          lessonDuration={bookingsData.lessonDuration}
+        />
+      );
     }
-
+  
     return (
       <div className="dashboard-details">
         {error ? (
           <p>{error}</p>
+        ) : bookingsData.upcomingLessons.length > 0 ? (
+          cards
         ) : (
-          bookingsData.upcomingLessons.length > 0 ? (
-            cards
-          ) : (
-            <p>Loading...</p>
-          )
+          <p>No upcoming bookings</p>
         )}
       </div>
     );
