@@ -1,17 +1,18 @@
 "use client";
-import React, { useState, useCallback, useMemo, lazy, Suspense } from 'react';
-import dynamic from 'next/dynamic'; // For dynamically importing components
+import React, { useState } from 'react';
+import Navbar from '@/app/components/instructorNavbar/navbar';
+import DateSelector from './DateSelector';
+import TimeTable from './Timetable';
 import './page.css';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import '@/app/components/background/background.css';
+import '@/app/components/dashboard/dashboard.css';
+import { GiCancel } from "react-icons/gi";
+import { SiTicktick } from "react-icons/si";
 import axios from 'axios'; // Import axios
 import { url } from '../../src/app/firebase/firebase_config';
-
-// Dynamically import components
-const Navbar = dynamic(() => import('@/app/components/instructorNavbar/navbar'));
-const DateSelector = lazy(() => import('./DateSelector'));
-const TimeTable = lazy(() => import('./Timetable'));
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -21,7 +22,7 @@ const Dashboard = () => {
   const [availability, setAvailability] = useState({});
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
-  const handleAvailabilityChange = useCallback((date, time) => {
+  const handleAvailabilityChange = (date, time) => {
     const dateKey = date.format('YYYY-MM-DD');
     const newAvailability = { ...availability };
 
@@ -36,9 +37,9 @@ const Dashboard = () => {
     }
 
     setAvailability(newAvailability);
-  }, [availability]);
+  };
 
-  const handleSelectAllChange = useCallback((date, times, isChecked) => {
+  const handleSelectAllChange = (date, times, isChecked) => {
     const dateKey = date.format('YYYY-MM-DD');
     const newAvailability = { ...availability };
 
@@ -49,58 +50,68 @@ const Dashboard = () => {
     }
 
     setAvailability(newAvailability);
-  }, [availability]);
+  };
 
-  const convertToRequiredFormat = useCallback((availability) => {
+  // Convert availability to required format
+  const convertToRequiredFormat = (availability) => {
     const timeZone = 'Asia/Singapore'; // Define the desired time zone
     const datetimes = [];
-
+  
     for (const [date, times] of Object.entries(availability)) {
       times.forEach(time => {
+        // Combine date and time
         const dateTimeString = `${date} ${time}`;
+        // Parse with dayjs to create a date object in the specified time zone
         const parsedDate = dayjs.tz(dateTimeString, 'YYYY-MM-DD hh:mm A', timeZone);
+        // Convert to ISO string
         const isoString = parsedDate.toISOString();
         datetimes.push(isoString);
       });
     }
     return datetimes;
-  }, []);
+  };
 
   const updateDatabase = async () => {
-    try {
-      const userDocID = localStorage.getItem('userDocID');
-      const formattedData = convertToRequiredFormat(availability);
-      const requestData = {
-        instructorID: userDocID,
-        datetimes: formattedData
-      };
 
-      const response = await axios.post(`${url}/instructors/availability`, requestData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      if (response.status === 200) {
-        setIsPopupVisible(true);
-      } else {
-        console.error("Failed to send availability data.");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-      if (error.response) {
-        console.error("Server responded with:", error.response.data);
-      }
+  try {
+    const userDocID = localStorage.getItem('userDocID');
+    const formattedData = convertToRequiredFormat(availability);
+    console.log(userDocID);
+    console.log(formattedData);
+    const requestData = {
+      instructorID: userDocID,
+      datetimes: formattedData
+    };
+
+    console.log("Sending data to server:", requestData); // Log the request data
+
+    const response = await axios.post(`${url}/instructors/availability`, requestData, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.status === 200) {
+      console.log("Availability data successfully sent to the database.");
+      setIsPopupVisible(true);
+    } else {
+      console.error("Failed to send availability data.");
     }
-  };
+  } catch (error) {
+    console.error("Error:", error);
+    if (error.response) {
+      console.error("Server responded with:", error.response.data);
+    }
+  }
+};
 
   const handleConfirm = async () => {
     await updateDatabase();
   };
 
-  const closePopup = useCallback(() => {
+  const closePopup = () => {
     setIsPopupVisible(false);
-  }, []);
+  };
 
   return (
     <div className='dashboard'>
@@ -109,21 +120,17 @@ const Dashboard = () => {
       </div>
       <div className="dashboard-container">
         <p>Select a date</p>
-        <Suspense fallback={<div>Loading...</div>}>
-          <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
-        </Suspense>
+        <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
       <div className="dashboard-container">
         <p>Select Your Unavailable Timings</p>
-        <Suspense fallback={<div>Loading...</div>}>
-          <TimeTable
-            selectedDate={selectedDate}
-            availability={availability}
-            handleAvailabilityChange={handleAvailabilityChange}
-            handleSelectAllChange={handleSelectAllChange}
-            handleConfirm={handleConfirm}
-          />
-        </Suspense>
+        <TimeTable
+          selectedDate={selectedDate}
+          availability={availability}
+          handleAvailabilityChange={handleAvailabilityChange}
+          handleSelectAllChange={handleSelectAllChange}
+          handleConfirm={handleConfirm}
+        />
       </div>
       {isPopupVisible && (
         <div id="popupOverlay" className="popup-overlay show">
