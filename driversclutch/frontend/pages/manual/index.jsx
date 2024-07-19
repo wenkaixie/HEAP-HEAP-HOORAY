@@ -67,7 +67,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
   };
   
   const handleEnrolClick = (event) => {
-    if (profileData.instructor) {
+    if (profileData.instructorFullName) {
       alert('Already enrolled to an instructor');
     } else {
       handleEnrolment(event);
