@@ -45,12 +45,12 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
 
     const deductValue = {
       studentID: userDocID,
-      amount: - Number(instructor.enrolmentFee)
+      amount: Number(instructor.enrolmentFee)
     }
     
     try {
-      console.log('trying to put', deductValue);
-      const response = await axios.put('http://localhost:8001/students/balance/topup', deductValue, {
+      console.log('trying to pay', deductValue);
+      const response = await axios.put('http://localhost:8001/students/balance/payment', deductValue, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -62,12 +62,12 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
         togglePopup(); 
       }, 1000);
     } catch (error) {
-      console.log('Error in deduct balance: ', error);
+      console.log('Error in payment: ', error);
     }
   };
   
   const handleEnrolClick = (event) => {
-    if (profileData.instructor) {
+    if (profileData.instructorFullName) {
       alert('Already enrolled to an instructor');
     } else {
       handleEnrolment(event);
@@ -227,10 +227,12 @@ const CardManual = ({ instructor, profileData }) => {
             <InstructorDetails togglePopup={togglePopup} instructor={instructor} profileData={profileData} />
           </div>
         </div>
-        <button onClick={togglePopup} className="book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
       </div>
       <div className="inner-card-container">
         <CardManualDetails instructor={instructor} />
+        
+        <button onClick={togglePopup} className="book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
+        
       </div>
     </div>
   );

@@ -40,14 +40,18 @@
   flex: 1;
 }
 
-.profile-container {
-  display: flex;
-  align-items: center;
-}
-
 .profile-picture-container {
   width: 80px;
   height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 20px; /* Move slightly to the right */
+  margin-top: -20px; /* Move slightly upwards */
+}
+
+.profile-picture-container {
+  width: 95px;
+  height: 95px;
   border-radius: 50%;
   overflow: hidden;
   margin-right: 16px;
@@ -223,6 +227,7 @@
   display: block;
 }
 
+
 .book-button {
   background-color: rgb(60, 79, 110);
   color: white;
@@ -231,8 +236,9 @@
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 25px; /* Add space between the button and other elements */
-  width: 100%; 
+  margin-top: 25px;
+  width: 75%; /* Take full width of the parent container */
+  box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
 .book-button:hover {

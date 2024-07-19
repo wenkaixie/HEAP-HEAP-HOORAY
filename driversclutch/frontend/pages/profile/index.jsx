@@ -30,7 +30,7 @@ const Dashboard = () => {
             throw new Error('User document ID not found in localStorage');
         }
 
-        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
 
         const profileData = response.data.data;
@@ -61,14 +61,6 @@ const Dashboard = () => {
         <h2>Profile</h2>
         <div className="profile-container">
           <div className='profile-container-row'>
-            <div>
-              <div className="profile-picture-container">
-                <img src="profile.jpg" className="profile-picture" />
-                <div className="overlay">
-                  <div className="edit-icon" onClick={togglePicture}>✎</div>
-                </div>
-              </div>
-            </div>
             <div>
               <h3>First Name</h3>
               <p>{profileData.firstName}</p>
@@ -112,15 +104,6 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        {/* <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
-          <div className='popup-box'>
-            <ChangePasswordInfo />
-            <div className='buttons-container'>
-              <button className='book-button' onClick={togglePopup}>Cancel</button>
-              <button className='book-button' onClick={togglePopup}>Change Password</button>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

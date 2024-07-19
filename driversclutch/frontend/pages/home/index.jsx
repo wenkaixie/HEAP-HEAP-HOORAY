@@ -18,7 +18,7 @@ const Dashboard = () => {
       if (!userDocID) {
       throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/students/homepage/lessons/?studentID=${userDocID}`);
+      const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/homepage/lessons/?studentID=${userDocID}`);
       console.log('API Response:', response.data);
       setBookingsData(response.data);
   } catch (error) {
@@ -32,7 +32,7 @@ const Dashboard = () => {
         if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
         }
-        const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+        const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
         setProfileData(response.data.data);
     } catch (error) {
@@ -45,10 +45,10 @@ const Dashboard = () => {
     fetchProfileData();
   }, []);
 
-  if (!bookingsData) {
+  if (!bookingsData || !profileData) {
       return null;
   }
-
+  
   const renderBookings = () => {
     const cards = [];
     bookingsData.upcomingLessons.sort();
@@ -56,19 +56,24 @@ const Dashboard = () => {
       if (i >= 3) {
         break;
       }
-      cards.push(<LessonCard key={i} index={i + bookingsData.lessonCount} lesson={bookingsData.upcomingLessons[i]} lessonDuration={bookingsData.lessonDuration} />);
+      cards.push(
+        <LessonCard
+          key={i}
+          index={i + bookingsData.lessonCount}
+          lesson={bookingsData.upcomingLessons[i]}
+          lessonDuration={bookingsData.lessonDuration}
+        />
+      );
     }
-
+  
     return (
       <div className="dashboard-details">
         {error ? (
           <p>{error}</p>
+        ) : bookingsData.upcomingLessons.length > 0 ? (
+          cards
         ) : (
-          bookingsData.upcomingLessons.length > 0 ? (
-            cards
-          ) : (
-            <p>Loading...</p>
-          )
+          <p>No upcoming bookings</p>
         )}
       </div>
     );
