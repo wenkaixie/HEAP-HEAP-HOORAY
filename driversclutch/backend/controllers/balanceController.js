@@ -44,11 +44,33 @@ const topupBalance = async(req, res) => {
         return res.status(200).json({code: 200, message: `Balance updated, new balance is ${newBalance}`});
     }
     catch (error) {
-        return res.status(500).json({ code: 500, message: `Error getting balance: ${error}` });
+        return res.status(500).json({ code: 500, message: `Error topping-up balance: ${error}` });
     }
 }
 
+const deductBalance = async (req, res) => {
+    const {studentID, amount} = req.body; //amount to be deducted in positive number, 
+    try {
+        const studentDoc = await db.collection("students").doc(studentID).get();
+        const currentBalance = studentDoc.data().balance;
+        let newBalance = currentBalance;
+        if (currentBalance >  amount) {
+            newBalance = currentBalance - amount;
+        }
+        else {
+            return res.status(400).json({code:400, message:"Insufficient account balance. Please top-up balance."});
+        }
+        await db.collection("students").doc(studentID).update({
+            balance: newBalance
+        })
+        return res.status(200).json({code: 200, message: `Balance updated, new balance is ${newBalance}`});   
+    }
+    catch (error) {
+        return res.status(500).json({ code: 500, message: `Error making payment: ${error}` });
+    }
+}
 module.exports = {
     getBalance,
-    topupBalance
+    topupBalance,
+    deductBalance
 }
