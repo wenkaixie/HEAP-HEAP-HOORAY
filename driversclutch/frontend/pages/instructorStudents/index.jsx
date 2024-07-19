@@ -71,7 +71,7 @@ const Card = ({ student, lessonDuration }) => {
         {showUpcoming && (
           student.upcomingLessons && student.upcomingLessons.length > 0 ? (
             student.upcomingLessons.map((lesson, index) => (
-              <InnerCard key={index} index={student.completedLessons.length} lesson={lesson} lessonDuration={lessonDuration} />
+              <InnerCard key={index} index={student.completedLessons.length + index} lesson={lesson} lessonDuration={lessonDuration} />
             ))
           ) : (
             <p>No Upcoming Lessons.</p>
