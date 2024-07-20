@@ -36,10 +36,11 @@ Our application provides a central portal for private driving learners. Students
 
 ## Usage
 To start the project:
-1. Run in the frontend directory:
+1. Set the "url" in "/driversclutch/frontend/src/app/firebase/firebase_config.js" to "http://localhost:8001"
+2. Run in the frontend directory:
     ```sh
     npm run dev
-2. Run in the backend directory:
+3. Run in the backend directory:
     ```sh
     node index.js
 
@@ -51,20 +52,20 @@ HEAP-HEAP-HOORAY\
     |- .gitignore
     |- driversclutch\
                 |- backend\
-                            |    
-                            |- firebase\ 
-                            |    
-                            |- node_modules\ 
-                            |    |- <generated npm files here>   
                             |
-                            |- routes\  
+                            |- firebase\
+                            |
+                            |- node_modules\
+                            |    |- <generated npm files here>
+                            |
+                            |- routes\
                             |    |- <routers for different features>
                             |
                             |
                             |- controllers\
                             |
                             |
-                            |- middlewares\ 
+                            |- middlewares\
                             |
                             |
                             |- .env
@@ -72,6 +73,37 @@ HEAP-HEAP-HOORAY\
                             |- index.js
                             |- jsconfig.json
                             |- vercel.json
+                            |- package-lock.json
+                            |- package.json
+                |- frontend\
+                            |
+                            |- next\
+                            |    |- <build output for the project>
+                            |
+                            |- node_modules\
+                            |    |- <generated npm files here>
+                            |
+                            |- pages\
+                            |    |- <pages in the project>
+                            |
+                            |- public\
+                            |    |- <images used for the project>
+                            |
+                            |- src\
+                                    |
+                                    |- components\
+                                    |    |- <components used in the project>
+                                    |
+                                    |- firebase\
+                                    |    |- <firebase files to link to the database>
+                            |
+                            |- utils\
+                            |    |- <axios for api>
+                            |
+                            |- .env
+                            |- .gitignore
+                            |- jsconfig.json
+                            |- next.config.mjs
                             |- package-lock.json
                             |- package.json
 
