@@ -1,4 +1,4 @@
-.card {
+.home-card {
     background-color: white;
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -8,32 +8,32 @@
     margin-bottom: 20px;
   }
   
-  .card h2 {
+  .home-card h2 {
     font-size: 24px;
     margin-top: 0px;
   }
 
-  .card h3 {
+  .home-card h3 {
     font-size: 20px;
     margin-top: 10px;
   }
   
-  .card p {
+  .home-card p {
     font-size: 16px;
     color: #666;
     margin-bottom: 20px;
   }
   
-  .card-details {
+  .home-card-details {
     font-size: 18px;
     margin-bottom: 20px;
   }
   
-  .card-details span {
+  .home-card-details span {
     display: block;
   }
   
-  .dashboard {
+  .home-dashboard {
     background-color: rgba(255, 255, 255, 0.654);
     border: 1px solid #e0e0e0;
     border-radius: 10px;
@@ -53,34 +53,34 @@
   }
   
   
-  .dashboard-container {
+  .home-dashboard-container {
   text-align: left;
   flex: 1;
   margin-bottom: 20px;
   }
   
-  .dashboard-container h2{
+  .home-dashboard-container h2{
   font-size: 38px;
   margin-top: 10px;
   margin-bottom: 10px;
   }
   
-  .dashboard-container p {
+  .home-dashboard-container p {
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
   }
   
-  .dashboard-details {
+  .home-dashboard-details {
   font-size: 18px;
   margin: 20px 0px;
   }
 
-  .dashboard-details span {
+  .home-dashboard-details span {
   display: block;
   }
   
-  .book-button {
+  .home-book-button {
   background-color: rgb(60, 79, 110);
   color: white;
   border: none;
@@ -90,12 +90,12 @@
   cursor: pointer;
   }
   
-  .book-button:hover {
+  .home-book-button:hover {
   background-color: #333;
   }
 
   @media (max-width: 768px) {
-    .dashboard {
+    .home-dashboard {
       flex-direction: column;
     }
   }

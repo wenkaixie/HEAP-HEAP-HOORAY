@@ -1,46 +1,48 @@
-.card h2 {
+.instructList-card h2 {
   font-size: 24px;
   margin-top: 0px;
 }
 
-.card h3 {
+.instructList-card h3 {
   font-size: 20px;
   margin-top: 10px;
 }
 
-.card p {
+.instructList-card p {
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
 }
 
-.card-details {
+.instructList-card-details {
   font-size: 18px;
   margin-bottom: 20px;
 }
 
-.card-details span {
+.instructList-card-details span {
   display: block;
 }
 
-.card {
+.instructList-card {
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 20px;
-  margin: 20px;
+  margin: 20px 0px;
   display: flex;
   flex-direction: row;
-  height: 250px; /* Adjust the height as needed */
+  height: fit-content;
+  min-height: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.card-container {
+.instructList-card-container {
   display: flex;
   flex-direction: column;
   flex: 1;
 }
 
-.profile-picture-container {
+.instructList-profile-picture-container {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -49,7 +51,7 @@
   margin-top: -20px; /* Move slightly upwards */
 }
 
-.profile-picture-container {
+.instructList-profile-picture-container {
   width: 95px;
   height: 95px;
   border-radius: 50%;
@@ -57,19 +59,19 @@
   margin-right: 16px;
 }
 
-.profile-picture {
+.instructList-profile-picture {
   width: 100%;
   height: auto;
 }
 
-.details-container {
+.instructList-details-container {
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.inner-card-container {
+.instructList-inner-card-container {
   flex: 1;
   display: flex;
   align-items: center;
@@ -77,7 +79,7 @@
   flex-direction: column; /* Add this line */
 }
 
-.inner-card {
+.instructList-inner-card {
   display: flex;
   flex-direction: column;
   padding: 16px;
@@ -91,17 +93,17 @@
   text-align: left; /* Center text */
 }
 
-.inner-card span {
+.instructList-inner-card span {
   margin-bottom: 8px; /* Add space between the words */
 }
 
-.tab-buttons {
+.instructList-tab-buttons {
   display: flex;
   justify-content: center;
   margin-bottom: 16px;
 }
 
-.tab-button {
+.instructList-tab-button {
   padding: 10px 20px;
   margin: 0 5px;
   cursor: pointer;
@@ -110,17 +112,17 @@
   border-radius: 4px;
 }
 
-.tab-button.active {
+.instructList-tab-button.active {
   background-color: #007bff;
   color: white;
   border-color: #007bff;
 }
 
-.tab-button:not(.active):hover {
+.instructList-tab-button:not(.active):hover {
   background-color: #ddd;
 }
 
-.popup-overlay {
+.instructList-popup-overlay {
   display: none;
   position: fixed;
   top: 0;
@@ -133,11 +135,11 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.popup-overlay.show {
+.instructList-popup-overlay.show {
   display: flex;
 }
 
-.popup-box {
+.instructList-popup-box {
   background-color: white;
   padding: 20px 40px;
   border-radius: 8px;
@@ -149,14 +151,14 @@
   margin: auto;
 }
 
-.buttons-container {
+.instructList-buttons-container {
   width: auto;
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
 
-.container {
+.instructList-container {
   position: relative;
   display: flex;
   min-width: 320px;
@@ -168,7 +170,7 @@
   flex-direction: column;
 }
 
-.container-row {
+.instructList-container-row {
   height: auto;
   min-width: 280px;
   display: flex;
@@ -177,11 +179,11 @@
   align-items: center;
 }
 
-.container-row div {
+.instructList-container-row div {
   flex: 1;
 }
 
-.dashboard {
+.instructList-dashboard {
   background-color: rgba(255, 255, 255, 0.654);
   border: 1px solid #e0e0e0;
   border-radius: 10px;
@@ -200,35 +202,35 @@
   flex-wrap: wrap;
 }
 
-.dashboard-container {
+.instructList-dashboard-container {
   text-align: left;
   flex: 1;
   margin-bottom: 20px;
 }
 
-.dashboard-container h2 {
+.instructList-dashboard-container h2 {
   font-size: 38px;
   margin-top: 10px;
   margin-bottom: 10px;
 }
 
-.dashboard-container p {
+.instructList-dashboard-container p {
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
 }
 
-.dashboard-details {
+.instructList-dashboard-details {
   font-size: 18px;
   margin: 20px 0px;
 }
 
-.dashboard-details span {
+.instructList-dashboard-details span {
   display: block;
 }
 
 
-.book-button {
+.instructList-book-button {
   background-color: rgb(60, 79, 110);
   color: white;
   border: none;
@@ -241,91 +243,91 @@
   box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
-.book-button:hover {
+.instructList-book-button:hover {
   background-color: #333;
 }
 
 @media (max-width: 1024px) {
-  .card {
+  .instructList-card {
     flex-direction: column;
     height: auto;
   }
 
-  .inner-card {
+  .instructList-inner-card {
     height: auto;
     width: 80%;
   }
 
-  .card-container {
+  .instructList-card-container {
     flex-direction: row;
   }
 
-  .details-container {
+  .instructList-details-container {
     margin-top: 16px;
   }
 
-  .dashboard {
+  .instructList-dashboard {
     padding: 20px 40px;
   }
 
-  .dashboard-container h2 {
+  .instructList-dashboard-container h2 {
     font-size: 30px;
   }
 }
 
 @media (max-width: 768px) {
-  .dashboard {
+  .instructList-dashboard {
     flex-direction: column;
     padding: 20px;
     margin-top: 100px;
   }
 
-  .card {
+  .instructList-card {
     margin: 10px;
     padding: 10px;
     flex-direction: column;
   }
 
-  .details-container {
+  .instructList-details-container {
     margin-bottom: 16px;
   }
 
-  .book-button {
+  .instructList-book-button {
     align-self: center;
     margin-top: 10px;
   }
 
-  .dashboard-container h2 {
+  .instructList-dashboard-container h2 {
     font-size: 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .card {
+  .instructList-card {
     padding: 10px;
     margin: 10px 0;
     flex-direction: column;
   }
 
-  .details-container {
+  .instructList-details-container {
     margin-bottom: 16px;
   }
 
-  .book-button {
+  .instructList-book-button {
     align-self: center;
     margin-top: 10px;
   }
 
-  .inner-card {
+  .instructList-inner-card {
     padding: 10px;
     border-radius: 8px;
   }
 
-  .dashboard {
+  .instructList-dashboard {
     padding: 10px;
   }
 
-  .dashboard-container h2 {
+  .instructList-dashboard-container h2 {
     font-size: 20px;
   }
 }

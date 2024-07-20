@@ -1,0 +1,224 @@
+
+/* page.css */
+main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+h2 {
+  font-size: 42px;
+}
+
+.calendar {
+  background-color: rgb(243, 243, 243);
+  border-radius: 8px;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+}
+
+.lesson {
+  text-align: center;
+  margin-top: 60px; /* Adjust margin for responsiveness */
+  margin-bottom: 0px; /* Add margin-bottom for spacing */
+  color: black;
+  font-size: 1.5vw; /* Use vw (viewport width) units for responsive font size */
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap; /* Ensure content wraps on smaller screens */
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.date-selector p,
+.time-selector p {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.booking-summary .title p {
+  font-size: 18px;
+  margin-top: 15px;
+}
+
+.times {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.time-button {
+  width: 200px;
+  height: 60px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  color: white;
+  background-color: rgb(60, 79, 110);
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px; /* Adjust the font size */
+}
+
+.time-button:hover {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+}
+
+.time-button:active {
+  transform: scale(0.98);
+}
+
+.time-button.disabled {
+  background-color: rgb(165, 165, 165);
+  cursor: not-allowed;
+}
+
+.booking-summary {
+  position: relative;
+}
+
+.booking-summary .container {
+  background-color: #ffffffbc;
+  border-radius: 8px;
+  padding: 30px;
+  margin-bottom: 10px;
+}
+
+.booking-summary .booking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.booking-summary p {
+  font-size: 15px;
+  margin: 5px 0;
+}
+
+.cancel-button {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 11.5px;
+}
+
+.cancel-button:hover {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+}
+
+.cancel-button:active {
+  transform: scale(0.98);
+}
+
+.error-message {
+  color: rgb(255, 67, 67);
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bold;
+}
+
+.next-button {
+  background-color: rgb(60, 79, 110);
+  width: 100%;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.next-button:hover {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+}
+
+.next-button:active {
+  transform: scale(0.98);
+}
+
+.next-button.disabled {
+  background-color: rgb(192, 192, 192);
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .lesson {
+      font-size: 4vw;
+  }
+
+  .left-column,
+  .center-column,
+  .right-column {
+      flex-basis: 100%;
+  }
+
+  .right-column::after {
+      display: none;
+  }
+
+  .right-column {
+      border-top: 1px solid #ccc;
+  }
+}
+
+.title {
+  width: 100%;
+  text-align: left;
+}
+
+.custom-date-calendar .MuiPickersDay-root {
+  font-size: 20px; /* Increase the font size of the days */
+}
+
+.custom-date-calendar .MuiPickersCalendarHeader-root {
+  font-size: 20px; /* Increase the font size of the calendar header */
+}
+
+.custom-date-calendar .MuiPickersCalendarHeader-label {
+  font-size: 18px; /* Increase the font size of the month and year label */
+}
+
+.custom-date-calendar .MuiPickersDay-dayWithMargin {
+  font-size: 15px; /* Increase the font size of days with margin */
+}
+
+.custom-date-calendar .MuiTypography-caption {
+  font-size: 15px; /* Increase the font size of text inside the calendar */
+}
+
+.confirm-button-container {
+  text-align: center;
+  margin: 20px 0 0 150px; /* Adjust margin for spacing */
+}
+
+.confirm-button {
+  background-color: rgb(60, 79, 110);
+  width: 100%;
+  max-width: 400px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+  padding: 15px;
+  font-size: 18px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.confirm-button:hover {
+  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+}
+
+.confirm-button:active {
+  transform: scale(0.98);
+}
+
+.confirm-button.disabled {
+  background-color: rgb(192, 192, 192);
+  cursor: not-allowed;
+}

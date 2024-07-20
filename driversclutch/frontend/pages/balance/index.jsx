@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import Navbar from '@/app/components/navbar/navbar';
 import './page.css';
-
 import '@/app/components/background/background.css';
-
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
@@ -39,25 +38,9 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
 
     setLoading(true);
 
-    // const res = await fetch('/api/create-payment-intent', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({ amount: amount * 100 }), // amount in cents
-    // });
-
-    // const { clientSecret } = await res.json();
-
-    // const result = await stripe.confirmCardPayment(clientSecret, {
-    //   payment_method: {
-    //     card: elements.getElement(CardElement),
-    //   },
-    // });
-
     try {
       console.log('trying to put', topUpValue);
-      const response = await axios.put('http://localhost:8001/students/balance/topup', topUpValue, {
+      const response = await axios.put(`${url}/students/balance/topup`, topUpValue, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -86,8 +69,8 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="container">
-        <div className="container-row">
+      <div className="balance-container">
+        <div className="balance-container-row">
           <div>
             <h3>Amount</h3>
           </div>
@@ -99,19 +82,19 @@ const TopUpForm = ({ setIsPopupVisible, isPopupVisible, fetchBalanceData }) => {
               min="1"
               step="any"
               inputMode="numeric"
-              className="large-input"
+              className="balance-large-input"
             />
           </div>
         </div>
-        <div className='container-row'>
+        <div className='balance-container-row'>
           <CardElement />
         </div>
-        <div className='container-row'>
-          <div className="buttons-container">
-            <button className="book-button" type="submit" disabled={!stripe || loading}>
+        <div className='balance-container-row'>
+          <div className="balance-buttons-container">
+            <button className="balance-book-button" type="submit" disabled={!stripe || loading}>
               {loading ? 'Processing...' : 'Top Up'}
             </button>
-            <button className="book-button" type="button" onClick={handleCancel}>
+            <button className="balance-book-button" type="button" onClick={handleCancel}>
               Cancel
             </button>
           </div>
@@ -138,7 +121,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/students/balance/?id=${userDocID}`);
+      const response = await axios.get(`${url}/students/balance/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setBalanceData(response.data);
     } catch (error) {
@@ -159,17 +142,17 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-container">
+    <div className="balance-dashboard">
+      <div className="balance-dashboard-container">
         <h2>Top-up Balance</h2>
         <p>Add credits to your account</p>
         <h3>Current Credit Balance: ${balanceData.balance}</h3>
         <br></br>
-        <button className="book-button" onClick={ togglePopup }>
+        <button className="balance-book-button" onClick={ togglePopup }>
           Add Credits
         </button>
-        <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
-          <div className="popup-box">
+        <div id="balance-popupOverlay" className={`balance-popup-overlay ${isPopupVisible ? 'show' : ''}`}>
+          <div className="balance-popup-box">
             <Elements stripe={stripePromise}>
               <TopUpForm setIsPopupVisible={setIsPopupVisible} isPopupVisible={isPopupVisible} fetchBalanceData={fetchBalanceData}/>
             </Elements>

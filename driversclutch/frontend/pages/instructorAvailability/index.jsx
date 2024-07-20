@@ -12,6 +12,7 @@ import '@/app/components/dashboard/dashboard.css';
 import { GiCancel } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
 import axios from 'axios'; // Import axios
+import { url } from '../../src/app/firebase/firebase_config';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -84,7 +85,7 @@ const Dashboard = () => {
 
     console.log("Sending data to server:", requestData); // Log the request data
 
-    const response = await axios.post('http://localhost:8001/instructors/availability', requestData, {
+    const response = await axios.post(`${url}/instructors/availability`, requestData, {
       headers: {
         'Content-Type': 'application/json',
       },

@@ -95,9 +95,8 @@ if (!user) {
             <Link href="#">Booking</Link>
             <div className="dropdown-content">
               <Link href="../../../../bookingList">My Bookings</Link>
-              <Link href="#">Theory test</Link>
+              <Link href="../../../../theoryTest">Theory Test</Link>
               <Link href="../../../../booking">Practical Lesson</Link>
-              <Link href="#">Simulator</Link>
             </div>
           </li>
           <li>

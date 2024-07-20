@@ -3,10 +3,9 @@
 import { useState, useEffect } from 'react';
 import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
-
 import '@/app/components/background/background.css';
-
 import axios from 'axios';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const Dashboard = () => {
   const [isPictureVisible, setIsPictureVisible] = useState(false);
@@ -30,7 +29,7 @@ const Dashboard = () => {
             throw new Error('User document ID not found in localStorage');
         }
 
-        const response = await axios.get(`https://heap-heap-hooray-lc3lka4s0-wenkais-projects.vercel.app/students/profile/?id=${userDocID}`);
+        const response = await axios.get(`${url}/students/profile/?id=${userDocID}`);
         console.log('API Response:', response.data);
 
         const profileData = response.data.data;
@@ -61,37 +60,30 @@ const Dashboard = () => {
         <h2>Profile</h2>
         <br></br>
         <div className="profile-container">
-          <div className='profile-container-row'>
-            <div>
-              <h3>First Name</h3>
-              <p>{profileData.firstName}</p>
-            </div>
-            <div>
-              <h3>Last Name</h3>
-              <p>{profileData.lastName}</p>
-            </div>
-            <div>
-              <h3>Email</h3>
-              <p>{profileData.email}</p>
-            </div>
+          <div className='profile-item'>
+            <h3>First Name</h3>
+            <p>{profileData.firstName}</p>
           </div>
-          <div className='profile-container-row'>
-            <div>
-              <h3>Date Of Birth</h3>
-              <p>{profileData.birthdate}</p>
-            </div>
-            <div>
-              <h3>Credit Balance</h3>
-              <p>{profileData.balance}</p>
-            </div>
-            <div>
-              <h3>Instructor</h3>
-              <p>{instructorName}</p>
-            </div>
+          <div className='profile-item'>
+            <h3>Last Name</h3>
+            <p>{profileData.lastName}</p>
           </div>
-          {/* <div className='profile-container-row'>
-            <button className="book-button btn-open-popup" onClick={togglePopup}>Change Password</button>
-          </div> */}
+          <div className='profile-item'>
+            <h3>Email</h3>
+            <p>{profileData.email}</p>
+          </div>
+          <div className='profile-item'>
+            <h3>Date Of Birth</h3>
+            <p>{profileData.birthdate}</p>
+          </div>
+          <div className='profile-item'>
+            <h3>Credit Balance</h3>
+            <p>{profileData.balance}</p>
+          </div>
+          <div className='profile-item'>
+            <h3>Instructor</h3>
+            <p>{instructorName}</p>
+          </div>
         </div>
         <div id="pictureOverlay" className={`picture-overlay ${isPictureVisible ? 'show' : ''}`}>
           <div className='picture-box'>

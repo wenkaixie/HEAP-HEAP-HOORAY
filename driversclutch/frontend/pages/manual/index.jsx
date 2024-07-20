@@ -7,6 +7,7 @@ import './page.css';
 import '@/app/components/background/background.css';
 import {FirestoreDB, auth} from '../../src/app/firebase/firebase_config';
 import { collection, query, where, getDocs, Firestore } from 'firebase/firestore';
+import { url } from '../../src/app/firebase/firebase_config';
 
 const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
   const userDocID = localStorage.getItem('userDocID');
@@ -27,7 +28,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
       
       try {
         console.log('trying to post', details);
-        const response = await axios.post('http://localhost:8001/students/privateInstructors/selected', details, {
+        const response = await axios.post(`${url}/students/privateInstructors/selected`, details, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -50,7 +51,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
     
     try {
       console.log('trying to pay', deductValue);
-      const response = await axios.put('http://localhost:8001/students/balance/payment', deductValue, {
+      const response = await axios.put(`${url}/students/balance/payment`, deductValue, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -75,18 +76,18 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
   };
 
   return (
-    <div className="popup-box">
+    <div className="instructList-popup-box">
       <div>
         <h2 style={{ fontSize: '30px' }}>Instructor Details</h2>
       </div>
       <br />
-      <div className='container'>
-        <div className="profile-container">
-          <div className="profile-picture-container">
-            <img src={instructor.profileImage} className="profile-picture" />
+      <div className='instructList-container'>
+        <div className="instructList-profile-container">
+          <div className="instructList-profile-picture-container">
+            <img src={instructor.profileImage} className="instructList-profile-picture" />
           </div>
         </div>
-        <div className='container-row'>
+        <div className='instructList-container-row'>
           <div>
             <h3>Name</h3>
             <p>{instructor.firstName} {instructor.lastName}</p>
@@ -104,7 +105,7 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
             <p>{instructor.passRate}</p>
           </div>
         </div>
-        <div className='container-row'>
+        <div className='instructList-container-row'>
           <div>
             <h3>Lesson Duration</h3>
             <p>{instructor.lessonDuration}</p>
@@ -120,9 +121,9 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
         </div>
       </div>
       <br />
-      <div className='buttons-container'>
-        <button className='book-button' onClick={handleEnrolClick}>Enrol Now</button>
-        <button className='book-button' onClick={togglePopup}>Close</button>
+      <div className='instructList-buttons-container'>
+        <button className='instructList-book-button' onClick={handleEnrolClick}>Enrol Now</button>
+        <button className='instructList-book-button' onClick={togglePopup}>Close</button>
       </div>
     </div>
   );
@@ -139,7 +140,7 @@ const Dashboard = () => {
       if (!userDocID) {
         throw new Error('User document ID not found in localStorage');
       }
-      const response = await axios.get(`http://localhost:8001/students/profile/?id=${userDocID}`);
+      const response = await axios.get(`${url}/students/profile/?id=${userDocID}`);
       console.log('API Response:', response.data);
       setProfileData(response.data.data);
     } catch (error) {
@@ -155,7 +156,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchInstructors = async () => {
       try {
-        const response = await axios.get('http://localhost:8001/students/privateInstructors/manual');
+        const response = await axios.get(`${url}/students/privateInstructors/manual`);
         console.log('API Response:', response.data);
         setInstructors(response.data.data);
       } catch (error) {
@@ -173,7 +174,7 @@ const Dashboard = () => {
     ));
 
     return (
-      <div className="dashboard-details">
+      <div className="instructList-dashboard-details">
         {error ? (
           <p>{error}</p>
         ) : (
@@ -188,11 +189,11 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="dashboard">
+    <div className="instructList-dashboard">
       <Navbar />
-      <div className="dashboard-container">
+      <div className="instructList-dashboard-container">
         <h2>Private Instructors</h2>
-        <div className="instructor-class" style ={{ fontSize: '18px'}}>Class 3 Instructors</div>
+        <div className="instructList-instructor-class" style ={{ fontSize: '18px'}}>Class 3 Instructors</div>
         {renderContent()}
       </div>
     </div>
@@ -207,31 +208,32 @@ const CardManual = ({ instructor, profileData }) => {
   };
 
   return (
-    <div className="card">
-      <div className="card-container">
-        <div className="details-container">
-          <h3 className="instructor-name" style={{ fontSize: '24px', fontWeight: 'bold' }}>
+    <div className="instructList-card">
+      <div className="instructList-card-container">
+        <div className="instructList-details-container">
+          <h3 className="instructList-instructor-name" style={{ fontSize: '24px', fontWeight: 'bold' }}>
             {instructor.firstName} {instructor.lastName}
           </h3>
-          <div className="profile-container">
-            <div className="profile-picture-container">
-              <img src={instructor.profileImage} className="profile-picture" />
+          <div className="instructList-profile-container">
+            <div className="instructList-profile-picture-container">
+              <img src={instructor.profileImage} className="instructList-profile-picture" />
             </div>
           </div>
           <div>
             <span>Enrolment Fee: ${instructor.enrolmentFee}</span>
+            <br />
             <span>Lesson Fee: ${instructor.lessonFee}</span>
             <br />
           </div>
-          <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
+          <div id="instructList-popupOverlay" className={`instructList-popup-overlay ${isPopupVisible ? 'show' : ''}`}>
             <InstructorDetails togglePopup={togglePopup} instructor={instructor} profileData={profileData} />
           </div>
         </div>
       </div>
-      <div className="inner-card-container">
+      <div className="instructList-inner-card-container">
         <CardManualDetails instructor={instructor} />
         
-        <button onClick={togglePopup} className="book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
+        <button onClick={togglePopup} className="instructList-book-button" style={{ textDecoration: 'none', fontSize: '15px'}}>View Details</button>
         
       </div>
     </div>
@@ -242,7 +244,7 @@ const CardManual = ({ instructor, profileData }) => {
 
 const CardManualDetails = ({ instructor }) => {
   return (
-    <div className="inner-card">
+    <div className="instructList-inner-card">
       <span>Lesson Duration: {instructor.lessonDuration} Hours</span>
       <span>Location: {instructor.locations.join(', ')}</span>
       <span>Remaining Slots: {instructor.remainingSlots}</span>
