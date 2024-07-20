@@ -60,37 +60,30 @@ const Dashboard = () => {
         <h2>Profile</h2>
         <br></br>
         <div className="profile-container">
-          <div className='profile-container-row'>
-            <div>
-              <h3>First Name</h3>
-              <p>{profileData.firstName}</p>
-            </div>
-            <div>
-              <h3>Last Name</h3>
-              <p>{profileData.lastName}</p>
-            </div>
-            <div>
-              <h3>Email</h3>
-              <p>{profileData.email}</p>
-            </div>
+          <div className='profile-item'>
+            <h3>First Name</h3>
+            <p>{profileData.firstName}</p>
           </div>
-          <div className='profile-container-row'>
-            <div>
-              <h3>Date Of Birth</h3>
-              <p>{profileData.birthdate}</p>
-            </div>
-            <div>
-              <h3>Credit Balance</h3>
-              <p>{profileData.balance}</p>
-            </div>
-            <div>
-              <h3>Instructor</h3>
-              <p>{instructorName}</p>
-            </div>
+          <div className='profile-item'>
+            <h3>Last Name</h3>
+            <p>{profileData.lastName}</p>
           </div>
-          {/* <div className='profile-container-row'>
-            <button className="book-button btn-open-popup" onClick={togglePopup}>Change Password</button>
-          </div> */}
+          <div className='profile-item'>
+            <h3>Email</h3>
+            <p>{profileData.email}</p>
+          </div>
+          <div className='profile-item'>
+            <h3>Date Of Birth</h3>
+            <p>{profileData.birthdate}</p>
+          </div>
+          <div className='profile-item'>
+            <h3>Credit Balance</h3>
+            <p>{profileData.balance}</p>
+          </div>
+          <div className='profile-item'>
+            <h3>Instructor</h3>
+            <p>{instructorName}</p>
+          </div>
         </div>
         <div id="pictureOverlay" className={`picture-overlay ${isPictureVisible ? 'show' : ''}`}>
           <div className='picture-box'>

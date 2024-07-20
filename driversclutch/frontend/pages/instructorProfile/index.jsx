@@ -99,163 +99,155 @@ const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <div>
+        <h2>Edit Profile</h2>
+      </div>
       <div className='profile-container'>
-        <div className='profile-container-row'>
-          <h2>Edit Profile</h2>
+        <div className='profile-item'>
+          <h3>First Name</h3>
+          <p>{profileData.firstName}</p>
         </div>
-        <div className='profile-container-row'>
-          <div>
-            <h3>First Name</h3>
-            <p>{profileData.firstName}</p>
-          </div>
-          <div>
-            <h3>Last Name</h3>
-            <p>{profileData.lastName}</p>
-          </div>
-          <div>
-            <h3>Email</h3>
-            <p>{profileData.email}</p>
-          </div>
-          <div>
-            <h3>Phone Number</h3>
+        <div className='profile-item'>
+          <h3>Last Name</h3>
+          <p>{profileData.lastName}</p>
+        </div>
+        <div className='profile-item'>
+          <h3>Email</h3>
+          <p>{profileData.email}</p>
+        </div>
+        <div className='profile-item'>
+          <h3>Phone Number</h3>
+          <input 
+            type="text"
+            required
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
+            className='large-input'
+          />
+        </div>
+        <div className='profile-item'>
+          <h3>Car Model</h3>
+          <input 
+            type="text"
+            required
+            value={carModel}
+            onChange={handleCarModelChange}
+            className='large-input'
+          />
+        </div>
+        <div className='profile-item'>
+          <h3>Car Plate</h3>
+          <input 
+            type="text"
+            required
+            value={carPlate}
+            onChange={handleCarPlateChange}
+            className='large-input'
+          />
+        </div>
+        <div className='profile-item'>
+          <h3>Driving Centre</h3>
+          <input 
+            type="text"
+            required
+            value={drivingCentre}
+            onChange={handleDrivingCentreChange}
+            className='large-input'
+          />
+        </div>
+        <div className='profile-item'>
+          <h3>Transmission Type</h3>
+          <input 
+            type="text"
+            required
+            value={transmissionType}
+            onChange={handleTransmissionTypeChange}
+            className='large-input'
+          />
+        </div>
+        <div className='profile-item'>
+            <h3>Work Start</h3>
             <input 
               type="text"
               required
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
+              value={workStart}
+              onChange={handleWorkStartChange}
               className='large-input'
             />
-          </div>
         </div>
-        <div className='profile-container-row'>
-          <div>
-            <h3>Car Model</h3>
+        <div className='profile-item'>
+            <h3>Work End</h3>
             <input 
               type="text"
               required
-              value={carModel}
-              onChange={handleCarModelChange}
+              value={workEnd}
+              onChange={handleWorkEndChange}
               className='large-input'
             />
-          </div>
-          <div>
-            <h3>Car Plate</h3>
+        </div>
+        <div className='profile-item'>
+            <h3>Enrolment Fee</h3>
             <input 
               type="text"
               required
-              value={carPlate}
-              onChange={handleCarPlateChange}
+              value={enrolmentFee}
+              onChange={handleEnrolmentFeeChange}
               className='large-input'
             />
-          </div>
-          <div>
-            <h3>Driving Centre</h3>
+        </div>
+        <div className='profile-item'>
+            <h3>Lesson Fee</h3>
             <input 
               type="text"
               required
-              value={drivingCentre}
-              onChange={handleDrivingCentreChange}
+              value={lessonFee}
+              onChange={handleLessonFeeChange}
               className='large-input'
             />
-          </div>
-          <div>
-            <h3>Transmission Type</h3>
+        </div>
+        <div className='profile-item'>
+            <h3>Lesson Duration</h3>
             <input 
               type="text"
               required
-              value={transmissionType}
-              onChange={handleTransmissionTypeChange}
+              value={lessonDuration}
+              onChange={handleLessonDurationChange}
               className='large-input'
             />
-          </div>
         </div>
-        <div className='profile-container-row'>
-          <div>
-              <h3>Work Start</h3>
-              <input 
-                type="text"
-                required
-                value={workStart}
-                onChange={handleWorkStartChange}
-                className='large-input'
-              />
-          </div>
-          <div>
-              <h3>Work End</h3>
-              <input 
-                type="text"
-                required
-                value={workEnd}
-                onChange={handleWorkEndChange}
-                className='large-input'
-              />
-          </div>
-          <div>
-              <h3>Enrolment Fee</h3>
-              <input 
-                type="text"
-                required
-                value={enrolmentFee}
-                onChange={handleEnrolmentFeeChange}
-                className='large-input'
-              />
-          </div>
-          <div>
-              <h3>Lesson Fee</h3>
-              <input 
-                type="text"
-                required
-                value={lessonFee}
-                onChange={handleLessonFeeChange}
-                className='large-input'
-              />
-          </div>
+        <div className='profile-item'>
+            <h3>Locations</h3>
+            <input 
+              type="text"
+              required
+              value={locations}
+              onChange={handleLocationsChange}
+              className='large-input'
+            />
         </div>
-        <div className='profile-container-row'>
-          <div>
-              <h3>Lesson Duration</h3>
-              <input 
-                type="text"
-                required
-                value={lessonDuration}
-                onChange={handleLessonDurationChange}
-                className='large-input'
-              />
-          </div>
-          <div>
-              <h3>Locations</h3>
-              <input 
-                type="text"
-                required
-                value={locations}
-                onChange={handleLocationsChange}
-                className='large-input'
-              />
-          </div>
-          <div>
-              <h3>Maximum Students</h3>
-              <input 
-                type="text"
-                required
-                value={maximumStudents}
-                onChange={handleMaximumStudentsChange}
-                className='large-input'
-              />
-          </div>
-          <div>
-              <h3>Pass Rate</h3>
-              <input 
-                type="text"
-                required
-                value={passRate}
-                onChange={handlePassRateChange}
-                className='large-input'
-              />
-          </div>
+        <div className='profile-item'>
+            <h3>Maximum Students</h3>
+            <input 
+              type="text"
+              required
+              value={maximumStudents}
+              onChange={handleMaximumStudentsChange}
+              className='large-input'
+            />
         </div>
-        <div className='profile-container-row'>
-          <button type="submit" className='book-button'>Save Changes</button>
+        <div className='profile-item'>
+            <h3>Pass Rate</h3>
+            <input 
+              type="text"
+              required
+              value={passRate}
+              onChange={handlePassRateChange}
+              className='large-input'
+            />
         </div>
+      </div>
+      <div>
+        <button type="submit" className='book-button'>Save Changes</button>
       </div>
     </form>
   );
@@ -383,90 +375,80 @@ const Dashboard = () => {
     return (
       <div className="dashboard">
         <div className="dashboard-container">
-          <h2>Profile</h2>
-          <div className="profile-container">
-            <div className='profile-container-row'>
-              <div className="profile-picture-container profile-container-content">
-                  <img src={profilePic ?? ""} className="profile-picture"/>
-                  <div className="overlay">
-                    <div className="edit-icon" onClick={togglePicture}>✎</div>
-                  </div>
-              </div>
-              <div>
-                <h3>First Name</h3>
-                <p>{profileData.firstName}</p>
-              </div>
-              <div>
-                <h3>Last Name</h3>
-                <p>{profileData.lastName}</p>
-              </div>
-              <div>
-                <h3>Email</h3>
-                <p>{profileData.email}</p>
-              </div>
-              <div>
-                <h3>Phone Number</h3>
-                <p>{profileData.phoneNumber}</p>
-              </div>
-            </div>
-            <div className='profile-container-row'>
-              <div>
-                <h3>Car Model</h3>
-                <p>{profileData.carModel}</p>
-              </div>
-              <div>
-                <h3>Car Plate</h3>
-                <p>{profileData.carPlate}</p>
-              </div>
-              <div>
-                <h3>Driving Centre</h3>
-                <p>{profileData.drivingCentre}</p>
-              </div>
-              <div>
-                <h3>Transmission Type</h3>
-                <p>{profileData.transmissionType}</p>
-              </div>
-            </div>
-            <div className='profile-container-row'>
-              <div>
-                <h3>Work Start</h3>
-                <p>{profileData.workStart}</p>
-              </div>
-              <div>
-                <h3>Work End</h3>
-                <p>{profileData.workEnd}</p>
-              </div>
-              <div>
-                <h3>Enrolment Fee</h3>
-                <p>{profileData.enrolmentFee}</p>
-              </div>
-              <div>
-                <h3>Lesson Fee</h3>
-                <p>{profileData.lessonFee}</p>
-              </div>
-            </div>
-            <div className='profile-container-row'>
-              <div>
-                <h3>Lesson Duration</h3>
-                <p>{profileData.lessonDuration} Hr</p>
-              </div>
-              <div>
-                <h3>Locations</h3>
-                <p>{profileData.locations.join(", ")}</p>
-              </div>
-              <div>
-                <h3>Maximum Students</h3>
-                <p>{profileData.maximumStudents}</p>
-              </div>
-              <div>
-                <h3>Pass Rate</h3>
-                <p>{profileData.passRate}</p>
-              </div>
-            </div>
-            <div className='profile-container-row'>
-              <button className="book-button btn-open-popup" onClick={togglePopup}>Edit Profile</button>
+        <h2>Profile</h2>
+          <div className="profile-picture-container profile-container-content">
+            <img src={profilePic ?? ""} className="profile-picture"/>
+            <div className="overlay">
+              <div className="edit-icon" onClick={togglePicture}>✎</div>
             </div>
           </div>
+          <div className="profile-container">
+            <div className='profile-item'>
+              <h3>First Name</h3>
+              <p>{profileData.firstName}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Last Name</h3>
+              <p>{profileData.lastName}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Email</h3>
+              <p>{profileData.email}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Phone Number</h3>
+              <p>{profileData.phoneNumber}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Car Model</h3>
+              <p>{profileData.carModel}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Car Plate</h3>
+              <p>{profileData.carPlate}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Driving Centre</h3>
+              <p>{profileData.drivingCentre}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Transmission Type</h3>
+              <p>{profileData.transmissionType}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Work Start</h3>
+              <p>{profileData.workStart}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Work End</h3>
+              <p>{profileData.workEnd}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Enrolment Fee</h3>
+              <p>{profileData.enrolmentFee}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Lesson Fee</h3>
+              <p>{profileData.lessonFee}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Lesson Duration</h3>
+              <p>{profileData.lessonDuration} Hr</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Locations</h3>
+              <p>{profileData.locations.join(", ")}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Maximum Students</h3>
+              <p>{profileData.maximumStudents}</p>
+            </div>
+            <div className='profile-item'>
+              <h3>Pass Rate</h3>
+              <p>{profileData.passRate}</p>
+            </div>
+          </div>
+          <button className="book-button btn-open-popup" onClick={togglePopup}>Edit Profile</button>
           <div id="pictureOverlay" className={`picture-overlay ${isPictureVisible ? 'show' : ''}`}>
             <div className='picture-box'>
               <h3>Change Photo</h3>

@@ -1,255 +1,258 @@
-
 h3 {
   font-size: 26px;
   margin: 10px 0px;
 }
 
 .profile-container {
-  position: relative;
   display: flex;
-  min-width: 320px;
-  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px 0px;
+  border-radius: 10px;
+  gap: 40px
+}
+
+.profile-item {
+  flex: 1 1 20%;
+  padding: 20px 0px;
+}
+
+.profile-item h3 {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+  .profile-item {
+      flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-item {
+      flex: 1 1 100%;
+      margin: 5px;
+  }
+}
+.profile-picture-container {
+  max-width: 150px;
+  min-width: 150px;
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 20px 0px;
+}
+
+.profile-picture {
+  max-width: 150px;
+  min-width: 150px;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.overlay {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.profile-picture-container:hover .overlay {
+  opacity: 1;
+}
+
+.picture-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.picture-overlay.show {
+  display: flex;
+}
+
+.picture-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  min-width: 250px;
+  max-width: calc(100% - 450px);
+  width: 25%;
+  height: auto;
   margin: auto;
-  justify-content: flex-start;
+}
+
+.edit-icon {
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  position: inherit;
+}
+
+.buttons-container {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.popup-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-overlay.show {
+  display: flex;
+}
+
+.popup-box {
+  background-color: white;
+  padding: 20px 40px;
+  border-radius: 8px;
+  text-align: left;
+  min-width: 250px;
+  max-width: calc(100% - 450px);
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+}
+
+.large-input {
+  width: 300px;
+  height: 40px;
+  font-size: 18px; 
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 2px 5px;
+}
+
+.dashboard {
+  background-color: rgba(255, 255, 255, 0.654);
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px 60px;
+  text-align: left;
+  min-width: 320px;
+  max-width: calc(100% - 450px);
+  margin: auto;
+  margin-top: 154px;
+  margin-bottom: 100px;
+  display: flex;
+  justify-content: center;
   align-items: top;
+  gap: 40px;
   flex-wrap: wrap;
 }
 
-.profile-container-row {
-  height: auto;
-  min-width: 280px;
-  display: flex;
-  gap: 40px;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  min-width: 320px;
+.dashboard-container {
+text-align: left;
+flex: 1;
+margin-bottom: 20px;
 }
 
-.profile-container-row div {
-  flex: 1;
+.dashboard-container h2{
+font-size: 38px;
+margin-top: 10px;
+margin-bottom: 10px;
 }
 
-  .profile-picture-container {
-    max-width: 150px;
-    min-width: 150px;
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin: 20px 0px;
-  }
-  
-  .profile-picture {
-    max-width: 150px;
-    min-width: 150px;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ccc;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .profile-picture-container:hover .overlay {
-    opacity: 1;
-  }
+.dashboard-container p {
+font-size: 16px;
+color: #666;
+margin-bottom: 20px;
+}
 
-  .picture-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .picture-overlay.show {
-    display: flex;
-  }
+.dashboard-details {
+font-size: 18px;
+margin: 20px 0px;
+}
 
-  .picture-box {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    text-align: left;
-    min-width: 250px;
-    max-width: calc(100% - 450px);
-    width: 25%;
-    height: auto;
-    margin: auto;
-  }
+.dashboard-details span {
+display: block;
+}
 
-  .edit-icon {
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    position: inherit;
-  }
+.book-button {
+background-color: rgb(60, 79, 110);
+color: white;
+border: none;
+padding: 10px 20px;
+font-size: 16px;
+border-radius: 5px;
+cursor: pointer;
+}
 
-  .buttons-container {
-    width: auto;
-    display: flex;
-    flex-direction: row;
-    gap: 20px;
-  }
+.book-button:hover {
+background-color: #333;
+}
 
-  .popup-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .popup-overlay.show {
-    display: flex;
-  }
-
-  .popup-box {
-    background-color: white;
-    padding: 20px 40px;
-    border-radius: 8px;
-    text-align: left;
-    min-width: 250px;
-    max-width: calc(100% - 450px);
-    width: fit-content;
-    height: fit-content;
-    margin: auto;
-  }
-
-  .large-input {
-    width: 300px;
-    height: 40px;
-    font-size: 18px; 
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 2px 5px;
-  }
-
+@media (max-width: 768px) {
   .dashboard {
-    background-color: rgba(255, 255, 255, 0.654);
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px 60px;
-    text-align: left;
-    min-width: 320px;
-    max-width: calc(100% - 450px);
-    margin: auto;
-    margin-top: 154px;
-    margin-bottom: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: top;
-    gap: 40px;
-    flex-wrap: wrap;
+    flex-direction: column;
   }
-  
-  .dashboard-container {
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
   text-align: left;
-  flex: 1;
   margin-bottom: 20px;
-  }
-  
-  .dashboard-container h2{
-  font-size: 38px;
+}
+
+.card h2 {
+  font-size: 24px;
+  margin-top: 0px;
+}
+
+.card h3 {
+  font-size: 20px;
   margin-top: 10px;
-  margin-bottom: 10px;
-  }
-  
-  .dashboard-container p {
+}
+
+.card p {
   font-size: 16px;
   color: #666;
   margin-bottom: 20px;
-  }
-  
-  .dashboard-details {
+}
+
+.card-details {
   font-size: 18px;
-  margin: 20px 0px;
-  }
+  margin-bottom: 20px;
+}
 
-  .dashboard-details span {
+.card-details span {
   display: block;
-  }
-  
-  .book-button {
-  background-color: rgb(60, 79, 110);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  font-size: 16px;
-  border-radius: 5px;
-  cursor: pointer;
-  }
-  
-  .book-button:hover {
-  background-color: #333;
-  }
+}
 
-  @media (max-width: 768px) {
-    .dashboard {
-      flex-direction: column;
-    }
-  }
 
-  .card {
-    background-color: white;
-    border: 1px solid #e0e0e0;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    text-align: left;
-    margin-bottom: 20px;
-  }
-  
-  .card h2 {
-    font-size: 24px;
-    margin-top: 0px;
-  }
-
-  .card h3 {
-    font-size: 20px;
-    margin-top: 10px;
-  }
-  
-  .card p {
-    font-size: 16px;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .card-details {
-    font-size: 18px;
-    margin-bottom: 20px;
-  }
-  
-  .card-details span {
-    display: block;
-  }
-  
- 
 
 
