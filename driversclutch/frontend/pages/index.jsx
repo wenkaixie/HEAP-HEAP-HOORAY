@@ -1,6 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import './page.css';
+import { BiLogIn } from "react-icons/bi";
+import { IoCalendarOutline } from "react-icons/io5";
+import { IoNewspaperOutline } from "react-icons/io5";
+import { MdOutlinePeopleAlt } from "react-icons/md";
+
 
 const HomePage = () => {
     return (
@@ -11,7 +16,10 @@ const HomePage = () => {
                 </div>
                 <div className='authLinks'>
                     <Link href="/login">
-                        Login
+                        <div className='login-container'>
+                            <BiLogIn className='login-icon' />
+                            <span>Login</span>
+                        </div>
                     </Link>
                 </div>
             </header>
@@ -28,17 +36,20 @@ const HomePage = () => {
             <section className='features'>
                 <h2>Our Features</h2>
                 <div className='featureList'>
-                    <div className='feature'>
+                    <div className='feature feature1'>
+                    <IoCalendarOutline className='calendar-icon' />
                         <h3>Book Lessons</h3>
-                        <p>Description</p>
+                        <p>Book driving lessons <em><strong>easily</strong></em> and manage your schedule with <em><strong>flexibility</strong></em>.</p>
                     </div>
-                    <div className='feature'>
+                    <div className='feature feature2'>
+                    <IoNewspaperOutline className='paper-icon' />
                         <h3>Theory Practices</h3>
-                        <p>Description</p>
+                        <p>Practice driving theory with our <em><strong>comprehensive</strong></em> resources.</p>
                     </div>
-                    <div className='feature'>
+                    <div className='feature feature3'>
+                    <MdOutlinePeopleAlt className='people-icon' />
                         <h3>Private Instructors Information</h3>
-                        <p>Description</p>
+                        <p><em><strong>Find</strong></em> and <em><strong>connect</strong></em> with our private driving instructors.</p>
                     </div>
                 </div>
             </section>
