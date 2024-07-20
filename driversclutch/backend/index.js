@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(logger); // Logging middleware
 app.use(bodyParser.json());
 app.use(cors({
-	origin: 'https://driversclutch.vercel.app',
+	origin: ":",
 	methods: 'GET,POST,PUT,DELETE',
 	credentials: true, // to allow cookies to be sent along with requests
   }));
