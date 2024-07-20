@@ -18,16 +18,24 @@ body {
 }
 
 .logo img {
-    height: 150px; /* Adjust the height as needed */
+    height: 200px; /* Adjust the height for a bigger logo */
 }
 
 .logo {
-    font-size: 24px;
+    font-size: 30px;
     font-weight: bold;
+    margin-left: 0px;
+}
+
+.authLinks .login-container {
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }
 
 .authLinks a {
-    margin-left: 20px;
+    margin-left: 30px;
+    padding: 5px;
     text-decoration: none;
     color: #333;
     font-weight: bold;
@@ -35,26 +43,33 @@ body {
 
 .hero {
     display: flex;
-    justify-content: left;
+    justify-content: flex-start; /* Move content to the left */
     align-items: center;
-    padding: 30px;
-    background-color: #aacfffc4;
+    padding: 30px 100px;
+    background-color: #c0daf9aa;
 }
 
+
 .heroImage img {
-    max-width: 60%;
+    max-width: 60%; /* Ensure the image doesn't exceed its container */
     height: auto;
+    flex-grow: 1; /* Allow the image to grow within its container */
+    min-width: 500px; /* Set a minimum width to prevent shrinking */
+    display: block;
+    margin-left: 10px; /* Add this to push the image to the right */
 }
 
 .heroText {
-    margin-left: 70px; /* Adjust this value to move the text more to the left */
+    margin-left: 20px; /* Adjust this value to move the text more to the left */
     text-align: left;
 }
 
 .heroText h1 {
-    font-size: 41px;
+    font-size: 45px;
     font-weight: normal;
+    margin-right: 11px;
 }
+
 
 .heroText .boldText {
     font-weight: bold;
@@ -63,16 +78,22 @@ body {
 .features {
     padding: 50px;
     background-color: #ffffff;
+    text-align: center; /* Ensure this is centered */
 }
 
 .features h2 {
-    font-size: 28px;
-    margin-bottom: 20px;
+    font-size: 39px;
+    margin-top: 20px;
+    margin-bottom: 50px;
+    color: rgb(6, 92, 184);
 }
 
 .featureList {
     display: flex;
-    justify-content: space-around;
+    justify-content: center; /* Center the features */
+    gap: 100px; /* Adjust the gap between features */
+    max-width: 1000px; /* Set a max-width to prevent stretching */
+    margin: 0 auto;
 }
 
 .feature {
@@ -80,17 +101,32 @@ body {
     text-align: center;
 }
 
-.feature img {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 20px;
+.feature1, .feature2, .feature3 {
+    max-width: 300px;
+    text-align: center;
 }
 
-.feature h3 {
+.feature3 h3 {
     font-size: 20px;
-    margin-bottom: 10px;
+    white-space: nowrap; /* Ensure "Private Instructors Information" stays on one line */
 }
 
 .feature p {
     color: #3c6c95;
+}
+
+
+.calendar-icon {
+    font-size: 35px; 
+    color: #210409
+}
+
+.paper-icon{
+    font-size: 35px;
+    color: #210409
+}
+
+.people-icon{
+    font-size: 35px;
+    color: #210409
 }

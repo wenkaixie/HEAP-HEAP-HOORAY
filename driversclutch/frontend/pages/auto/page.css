@@ -26,12 +26,14 @@
 .instructList-card {
   background-color: white;
   border: 1px solid #ddd;
-  border-radius: 5px;
+  border-radius: 10px;
   padding: 20px;
-  margin: 20px;
+  margin: 20px 0px;
   display: flex;
   flex-direction: row;
-  height: 250px; /* Adjust the height as needed */
+  height: fit-content;
+  min-height: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .instructList-card-container {
