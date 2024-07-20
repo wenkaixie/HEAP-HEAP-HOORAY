@@ -7,6 +7,23 @@ const options = new chrome.Options();
 // options.addArguments('disable-gpu');
 // options.addArguments('window-size=1920x1080'); // Set window size for better element visibility
 
+module.exports = (req, res) => {
+    //set header first to allow request or origin domain (value can be different)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, OPTIONS, DELETE');
+
+//---- other code
+
+ //Preflight CORS handler
+    if(req.method === 'OPTIONS') {
+        return res.status(200).json(({
+            body: "OK"
+        }))
+    }
+}
+
 const makeBooking = async (req, res) => {
     const { month, date } = req.query;
     console.log('Booking request received:', month, date);
