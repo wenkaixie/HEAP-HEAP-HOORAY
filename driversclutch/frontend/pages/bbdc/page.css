@@ -1,9 +1,10 @@
-/* page.css */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  display: flex;
+  height: 100vh; /* Ensure the body takes the full height */
 }
 
 * {
@@ -19,9 +20,14 @@ body {
 }
 
 .sidebar {
-  background-color: #e0e0e0;
+  background-color: #f0f0f0;
   padding: 20px;
   width: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 95vh;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .menu ul {
@@ -31,17 +37,49 @@ body {
 
 .menu ul li {
   margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.menu ul li:hover {
+  background-color: #0277bd;
 }
 
 .profile {
-  margin-top: 20px;
   text-align: center;
+}
+
+.profile p {
+  margin: 10px 0;
 }
 
 button {
   margin-top: 10px;
-  padding: 5px 10px;
+  padding: 10px 20px;
+  background-color: #0277bd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #01579b; /* Darker blue on hover */
+}
+
+.mainContent {
+  display: flex;
+  flex: 1;
+}
+
+.content {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 20px;
 }
 
 .calendar {
@@ -52,20 +90,25 @@ button {
 .monthButtons button {
   margin: 5px;
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
+  background-color: #f0f0f0;
+  color: black;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  font-size: 12px;
+  width: fit-content;
 }
 
 .monthButtons button.selected {
   background-color: #0056b3;
+  color: white;
 }
 
 .calendarContainer {
   background-color: #f9f9f9;
   padding: 10px;
+  border: none;
+  border-radius: 5px;
 }
 
 .monthSelector {
@@ -81,7 +124,7 @@ button {
 }
 
 .days div {
-  padding: 5px;
+  padding: 10px;
 }
 
 .selected-date {
@@ -114,6 +157,8 @@ button {
 .day.selected {
   background-color: #007bff;
   color: white;
+  border: none;
+  border-radius: 5px;
 }
 
 .day.past {
@@ -122,16 +167,21 @@ button {
 }
 
 .slotContainer {
+  padding: 20px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
+  gap: 10px 20px;
 }
 
 .slot {
-  background-color: #f9f9f9;
-  padding: 10px;
-  text-align: center;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-color: #f0f0f0;
+  color: black;
+  border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .slot.selected {
@@ -151,29 +201,21 @@ button {
 }
 
 .confirm-button {
-  padding: 15px 30px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-.confirm-button:hover {
   background-color: #0056b3;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
 }
 
-.mainContent {
-  display: flex;
-}
-
-.content {
-  flex: 1;
-  padding: 20px;
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  gap: 20px;
+.confirm-button.disabled {
+  background-color: grey;
+  cursor: not-allowed;
 }
 
 .selected {

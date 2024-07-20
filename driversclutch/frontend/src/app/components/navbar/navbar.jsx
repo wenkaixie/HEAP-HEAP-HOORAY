@@ -97,7 +97,6 @@ if (!user) {
               <Link href="../../../../bookingList">My Bookings</Link>
               <Link href="../../../../theoryTest">Theory Test</Link>
               <Link href="../../../../booking">Practical Lesson</Link>
-              <Link href="#">Simulator</Link>
             </div>
           </li>
           <li>

@@ -94,6 +94,7 @@ const Calendar = ({ selectedMonth, setSelectedMonth, selectedDate, setSelectedDa
           </button>
         ))}
       </div>
+      <br></br>
       <div className="calendarContainer">
         <div className="days">
           {Array.from({ length: daysInMonth[selectedMonth] }, (_, index) => (
@@ -108,8 +109,8 @@ const Calendar = ({ selectedMonth, setSelectedMonth, selectedDate, setSelectedDa
         </div>
       </div>
       <div className="selected-date">
-        <p>The selected date</p>
-        <p>{selectedDate ? `2024-${selectedMonth.split('\'')[0]}-${String(selectedDate).padStart(2, '0')}` : 'None'}</p>
+        <p>Date Selected:</p>
+        <p>{selectedDate ? `2024-${selectedMonth.split('\'')[0]}-${String(selectedDate).padStart(2, '0')}` : '(No Date Selected)'}</p>
       </div>
     </div>
   );
@@ -145,28 +146,47 @@ const getFixedSlotsForDate = (date) => {
   }
 };
 
-const Slots = ({ selectedDate, selectedSlot, setSelectedSlot, slots }) => (
-  <div className="slots">
-    <div className="slotContainer">
-      {slots.map(slot => (
-        <div
-          key={slot}
-          className={`slot ${selectedSlot === slot ? 'selected' : ''}`}
-          onClick={() => setSelectedSlot(slot)}
-        >
-          {slot}
-        </div>
-      ))}
-    </div>
-  </div>
-);
+const Slots = ({ selectedDate, selectedSlot, setSelectedSlot, slots }) => {
+  const handleSlotClick = (slot) => {
+    if (selectedSlot === slot) {
+      setSelectedSlot(''); // Deselect the slot if it is already selected
+    } else {
+      setSelectedSlot(slot);
+    }
+  };
 
-const Summary = ({ selectedMonth, selectedDate, selectedSlot }) => (
+  return (
+    <div className="slots">
+      <div className="slotContainer">
+        {slots.map(slot => (
+          <div
+            key={slot}
+            className={`slot ${selectedSlot === slot ? 'selected' : ''}`}
+            onClick={() => handleSlotClick(slot)}
+          >
+            {slot}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const Summary = ({ selectedMonth, selectedDate, selectedSlot, handleConfirmBooking }) => (
   <div className="summary">
     <h2>SUMMARY</h2>
     <div className="summary-item">
       <p>{selectedDate ? `2024-${selectedMonth.split('\'')[0]}-${String(selectedDate).padStart(2, '0')}` : 'No Date Selected'}</p>
       <p>{selectedSlot || 'No Slot Selected'}</p>
+    </div>
+    <div className="confirm-button-container">
+      <button 
+        className={`confirm-button ${selectedSlot ? '' : 'disabled'}`} 
+        onClick={handleConfirmBooking} 
+        disabled={!selectedSlot}
+      >
+        Confirm Booking
+      </button>
     </div>
   </div>
 );
@@ -190,6 +210,9 @@ const BookingPage = () => {
   };
 
   useEffect(() => {
+    if (selectedMonth) {
+      setSelectedSlot(''); // Clear the selected slot when the month changes
+    }
     if (selectedDate) {
       const date = new Date(2024, getMonthIndex(selectedMonth) - 1, selectedDate);
       setSlots(getFixedSlotsForDate(date));
@@ -204,7 +227,7 @@ const BookingPage = () => {
     }
   
     try {
-      const response = await axios.post(`http://localhost:8001/webscraping/confirm-booking`, {
+      const response = await axios.post(`${url}webscraping/confirm-booking`, {
         date: selectedDate.format('YYYY-MM-DD'),
         slot: selectedSlot
       });
@@ -228,11 +251,8 @@ const BookingPage = () => {
         <div className="content">
           <Calendar selectedMonth={selectedMonth} setSelectedMonth={setSelectedMonth} selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
           <Slots selectedDate={selectedDate} selectedSlot={selectedSlot} setSelectedSlot={setSelectedSlot} slots={slots} />
-          <Summary selectedMonth={selectedMonth} selectedDate={selectedDate} selectedSlot={selectedSlot} />
+          <Summary selectedMonth={selectedMonth} selectedDate={selectedDate} selectedSlot={selectedSlot} handleConfirmBooking={handleConfirmBooking} />
         </div>
-      </div>
-      <div className="confirm-button-container">
-        <button className="confirm-button" onClick={handleConfirmBooking}>Confirm Booking</button>
       </div>
     </main>
   );
