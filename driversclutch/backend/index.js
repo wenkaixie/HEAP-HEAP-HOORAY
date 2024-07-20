@@ -16,7 +16,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger); // Logging middleware
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors({
+	origin: 'https://driversclutch.vercel.app',
+  }));
 
 //server check
 app.listen(PORT, (error) => {
