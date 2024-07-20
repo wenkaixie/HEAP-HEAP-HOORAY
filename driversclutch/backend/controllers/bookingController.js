@@ -3,9 +3,9 @@ const chrome = require('selenium-webdriver/chrome');
 const options = new chrome.Options();
 
 // Enable headless mode for faster execution
-options.addArguments('headless');
-options.addArguments('disable-gpu');
-options.addArguments('window-size=1920x1080'); // Set window size for better element visibility
+// options.addArguments('headless');
+// options.addArguments('disable-gpu');
+// options.addArguments('window-size=1920x1080'); // Set window size for better element visibility
 
 const makeBooking = async (req, res) => {
     const { month, date } = req.query;
@@ -15,7 +15,7 @@ const makeBooking = async (req, res) => {
 
     try {
         await driver.get('https://driversclutch.vercel.app/bbdc');
-        //await driver.get('http://localhost:3000/bbdc');
+        // await driver.get('http://localhost:3000/bbdc');
 
         const monthSelector = async (month) => {
             await driver.wait(until.elementLocated(By.css('.monthButtons button')), 10000);

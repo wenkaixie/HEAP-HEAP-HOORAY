@@ -20,7 +20,7 @@ const FirestoreDB = getFirestore(app);
 
 export { FirestoreDB, auth };
 
-// export const url = "http://localhost:8001"
+//export const url = "http://localhost:8001"
 export const url= "https://heap-heap-hooray-g2ua9rxqg-wenkais-projects.vercel.app";
 
 export default app;

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '@/app/components/navbar/navbar';
 import DateSelector from './DateSelector';
 import TimeSlots from './TimeSlots';
+import BookingSummary from './BookingSummary';
 import dayjs from 'dayjs';
 import './page.css';
 import '@/app/components/background/background.css';
@@ -17,35 +18,15 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 dayjs.extend(customParseFormat);
 
-dayjs.tz.setDefault("Asia/Singapore");
-
 const Dashboard = () => {
   const [selectedDate, setSelectedDate] = useState(dayjs());
   const [bookings, setBookings] = useState([]);
   const [timeslots, setTimeslots] = useState([]);
-  const [selectedSlot, setSelectedSlot] = useState('');
   const [canceledBookings, setCanceledBookings] = useState([]);
+  const [hasClashes, setHasClashes] = useState(false);
   const [error, setError] = useState(null);
   const [studentData, setStudentData] = useState(null);
   const [lessonCount, setLessonCount] = useState(0);
-
-  const handleDateChange = async (date) => {
-    setSelectedDate(date);
-
-    // Format the date for the backend
-    const month = date.format('MMM').toUpperCase();
-    const day = date.date();
-
-    try {
-      const response = await axios.get(`${url}/webscraping/make-booking`, {
-        params: { month: `${month}'24`, date: day }
-      });
-      setTimeslots(response.data.availableSlots);
-    } catch (error) {
-      console.error('Error fetching timeslots:', error);
-      setError('Failed to fetch timeslots');
-    }
-  };
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -69,10 +50,58 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (studentData) {
-      const { lessonCount } = studentData;
-      setLessonCount(lessonCount);
+      const { workStart, workEnd, lessonDuration, unavailableTimeslots, lessonCount } = studentData;
+      setLessonCount(studentData.lessonCount);
+
+      const generateTimeslots = () => {
+        const start = dayjs(workStart, 'hh:mm A');
+        const end = dayjs(workEnd, 'hh:mm A');
+        const generatedTimes = [];
+        let currentTime = start;
+
+        while (currentTime.isBefore(end) || currentTime.isSame(end)) {
+          generatedTimes.push(currentTime.format('hh:mm A'));
+          currentTime = currentTime.add(lessonDuration, 'hour');
+        }
+
+        return generatedTimes;
+      };
+
+      const markUnavailableTimeslots = (timeslots, unavailableTimes) => {
+        const timeZone = 'Asia/Singapore';
+        const unavailableTimesData = {};
+        const now = dayjs().tz(timeZone);
+
+        unavailableTimes.forEach(dateTime => {
+          const date = dayjs.utc(dateTime).tz(timeZone);
+          const formattedDate = date.format('YYYY-MM-DD');
+          const formattedTime = date.format('hh:mm A');
+
+          if (!unavailableTimesData[formattedDate]) {
+            unavailableTimesData[formattedDate] = [];
+          }
+          unavailableTimesData[formattedDate].push(formattedTime);
+        });
+
+        const dateKey = selectedDate.format('YYYY-MM-DD');
+        return timeslots.map(time => {
+          const timeslotDateTime = dayjs(`${selectedDate.format('YYYY-MM-DD')} ${time}`, 'YYYY-MM-DD hh:mm A').tz(timeZone);
+          const isPast = timeslotDateTime.isBefore(now);
+          const isUnavailable = unavailableTimesData[dateKey] && unavailableTimesData[dateKey].includes(time);
+          return {
+            time,
+            available: !isPast && !isUnavailable
+          };
+        });
+      };
+
+      const availableTimes = generateTimeslots();
+      const timeslotData = markUnavailableTimeslots(availableTimes, unavailableTimeslots);
+
+      setTimeslots(timeslotData);
     }
-  }, [studentData]);
+  }, [studentData, selectedDate]);
+
 
   const generateLessonNames = (bookings) => {
     const startingLessonNumber = lessonCount + 1;
@@ -82,32 +111,85 @@ const Dashboard = () => {
     }));
   };
 
-  const handleAddBooking = (slot) => {
-    setSelectedSlot(slot);
+  const handleAddBooking = (time) => {
+    if (!studentData) return;
+  
+    const { lessonDuration } = studentData;
+    const endTime = dayjs(selectedDate.format('YYYY-MM-DD') + ' ' + time, 'YYYY-MM-DD hh:mm A')
+      .add(lessonDuration, 'hour')
+      .format('hh:mm A');
+  
+    const newBooking = {
+      date: selectedDate.format('D MMMM YYYY'),
+      time,
+      endTime,
+      lesson: ''
+    };
+  
+    const updatedBookings = [...bookings, newBooking].sort((a, b) =>
+      dayjs(a.date + ' ' + a.time, 'D MMMM YYYY hh:mm A') -
+      dayjs(b.date + ' ' + b.time, 'D MMMM YYYY hh:mm A')
+    );
+  
+    setBookings(generateLessonNames(updatedBookings));
+  
+    setTimeslots(timeslots.map(slot =>
+      slot.time === time ? { ...slot, available: false } : slot
+    ));
+  
+    checkForClashes(updatedBookings);
   };
 
-  const handleConfirmBooking = async () => {
-    if (!selectedDate || !selectedSlot) {
-      alert('Please select a date and time slot before confirming the booking.');
-      return;
-    }
+  const handleCancelBooking = (index) => {
+    const bookingToRemove = bookings[index];
+    const updatedBookings = bookings.filter((_, i) => i !== index).sort((a, b) =>
+      dayjs(a.date + ' ' + a.time, 'D MMMM YYYY hh:mm A') -
+      dayjs(b.date + ' ' + b.time, 'D MMMM YYYY hh:mm A')
+    );
+  
+    setBookings(generateLessonNames(updatedBookings));
+    setCanceledBookings([...canceledBookings, bookingToRemove]);
+  
+    setTimeslots(timeslots.map(slot =>
+      slot.time === bookingToRemove.time ? { ...slot, available: true } : slot
+    ));
+  
+    checkForClashes(updatedBookings);
+  };
+  
 
-    try {
-      const response = await axios.post(`${url}/webscraping/confirm-booking`, {
-        date: selectedDate.format('YYYY-MM-DD'),
-        slot: selectedSlot
+  const handleRebookCanceledBooking = (bookingToRemove) => {
+    const updatedCanceledBookings = canceledBookings.filter(
+      booking => booking.time !== bookingToRemove.time
+    );
+    setCanceledBookings(updatedCanceledBookings);
+
+    handleAddBooking(bookingToRemove.time);
+  };
+
+  const handleNextStep = () => {
+    localStorage.setItem('bookings', JSON.stringify(bookings));
+    window.location.href = "./paymentBooking";
+  };
+
+  const checkForClashes = (bookings) => {
+    const hasClashes = bookings.some((booking, index) => {
+      const bookingStart = dayjs(booking.date + ' ' + booking.time, 'D MMMM YYYY hh:mm A');
+      const bookingEnd = dayjs(booking.date + ' ' + booking.endTime, 'D MMMM YYYY hh:mm A');
+      return bookings.some((otherBooking, otherIndex) => {
+        if (index === otherIndex) return false;
+        const otherBookingStart = dayjs(otherBooking.date + ' ' + otherBooking.time, 'D MMMM YYYY hh:mm A');
+        const otherBookingEnd = dayjs(otherBooking.date + ' ' + otherBooking.endTime, 'D MMMM YYYY hh:mm A');
+        return bookingStart.isBefore(otherBookingEnd) && bookingEnd.isAfter(otherBookingStart);
       });
+    });
 
-      if (response.data.status === 'success') {
-        alert('Booking confirmed successfully');
-      } else {
-        alert('Failed to confirm booking');
-      }
-    } catch (error) {
-      console.error('Error confirming booking:', error);
-      alert('Failed to confirm booking');
-    }
+    setHasClashes(hasClashes);
   };
+
+  useEffect(() => {
+    checkForClashes(bookings);
+  }, [bookings]);
 
   if (error) {
     return <div>Error: {error}</div>;
@@ -123,20 +205,32 @@ const Dashboard = () => {
   return (
     <div className='dashboard'>
       <div className='title'>
-        <h2>Theory Test Booking</h2>
+        <h2>Lesson Booking</h2>
       </div>
       <div className="dashboard-container">
-        <p>Centre: Bukit Batok Driving Centre</p>
-        <DateSelector selectedDate={selectedDate} setSelectedDate={handleDateChange} />
-        <button className="confirm-button" onClick={handleConfirmBooking}>Confirm Booking</button>
+        <p>Instructor: {instructorName}</p>
+        <DateSelector selectedDate={selectedDate} setSelectedDate={setSelectedDate} />
       </div>
       <div className="dashboard-container">
-        <p>Test Time Slots Available</p>
+        <p>Time Slots Available</p>
         <TimeSlots
           timeslots={timeslots}
           selectedDate={selectedDate}
           handleAddBooking={handleAddBooking}
         />
+      </div>
+      <div className="dashboard-container">
+        <div className='right'>
+          <p>Booking Summary</p>
+          <BookingSummary
+            bookings={bookings}
+            canceledBookings={canceledBookings}
+            handleCancelBooking={handleCancelBooking}
+            handleRebookCanceledBooking={handleRebookCanceledBooking}
+            handleNextStep={handleNextStep}
+            hasClashes={hasClashes}
+          />
+        </div>
       </div>
     </div>
   );

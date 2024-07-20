@@ -33,4 +33,3 @@ const BookingSummary = ({ bookings, handleCancelBooking, handleNextStep, hasClas
 };
 
 export default BookingSummary;
-

@@ -16,11 +16,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger); // Logging middleware
 app.use(bodyParser.json());
-app.use(cors({
-	origin: "https://driversclutch.vercel.app",
-	methods: 'GET,POST,PUT,DELETE',
+const allowedOrigins = [
+	"https://driversclutch.vercel.app",
+	"http://localhost:3000"
+  ];
+  
+  const corsOptions = {
+	origin: allowedOrigins,
+	methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 	credentials: true, // to allow cookies to be sent along with requests
-  }));
+  };
+  
+app.use(cors(corsOptions));
 
 //server check
 app.listen(PORT, (error) => {
