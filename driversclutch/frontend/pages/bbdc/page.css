@@ -116,6 +116,11 @@ button {
   color: white;
 }
 
+.day.past {
+  color: grey;
+  cursor: not-allowed;
+}
+
 .slotContainer {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
