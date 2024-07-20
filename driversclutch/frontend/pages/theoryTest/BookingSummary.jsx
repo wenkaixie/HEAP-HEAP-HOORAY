@@ -1,30 +1,24 @@
 import React from 'react';
+import dayjs from 'dayjs';
 
-const BookingSummary = ({ bookings, handleCancelBooking, handleNextStep, hasClashes }) => {
+const BookingSummary = ({ selectedDate, selectedTimeslot, handleCancelBooking, handleNextStep, price }) => {
   return (
     <div className="booking-summary">
-      {bookings.map((booking, index) => (
-        <div key={index} className='container'>
+      {selectedTimeslot && (
+        <div className='container'>
           <div className="booking-item">
             Theory Test<br /><br />
-            {booking.date} <br />
+            {selectedDate.format('DD MMMM YYYY')} <br />
+            {selectedTimeslot} <br />
+            <div className='price'>${price}</div> 
           </div>
-          <button 
-            className="cancel-button" 
-            onClick={() => handleCancelBooking(index)}
-          >
-            Cancel
-          </button>
         </div>
-      ))}
+      )}
 
-      {hasClashes && <p className="error-message">Ensure there are no overlapping bookings!</p>}
-
-      {bookings.length > 0 && (
+      {selectedTimeslot && (
         <button
-          className={`next-button ${hasClashes ? 'disabled' : ''}`}
+          className="next-button"
           onClick={handleNextStep}
-          disabled={hasClashes}
         >Proceed to payment</button>
       )}
     </div>
@@ -32,4 +26,3 @@ const BookingSummary = ({ bookings, handleCancelBooking, handleNextStep, hasClas
 };
 
 export default BookingSummary;
-

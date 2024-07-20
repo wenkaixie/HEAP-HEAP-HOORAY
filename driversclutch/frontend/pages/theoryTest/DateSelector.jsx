@@ -1,4 +1,3 @@
-// DateSelector.jsx
 "use client";
 import React from 'react';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -11,14 +10,13 @@ const DateSelector = ({ selectedDate, setSelectedDate }) => {
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <div className="date-selector">
         <div className='calendar'>
-           <DateCalendar
-          value={selectedDate}
-          onChange={(date) => setSelectedDate(date)}
-          minDate={dayjs()}
-          className="custom-date-calendar"
-        /> 
+          <DateCalendar
+            value={selectedDate}
+            onChange={(date) => setSelectedDate(date)}
+            minDate={dayjs()}
+            className="custom-date-calendar"
+          /> 
         </div>
-        
       </div>
     </LocalizationProvider>
   );
