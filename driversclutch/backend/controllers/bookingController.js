@@ -15,7 +15,7 @@ const makeBooking = async (req, res) => {
 
     try {
         // await driver.get('https://driversclutch.vercel.app/bbdc');
-        await driver.get('http://localhost:3000/bbdc');
+        await driver.get('${url}/bbdc');
 
         const monthSelector = async (month) => {
             await driver.wait(until.elementLocated(By.css('.monthButtons button')), 10000);
