@@ -20,6 +20,6 @@ const FirestoreDB = getFirestore(app);
 
 export { FirestoreDB, auth };
 
-export const url= "https://heap-heap-hooray-bcooqel76-wenkais-projects.vercel.app";
+export const url= "https://heap-heap-hooray-inytpevgi-wenkais-projects.vercel.app";
 
 export default app;
