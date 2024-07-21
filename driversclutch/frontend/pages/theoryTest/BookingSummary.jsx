@@ -27,18 +27,18 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
       {selectedTimeslot && (
         <>
           <p>Credits Left: ${creditBalance}</p>
-          {creditBalance < totalPrice && (
+          {creditBalance < price && (
             <div className="insufficient-credits">
               Insufficient credits. Click <a href="./balance">here</a> to top up.
             </div>
           )}
-          <div className="pay-btn">
+          
             <button
-              className="next-button"
+              className={`next-button ${creditBalance < price ? 'disabled' : ''}`}
               onClick={handleNextStep}
-              disabled={creditBalance < totalPrice}
+              
             >Pay</button>
-          </div>
+          
         </>
       )}
     </div>
