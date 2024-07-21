@@ -130,3 +130,59 @@ body {
     font-size: 35px;
     color: #210409
 }
+
+.info-sections {
+    display: flex;
+    justify-content: space-around;
+    padding: 50px;
+    background-color: #ffffff;
+    text-align: center; 
+}
+
+.info-container {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #f0f4f8;
+}
+
+.testimonial-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 50px;
+    background-color: #e2edfc;
+    border-radius: 20px;
+}
+
+.testimonials {
+    margin-bottom: 30px;
+}
+
+.testimonials h2 {
+    color: rgb(0, 37, 77);
+}
+
+.testimonial-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+
+.author {
+    font-style: italic;
+    margin-top: 10px;
+    display: block;
+}
+
+.info-container h2 {
+    color: rgb(0, 37, 77);
+}
+
+.footer p {
+    margin: 15px 10px;
+}
