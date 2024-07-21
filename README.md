@@ -1,7 +1,11 @@
 # DriversClutch
 
 ## Description
-Our application provides a central portal for private driving learners. Students can get information on different private instructors, book lessons and tests, and do extra theory practice on this application. Driving instructors can also use our page to
+Our application provides a central portal for private driving learners. Students can get information on different private instructors, book private lessons and school tests, and do extra theory practice on this application. Driving instructors can use our page to view their students' information and lesson progress, and mark out their unavailable timings for lesson slots. 
+
+## Deployed Application
+https://driversclutch.vercel.app/
+
 
 ## Table of Contents
 - [Installation](#installation)
@@ -9,6 +13,7 @@ Our application provides a central portal for private driving learners. Students
 - [File Directory](#directory)
 - [Node Packages](#packages)
 - [Acknowledgments](#acknowledgments)
+
 
 ## Installation
 1. Clone the repository:
