@@ -26,17 +26,17 @@ const getInfo = async (req, res) => {
 			studentInfo;
 
 		let fullname = "";
+		if (instructor == "") {
+			fullname = "";
+			filteredData.instructorFullName = fullname;
+			return res.status(200).json({ code: 200, data: filteredData });
+		}
+	
 		// Fetch instructor document
 		const instructorDoc = await db
 			.collection("instructors")
 			.doc(instructor)
 			.get();
-
-		// console.log(instructor);
-		if (!instructorDoc.exists) {
-			// return res.status(404).json({ code: 404, message: "Instructor not found" });
-			fullname = "";
-		}
 
 		const { firstName, lastName = [] } = instructorDoc.data();
 		fullname = `${lastName} ${firstName}`;
