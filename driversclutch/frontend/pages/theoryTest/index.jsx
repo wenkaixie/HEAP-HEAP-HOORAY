@@ -193,7 +193,7 @@ const Dashboard = () => {
 
     const closePopup = () => {
         setIsPopupVisible(false);
-        window.location.href = "./theoryTest";
+        window.location.href = "./home";
     };
 
 
