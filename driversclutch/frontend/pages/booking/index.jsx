@@ -51,7 +51,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (studentData) {
       const { workStart, workEnd, lessonDuration, unavailableTimeslots, lessonCount } = studentData;
-      setLessonCount(studentData.lessonCount);
+      setLessonCount(studentData.totalLessonCount);
 
       const generateTimeslots = () => {
         const start = dayjs(workStart, 'hh:mm A');

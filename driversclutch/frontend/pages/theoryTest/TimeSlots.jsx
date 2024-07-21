@@ -15,7 +15,7 @@ const TimeSlots = ({ timeslots, selectedDate, handleAddBooking, loading, selecte
         <div className="time-selector">
           <div className="times">
             {timeslots.map((slot, index) => {
-              const startTime = dayjs(slot.split(' ')[2], 'HH:mm').format('h:mm A'); // Format the start time with uppercase AM/PM
+              const startTime = dayjs(slot.split(' ')[2], 'HH:mm').format('hh:mm A'); // Format the start time with the desired format
               return (
                 <button
                   key={index}
