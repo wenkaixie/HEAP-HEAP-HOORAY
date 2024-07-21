@@ -59,11 +59,13 @@ const InstructorDetails = ({ togglePopup, instructor, profileData }) => {
       console.log('Payment succeeded!');
       console.log('Balance updated: ', response.data);
       fullyEnrol(event);
+      alert('Enrolment Successful');
       setTimeout(() => {
         togglePopup(); 
       }, 1000);
     } catch (error) {
       console.log('Error in payment: ', error);
+      alert('Error in payment: Insufficient funds');
     }
   };
   
