@@ -13,17 +13,17 @@ const Dashboard = () => {
   const [showCompleted, setShowCompleted] = useState(false);
 
   const fetchBookingsData = async () => {
-  try {
-      const userDocID = localStorage.getItem('userDocID');
-      if (!userDocID) {
-      throw new Error('User document ID not found in localStorage');
-      }
-      const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
-      console.log('API Response:', response.data);
-      setBookingsData(response.data);
-  } catch (error) {
-      setError(error.message);
-  }
+    try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
+        console.log('API Response:', response.data);
+        setBookingsData(response.data);
+    } catch (error) {
+        setError(error.message);
+    }
   };
 
   useEffect(() => {
@@ -32,10 +32,6 @@ const Dashboard = () => {
 
   if (!bookingsData) {
       return null;
-  }
-
-  if (error) {
-    return <p>{error}</p>;
   }
 
   const renderUpcomingBookings = () => {
@@ -53,7 +49,7 @@ const Dashboard = () => {
           bookingsData.upcomingLessons.length > 0 ? (
             cards
           ) : (
-            <p>Loading...</p>
+            <p>No upcoming bookings</p>
           )
         )}
       </div>
@@ -75,7 +71,7 @@ const Dashboard = () => {
           bookingsData.completedLessons.length > 0 ? (
             cards
           ) : (
-            <p>Loading...</p>
+            <p>No completed bookings</p>
           )
         )}
       </div>

@@ -11,20 +11,21 @@ import { url } from '../../src/app/firebase/firebase_config';
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
   const [profileData, setProfileData] = useState(null);
+  const [testData, setTestData] = useState(null);
   const [error, setError] = useState(null);
 
   const fetchBookingsData = async () => {
-  try {
-      const userDocID = localStorage.getItem('userDocID');
-      if (!userDocID) {
-      throw new Error('User document ID not found in localStorage');
-      }
-      const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
-      console.log('API Response:', response.data);
-      setBookingsData(response.data);
-  } catch (error) {
-      setError(error.message);
-  }
+    try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
+        console.log('API Response:', response.data);
+        setBookingsData(response.data);
+    } catch (error) {
+        setError(error.message);
+    }
   };
 
   const fetchProfileData = async () => {
@@ -41,16 +42,34 @@ const Dashboard = () => {
     }
     };
 
+  const fetchTestData = async () => {
+    try {
+        const userDocID = localStorage.getItem('userDocID');
+        if (!userDocID) {
+        throw new Error('User document ID not found in localStorage');
+        }
+        const response = await axios.get(`${url}/students/homepage/lessons/?studentID=${userDocID}`);
+        console.log('API Response:', response.data);
+        // setTestData(response.data);
+    } catch (error) {
+        setError(error.message);
+    }
+  };
+
   useEffect(() => {
     fetchBookingsData();
     fetchProfileData();
+    fetchTestData();
   }, []);
 
-  if (!bookingsData || !profileData) {
+  if (!profileData) {
       return null;
   }
 
   const renderBookings = () => {
+    if (!bookingsData) {
+      return <p>No Lessons Booked</p>
+    };
     const cards = [];
     bookingsData.upcomingLessons.sort();
     for (let i = 0; i < bookingsData.upcomingLessons.length; i++) {
@@ -80,15 +99,58 @@ const Dashboard = () => {
     );
   };
 
+  const renderTestBookings = () => {
+    if (!testData) {
+      return <p>No Tests Booked</p>
+    };
+    const cards = [];
+    testData.upcomingLessons.sort();
+    for (let i = 0; i < bookingsData.upcomingLessons.length; i++) {
+      if (i >= 3) {
+        break;
+      }
+      cards.push(
+        <LessonCard
+          key={i}
+          index={i + bookingsData.lessonCount}
+          lesson={bookingsData.upcomingLessons[i]}
+          lessonDuration={bookingsData.lessonDuration}
+        />
+      );
+    }
+  
+    return (
+      <div className="home-dashboard-details">
+        {error ? (
+          <p>{error}</p>
+        ) : bookingsData.upcomingLessons.length > 0 ? (
+          cards
+        ) : (
+          <p>No upcoming theory test bookings</p>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="home-dashboard">
       <div className="home-dashboard-container">
-        <h2>Upcoming Bookings</h2>
-        <div className="home-dashboard-details">
-          {renderBookings()}
+        <div>
+          <h2>Upcoming Lessons</h2>
+          <div className="home-dashboard-details">
+            {renderBookings()}
+          </div>
+          <br></br>
+          <Link href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Lesson Bookings</Link>
         </div>
         <br></br>
-        <Link href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
+        <br></br>
+        <div>
+          <h2>Upcoming Theory Tests</h2>
+          <div className='home-dashboard-details'>
+            {renderTestBookings()}
+          </div>
+        </div>
       </div>
       <div className="home-dashboard-container">
         <div>
