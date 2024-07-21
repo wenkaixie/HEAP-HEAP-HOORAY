@@ -138,7 +138,7 @@ const updateDatabaseInstructor = async () => {
         console.log("UpcomingLessons data successfully sent to the database.");
         setCreditBalance(remainingBalance);
         setIsPopupVisible(true);
-        localStorage.removeItem('bookings'); // Clear the userDocID from local storage
+        localStorage.removeItem('bookings'); 
         console.log('Bookingdetails removed from localStorage');
       } else {
         console.error("Failed to send UpcomingLessons data.");
@@ -190,7 +190,7 @@ const updateDatabaseInstructor = async () => {
       
       <div className="dashboard-container">
         <p>Total Amount : ${totalPrice}</p>
-        <p>Balance : ${creditBalance}</p>
+        <p>Credits Left : ${creditBalance}</p>
         {creditBalance < totalPrice && (
           <div className="insufficient-credits">
             {/* update link for top up!!!! */}

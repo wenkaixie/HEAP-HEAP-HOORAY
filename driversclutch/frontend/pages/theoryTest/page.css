@@ -67,7 +67,7 @@ h2 {
 }
 
 .time-button:active {
-  transform: scale(0.98);
+  transform: scale(0.99);
 }
 
 .time-button.disabled {
@@ -191,34 +191,60 @@ h2 {
   font-size: 15px; /* Increase the font size of text inside the calendar */
 }
 
-.confirm-button-container {
-  text-align: center;
-  margin: 20px 0 0 150px; /* Adjust margin for spacing */
+
+.insufficient-credits {
+    color: red;
+    text-align: left;
+    margin-bottom: 10px;
 }
 
-.confirm-button {
-  background-color: rgb(60, 79, 110);
-  width: 100%;
-  max-width: 400px;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 8px;
-  padding: 15px;
-  font-size: 18px;
-  text-align: center;
-  margin-top: 30px;
+.insufficient-credits a {
+    color: rgb(60, 79, 110);
+    text-decoration: underline;
+    cursor: pointer;
 }
 
-.confirm-button:hover {
-  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+  
+.popup-overlay.show {
+    display: flex;
+}
+  
+.popup-box {
+    position: relative; /* Ensure the popup-box is the reference point for the absolute positioning of the close button */
+    background: white;
+    padding: 70px 100px;
+    border-radius: 5px;
+    text-align: center;
+}
+  
+.popup-box strong {
+    font-size: 25px;
+}
+  
+.popup-box .button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 15px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: rgb(60, 79, 110);
 }
 
-.confirm-button:active {
-  transform: scale(0.98);
+.popup-box .tick {
+    font-size: 40px;
+    color: rgb(5, 98, 89);
 }
 
-.confirm-button.disabled {
-  background-color: rgb(192, 192, 192);
-  cursor: not-allowed;
-}
