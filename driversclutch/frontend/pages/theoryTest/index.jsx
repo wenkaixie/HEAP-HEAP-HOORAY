@@ -29,6 +29,7 @@ const Dashboard = () => {
     const [studentData, setStudentData] = useState(null);
     const [price, setPrice] = useState(5.45);
     const [loading, setLoading] = useState(false);
+    const [beforeFormat, setBeforeFormat] = useState(null);
 
     const [creditBalance, setCreditBalance] = useState(0);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
@@ -98,9 +99,14 @@ const Dashboard = () => {
     // }, [selectedDate, studentData]);
 
     const handleAddBooking = (slot) => {
-        setSelectedSlot(slot);
+        setBeforeFormat(slot)
+        const startTime = dayjs(slot.split(' ')[2], 'HH:mm');
+        const endTime = startTime.add(45, 'minute');
+        const formattedSlot = `${startTime.format('HH:mm')} - ${endTime.format('HH:mm')}`;
+        setSelectedSlot(formattedSlot);
     };
 
+    
     // fetch balance
     useEffect(() => {
         const fetchBalanceData = async () => {
@@ -131,9 +137,9 @@ const Dashboard = () => {
 
 
     const handleNextStep = async () => {
+        
         if (creditBalance >= price) {
             await updateDatabase();
-            await updateBalance();
         }
     }
 
@@ -174,14 +180,19 @@ const Dashboard = () => {
     // }
 
     const updateDatabase = async () => {
+        console.log(selectedSlot);
         try {
+            const userDocID = localStorage.getItem('userDocID');
             const response = await axios.post(`${url}/webscraping/confirm-booking`, {
                 date: selectedDate.format('YYYY-MM-DD'),
-                slot: selectedSlot,
+                editedSlot: 'selectedSlot',
+                studentID: userDocID,
+                slot: beforeFormat
             });
-
+    
             if (response.data.status === 'success') {
-                console.log(" data successfully sent to the database.");
+                console.log("Data successfully sent to the database.");
+                await updateBalance();
             } else {
                 alert('Failed to confirm booking');
             }
@@ -190,6 +201,7 @@ const Dashboard = () => {
             alert('Failed to confirm booking');
         }
     };
+    
 
     const closePopup = () => {
         setIsPopupVisible(false);
