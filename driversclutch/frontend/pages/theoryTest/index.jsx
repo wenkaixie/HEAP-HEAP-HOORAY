@@ -184,10 +184,10 @@ const Dashboard = () => {
         try {
             const userDocID = localStorage.getItem('userDocID');
             const response = await axios.post(`${url}/webscraping/confirm-booking`, {
-                date: selectedDate.format('YYYY-MM-DD'),
-                editedSlot: 'selectedSlot',
                 studentID: userDocID,
-                slot: beforeFormat
+                date: selectedDate.format('YYYY-MM-DD'),
+                slot: beforeFormat,
+                editedSlot: 'selectedSlot'
             });
     
             if (response.data.status === 'success') {
