@@ -51,29 +51,28 @@ h2 {
 }
 
 .time-button {
-  width: 200px;
-  height: 60px;
-  margin: 10px;
-  border: 1px solid #ccc;
-  color: white;
-  background-color: rgb(60, 79, 110);
-  cursor: pointer;
-  border-radius: 8px;
-  font-size: 16px; /* Adjust the font size */
-}
-
-.time-button:hover {
-  box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
-}
-
-.time-button:active {
-  transform: scale(0.99);
-}
-
-.time-button.disabled {
-  background-color: rgb(165, 165, 165);
-  cursor: not-allowed;
-}
+    width: 80px;
+    height: 40px;
+    margin: 5px;
+    border: 1px solid #ccc;
+    color: white;
+    background-color: rgb(60, 79, 110);
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  
+  .time-button:hover{
+    box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.154);
+  }
+  
+  .time-button:active{
+    transform: scale(0.98); 
+  }
+  
+  .time-button.disabled {
+    background-color: rgb(165, 165, 165);
+    cursor: not-allowed;
+  }
 
 .booking-summary {
   position: relative;
@@ -248,3 +247,7 @@ h2 {
     color: rgb(5, 98, 89);
 }
 
+
+.price {
+    color: rgb(60, 79, 110);
+}

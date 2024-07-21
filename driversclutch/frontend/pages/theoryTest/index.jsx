@@ -133,35 +133,55 @@ const Dashboard = () => {
     const handleNextStep = async () => {
         if (creditBalance >= price) {
             await updateDatabase();
+            await updateBalance();
         }
     }
+
+    const updateBalance = async () => {
+        const remainingBalance = creditBalance - price;
+        try {
+            const userDocID = localStorage.getItem('userDocID');
+            const requestData = {
+                studentID: userDocID,
+                amount: price,
+            };
+            console.log("Sending data to server:", requestData);
+
+            const response = await axios.put(`${url}/students/balance/payment`, requestData, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            });
+
+            if (response.status === 200) {
+                console.log("Balance data successfully sent to the database.");
+                setCreditBalance(remainingBalance);
+                setIsPopupVisible(true);
+            } else {
+                console.error("Failed to send balance data.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            if (error.response) {
+                console.error("Server responded with:", error.response.data);
+            }
+        }
+    };
 
     // if (!selectedDate || !selectedSlot) {
     //     alert('Please select a date and time slot before confirming the booking.');
     //     return;
     // }
 
-    // const handleNextStep = () => {
-    //   // all of the below can refer to paymentBooking index.jsx
-    //   // deduct from balance (i need to fetch balance too)
-    //   // send booking details to backend
-    //   // show a popup screen to show that booking confirmed (only when data is successfully sent) 
-    //   // when i click the close button, user returns back to the refreshed theory page (and hopefully there is a note below the timeslots that writes that the user has already took the test)
-    // };
     const updateDatabase = async () => {
-        const remainingBalance = creditBalance - price;
         try {
             const response = await axios.post(`${url}/webscraping/confirm-booking`, {
                 date: selectedDate.format('YYYY-MM-DD'),
                 slot: selectedSlot,
-                // change the name????
-                balance : remainingBalance
             });
 
             if (response.data.status === 'success') {
-                setCreditBalance(remainingBalance);
-                setIsPopupVisible(true);
-                alert('Booking confirmed successfully');
+                console.log(" data successfully sent to the database.");
             } else {
                 alert('Failed to confirm booking');
             }

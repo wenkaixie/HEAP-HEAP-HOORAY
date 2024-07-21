@@ -3,9 +3,9 @@ const chrome = require('selenium-webdriver/chrome');
 const options = new chrome.Options();
 
 // Enable headless mode for faster execution
-// options.addArguments('headless');
-// options.addArguments('disable-gpu');
-// options.addArguments('window-size=1920x1080'); // Set window size for better element visibility
+options.addArguments('headless');
+options.addArguments('disable-gpu');
+options.addArguments('window-size=1920x1080'); // Set window size for better element visibility
 
 module.exports = (req, res) => {
     //set header first to allow request or origin domain (value can be different)

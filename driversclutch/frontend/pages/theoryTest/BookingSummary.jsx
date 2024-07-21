@@ -6,20 +6,19 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
   console.log('Selected Date:', selectedDate);
   console.log('Selected Timeslot:', selectedTimeslot);
 
-  const startTime = dayjs(selectedTimeslot, 'HH:mm');
-  const endTime = startTime.add(45, 'minute');
-
-  console.log('Start Time:', startTime.format('HH:mm'));
-  console.log('End Time:', endTime.format('HH:mm'));
+  const slotNumber = selectedTimeslot ? selectedTimeslot.split(' ')[1] : ''; // Extract slot number
+  const startTime = selectedTimeslot ? selectedTimeslot.split(' ')[2] : ''; // Extract start time
+  const formattedStartTime = startTime ? dayjs(startTime, 'HH:mm').format('h:mm A') : ''; // Format start time with uppercase AM/PM
+  const endTime = startTime ? dayjs(startTime, 'HH:mm').add(45, 'minute').format('h:mm A') : ''; // Calculate and format end time with uppercase AM/PM
 
   return (
     <div className="booking-summary">
       {selectedTimeslot && selectedDate && (
         <div className='container'>
           <div className="booking-item">
-            Theory Test Session<br /><br />
+            Theory Test Session {slotNumber}<br /><br />
             {selectedDate.format('DD MMMM YYYY')} <br />
-            {selectedTimeslot} <br />
+            {formattedStartTime} - {endTime} <br />
             <div className='price'>${price}</div> 
           </div>
         </div>
@@ -38,7 +37,7 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
               className="next-button"
               onClick={handleNextStep}
               disabled={creditBalance < totalPrice}
-            >Proceed to payment</button>
+            >Pay</button>
           </div>
         </>
       )}
