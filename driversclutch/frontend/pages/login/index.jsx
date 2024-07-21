@@ -18,18 +18,7 @@ const Login = () => {
 	const auth = FBInstanceAuth.getAuth();
 	const router = useRouter();
 	const [error, setError] = useState(null);
-	const [showModal, setShowModal] = useState(false); // State for modal visibility
-
-	// const [user, loading] = useAuthState(auth);
-
-	// if (loading) {
-	// 	return <div>Loading...</div>
-	// }
-
-	// if (user) {
-	// 	router.push("/home");
-	// 	return <div>Welcome {user.displayName}</div>;
-	// }
+	const [showModal, setShowModal] = useState(false);
 
 	const handleUsernameChange = (event) => {
 	setUsername(event.target.value);
@@ -161,6 +150,7 @@ const Login = () => {
               Show Password
             </label>
           </div>
+		  <br></br>
           <button className="submit" type="submit">
             Access To Booking System
           </button>

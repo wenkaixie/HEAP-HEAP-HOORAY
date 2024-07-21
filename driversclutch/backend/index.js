@@ -7,14 +7,14 @@ const PORT = 8001;
 const { db } = require("./firebase/firebase.js");
 // const authMiddleware = require('./middlewares/authMiddleware');
 // const errorHandler = require('./middlewares/errorMiddleware');
-const logger = require("./middlewares/loggerMiddleware");
+// const logger = require("./middlewares/loggerMiddleware");
 
 const app = express();
 
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(logger); // Logging middleware
+// app.use(logger); // Logging middleware
 app.use(bodyParser.json());
 const allowedOrigins = [
 	"https://driversclutch.vercel.app",

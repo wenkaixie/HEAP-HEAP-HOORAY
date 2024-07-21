@@ -35,7 +35,10 @@ const getInstructorTimeslots = async (req, res) => {
         }
 
         const completedLessons = studentDoc.data().completedLessons;
-        const lessonCount = completedLessons.length;
+        const upcomingLessons = studentDoc.data().upcomingLessons;
+        const completedLessonCount = completedLessons.length;
+        const upcomingLessonCount = upcomingLessons.length;
+        const totalLessonCount = upcomingLessonCount + completedLessonCount;
 
         // // Convert Firestore Timestamps to ISO 8601 strings
         // const completedLessonsISO = completedLessons.map(timestamp => timestamp.toDate().toISOString());
@@ -46,7 +49,8 @@ const getInstructorTimeslots = async (req, res) => {
         workEnd: workEnd,
         lessonDuration: lessonDuration,
         unavailableTimeslots: unavailableTimeslotsISO,
-        lessonCount: lessonCount
+        completedLessonCount: completedLessonCount,
+        totalLessonCount: totalLessonCount
         });
     } 
 

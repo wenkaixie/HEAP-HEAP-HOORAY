@@ -8,8 +8,8 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
 
   const slotNumber = selectedTimeslot ? selectedTimeslot.split(' ')[1] : ''; // Extract slot number
   const startTime = selectedTimeslot ? selectedTimeslot.split(' ')[2] : ''; // Extract start time
-  const formattedStartTime = startTime ? dayjs(startTime, 'HH:mm').format('h:mm A') : ''; // Format start time with uppercase AM/PM
-  const endTime = startTime ? dayjs(startTime, 'HH:mm').add(45, 'minute').format('h:mm A') : ''; // Calculate and format end time with uppercase AM/PM
+  const formattedStartTime = startTime ? dayjs(startTime, 'HH:mm').format('hh:mm A') : ''; // Format start time with the desired format
+  const endTime = startTime ? dayjs(startTime, 'HH:mm').add(45, 'minute').format('hh:mm A') : ''; // Calculate and format end time with the desired format
 
   return (
     <div className="booking-summary">
@@ -33,12 +33,12 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
             </div>
           )}
           
-            <button
-              className={`next-button ${creditBalance < price ? 'disabled' : ''}`}
-              onClick={handleNextStep}
-              
-            >Pay</button>
-          
+          <button
+            className={`next-button ${creditBalance < price ? 'disabled' : ''}`}
+            onClick={handleNextStep}
+          >
+            Pay
+          </button>
         </>
       )}
     </div>
