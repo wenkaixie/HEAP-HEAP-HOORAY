@@ -48,7 +48,7 @@
   }
 
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .dashboard {
       flex-direction: column;
     }
@@ -65,8 +65,8 @@
       text-align: center;
     }
 
-    .book-button {
-      width: 100%;
+    .buttons-container {
+      text-align: center;
     }
 
     .title {

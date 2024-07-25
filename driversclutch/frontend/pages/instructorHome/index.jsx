@@ -5,6 +5,7 @@ import '@/app/components/background/background.css'
 import '@/app/components/dashboard/dashboard.css'
 import axios from 'axios';
 import { url } from '../../src/app/firebase/firebase_config';
+import Link from 'next/link';
 
 const Dashboard = () => {
   const [bookingsData, setBookingsData] = useState(null);
@@ -86,14 +87,18 @@ const Dashboard = () => {
             {renderBookings()}
           </div>
           <br></br>
-          <button href="/instructorStudents" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</button>
+          <div className='buttons-container'>
+            <Link href="/instructorStudents" className="book-button" style={{ textDecoration: "none"}}>View All Bookings</Link>
+          </div>
         </div>
         <div className='dashboard-container'>
           <div>
             <h2 className='title'>Set Lesson Availablity</h2>
             <p>Edit your available timeslots</p>
             <br></br>
-            <button href="/instructorAvailability" className="book-button" style={{ textDecoration: "none"}}>Lesson Availability</button>
+            <div className='buttons-container'>
+              <Link href="/instructorAvailability" className="book-button" style={{ textDecoration: "none"}}>Lesson Availability</Link>
+            </div>
           </div>
           <br></br>
           <br></br>
@@ -101,7 +106,9 @@ const Dashboard = () => {
             <h2 className='title'>My Profile</h2>
             <p>View and edit your profile info</p>
             <br></br>
-            <button href="/instructorProfile" className="book-button" style={{ textDecoration: "none"}}>Manage Account</button>
+            <div className='buttons-container'>
+              <Link href="/instructorProfile" className="book-button" style={{ textDecoration: "none"}}>Manage Account</Link>
+            </div>
           </div>
         </div>
       </div>

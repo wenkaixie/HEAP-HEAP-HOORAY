@@ -111,9 +111,10 @@
       text-align: center;
     }
 
-    .home-book-button {
-      width: 100%;
+    .buttons-container {
+      text-align: center;
     }
+
     .title {
       text-align: center;
     }
