@@ -293,6 +293,10 @@
     margin-bottom: 16px;
   }
 
+  .instructList-inner-card {
+    width:275px;
+  }
+
   .instructList-book-button {
     align-self: center;
     margin-top: 10px;
