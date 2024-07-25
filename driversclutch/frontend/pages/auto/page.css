@@ -300,10 +300,6 @@
     align-self: center;
     margin-top: 10px;
   }
-
-  .instructList-dashboard-container h2 {
-    font-size: 24px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -327,9 +323,5 @@
 
   .instructList-dashboard {
     padding: 10px;
-  }
-
-  .instructList-dashboard-container h2 {
-    font-size: 20px;
   }
 }
