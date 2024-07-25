@@ -93,9 +93,10 @@ const HomePage = () => {
                         <p>{testimonials[currentTestimonialIndex].text}</p>
                         <span className='author'>{testimonials[currentTestimonialIndex].author}</span>
                     </div>
-                    <div className='testimonial-buttons'>
-                        <button onClick={prevTestimonial}>Previous</button>
-                        <button onClick={nextTestimonial}>Next</button>
+                    <br></br>
+                    <div className='testimonial-buttons-container'>
+                        <button className='testimonial-buttons' onClick={prevTestimonial}>Previous</button>
+                        <button className='testimonial-buttons' onClick={nextTestimonial}>Next</button>
                     </div>
                 </div>
             </section>
