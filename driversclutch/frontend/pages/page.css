@@ -190,7 +190,7 @@ body {
     .heroImage img{
         display: initial;
         align-items: center;
-        min-width: calc(90%);
+        min-width: 100%;
         max-width: calc(50%);
     }
     .hero-text {
