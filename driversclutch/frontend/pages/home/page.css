@@ -94,7 +94,7 @@
   background-color: #333;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .home-dashboard {
       flex-direction: column;
     }
