@@ -191,7 +191,6 @@ body {
         display: initial;
         align-items: center;
         min-width: 100%;
-        max-width: calc(50%);
     }
     .hero-text {
         text-align: center;
