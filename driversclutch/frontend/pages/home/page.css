@@ -102,3 +102,9 @@
       text-align: center;
     }
   }
+
+  @media (max-width: 480px) {
+    .home-dashboard {
+      padding: 10px;
+    }
+  }

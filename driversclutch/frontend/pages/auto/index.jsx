@@ -220,10 +220,10 @@ const CardManual = ({ instructor, profileData }) => {
             </div>
           </div>
           <div>
+            <br />
             <span>Enrolment Fee: ${instructor.enrolmentFee}</span>
             <br />
             <span>Lesson Fee: ${instructor.lessonFee}</span>
-            <br />
           </div>
           <div id="instructList-popupOverlay" className={`instructList-popup-overlay ${isPopupVisible ? 'show' : ''}`}>
             <InstructorDetails togglePopup={togglePopup} instructor={instructor} profileData={profileData} />

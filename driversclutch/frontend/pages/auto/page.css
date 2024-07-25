@@ -28,7 +28,7 @@
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 20px;
-  margin: 20px 0px;
+  margin: 20px 10px;
   display: flex;
   flex-direction: row;
   height: fit-content;
@@ -74,27 +74,28 @@
 .instructList-inner-card-container {
   flex: 1;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column; /* Add this line */
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 10px 0px;
 }
 
 .instructList-inner-card {
   display: flex;
   flex-direction: column;
-  padding: 16px;
   border: 1px solid #ddd;
   border-radius: 16px; /* More rounded corners */
   background-color: #f0f0f0; /* Grey background */
-  height: 50%;
-  width: 70%;
+  height: 100%;
+  width: 100%;
+  gap: 8px;
+  padding: 10px 0px;
   justify-content: center; /* Center content vertically */
   align-items: left; /* Center content horizontally */
   text-align: left; /* Center text */
 }
 
 .instructList-inner-card span {
-  margin-bottom: 8px; /* Add space between the words */
+  padding: 0px 16px;
 }
 
 .instructList-tab-buttons {
@@ -239,7 +240,7 @@
   border-radius: 5px;
   cursor: pointer;
   margin-top: 25px;
-  width: 75%; /* Take full width of the parent container */
+  width: 100%;
   box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
@@ -255,7 +256,6 @@
 
   .instructList-inner-card {
     height: auto;
-    width: 80%;
   }
 
   .instructList-card-container {
@@ -264,6 +264,7 @@
 
   .instructList-details-container {
     margin-top: 16px;
+    align-items: center;
   }
 
   .instructList-dashboard {
