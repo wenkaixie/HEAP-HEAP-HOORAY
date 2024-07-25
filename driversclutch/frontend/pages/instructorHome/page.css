@@ -46,3 +46,13 @@
   .book-button:hover {
     background-color: #333;
   }
+
+
+  @media (max-width: 768px) {
+    .dashboard {
+      flex-direction: column;
+    }
+    .title {
+      text-align: center;
+    }
+  }

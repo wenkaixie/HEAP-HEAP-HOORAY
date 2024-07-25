@@ -82,7 +82,7 @@ const Dashboard = () => {
     return (
       <div className="dashboard">
         <div className="dashboard-container">
-          <h2>Upcoming Bookings</h2>
+          <h2 className='title'>Upcoming Bookings</h2>
           <div className="dashboard-details">
             {renderBookings()}
           </div>
@@ -91,7 +91,7 @@ const Dashboard = () => {
         </div>
         <div className='dashboard-container'>
           <div>
-            <h2>Set Lesson Availablity</h2>
+            <h2 className='title'>Set Lesson Availablity</h2>
             <p>Edit your available timeslots</p>
             <br></br>
             <Link href="/instructorAvailability" className="book-button" style={{ textDecoration: "none"}}>Lesson Availability</Link>
@@ -99,7 +99,7 @@ const Dashboard = () => {
           <br></br>
           <br></br>
           <div>
-            <h2>My Profile</h2>
+            <h2 className='title'>My Profile</h2>
             <p>View and edit your profile info</p>
             <br></br>
             <Link href="/instructorProfile" className="book-button" style={{ textDecoration: "none"}}>Manage Account</Link>

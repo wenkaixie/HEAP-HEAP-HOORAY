@@ -43,31 +43,27 @@ body {
 
 .hero {
     display: flex;
-    justify-content: flex-start; /* Move content to the left */
     align-items: center;
     padding: 30px 100px;
     background-color: #c0daf9aa;
+    gap: 40px;
 }
 
 
 .heroImage img {
     max-width: 60%; /* Ensure the image doesn't exceed its container */
     height: auto;
-    flex-grow: 1; /* Allow the image to grow within its container */
     min-width: 500px; /* Set a minimum width to prevent shrinking */
     display: block;
-    margin-left: 10px; /* Add this to push the image to the right */
 }
 
 .heroText {
-    margin-left: 20px; /* Adjust this value to move the text more to the left */
     text-align: left;
 }
 
 .heroText h1 {
     font-size: 45px;
     font-weight: normal;
-    margin-right: 11px;
 }
 
 
@@ -186,3 +182,26 @@ body {
 .footer p {
     margin: 15px 10px;
 }
+
+@media (max-width: 1000px) {
+    .hero {
+      flex-direction: column;
+    }
+    .heroImage img{
+        display: initial;
+        align-items: center;
+        min-width: calc(90%);
+        max-width: 500px;
+    }
+    .hero-text {
+        text-align: center;
+
+    }
+    .featureList {
+      flex-direction: column;
+      align-items: center;
+    }
+    .info-sections {
+        flex-direction: column;
+    }
+  }

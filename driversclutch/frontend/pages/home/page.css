@@ -98,4 +98,7 @@
     .home-dashboard {
       flex-direction: column;
     }
+    .title {
+      text-align: center;
+    }
   }
