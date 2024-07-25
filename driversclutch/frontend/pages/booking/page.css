@@ -187,3 +187,9 @@ h2 {
   .custom-date-calendar .MuiTypography-caption {
     font-size: 15px; /* Increase the font size of text inside the calendar */
   }
+
+  @media (max-width: 480px) {
+    .dashboard {
+      padding: 10px;
+    }
+  }

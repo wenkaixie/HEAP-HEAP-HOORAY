@@ -98,6 +98,22 @@
     .home-dashboard {
       flex-direction: column;
     }
+
+    .home-dashboard-details {
+      text-align: center;
+    }
+
+    .home-dashboard h2{
+      text-align: center;
+    }
+
+    .home-dashboard p{
+      text-align: center;
+    }
+
+    .home-book-button {
+      width: 100%;
+    }
     .title {
       text-align: center;
     }

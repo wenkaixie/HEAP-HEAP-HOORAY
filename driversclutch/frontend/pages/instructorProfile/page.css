@@ -32,6 +32,9 @@ h3 {
         flex: 1 1 100%;
         margin: 5px;
     }
+    .dashboard {
+      padding: 10px;
+    }
 }
 
 .profile-picture-container {

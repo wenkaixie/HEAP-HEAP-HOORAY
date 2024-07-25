@@ -285,7 +285,6 @@
 
   .instructList-card {
     margin: 10px;
-    padding: 10px;
     flex-direction: column;
   }
 
@@ -293,7 +292,7 @@
     margin-bottom: 16px;
   }
 
-    .instructList-inner-card {
+  .instructList-inner-card {
     width:275px;
   }
 
@@ -309,7 +308,6 @@
 
 @media (max-width: 480px) {
   .instructList-card {
-    padding: 10px;
     margin: 10px 0;
     flex-direction: column;
   }
@@ -324,7 +322,6 @@
   }
 
   .instructList-inner-card {
-    padding: 10px;
     border-radius: 8px;
   }
 

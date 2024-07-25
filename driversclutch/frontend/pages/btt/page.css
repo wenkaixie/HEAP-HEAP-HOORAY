@@ -146,4 +146,8 @@ h2 {
   height: auto;
 }
 
-
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 10px;
+  }
+}

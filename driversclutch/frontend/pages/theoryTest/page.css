@@ -251,3 +251,10 @@ h2 {
 .price {
     color: rgb(60, 79, 110);
 }
+
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 10px;
+  }
+}

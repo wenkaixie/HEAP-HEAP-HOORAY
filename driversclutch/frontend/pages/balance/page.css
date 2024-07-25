@@ -177,7 +177,11 @@ input[type=number]::-webkit-outer-spin-button {
   .balance-card-details span {
     display: block;
   }
-  
 
+  @media (max-width: 480px) {
+    .balance-dashboard {
+      padding: 10px;
+    }
+  }
 
 

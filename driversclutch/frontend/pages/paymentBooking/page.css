@@ -121,3 +121,10 @@ h2 {
     font-size: 40px;
     color: rgb(5, 98, 89);
 }
+
+
+@media (max-width: 480px) {
+    .dashboard {
+      padding: 10px;
+    }
+  }

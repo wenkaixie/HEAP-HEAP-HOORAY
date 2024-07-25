@@ -99,3 +99,10 @@
       flex-direction: column;
     }
   }
+
+
+  @media (max-width: 480px) {
+    .list-dashboard {
+      padding: 10px;
+    }
+  }

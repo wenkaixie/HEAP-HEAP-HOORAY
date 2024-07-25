@@ -4,7 +4,6 @@ import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
-import Link from "next/link";
 import { url } from '../../src/app/firebase/firebase_config';
 
 
@@ -141,7 +140,7 @@ const Dashboard = () => {
             {renderBookings()}
           </div>
           <br></br>
-          <Link href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Lesson Bookings</Link>
+          <button href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Lesson Bookings</button>
         </div>
         <br></br>
         <br></br>
@@ -157,7 +156,7 @@ const Dashboard = () => {
           <h2 className='title'>Make a New Booking</h2>
           <p>Book a practical lesson</p>
           <br></br>
-          <Link href="/booking" className="home-book-button" style={{ textDecoration: "none"}}>Book Now</Link>
+          <button href="/booking" className="home-book-button" style={{ textDecoration: "none"}}>Book Now</button>
         </div>
         <br></br>
         <br></br>
@@ -165,7 +164,7 @@ const Dashboard = () => {
           <h2 className='title'>Theory Practice</h2>
           <p>Test your knowledge with a mock theory test</p>
           <br></br>
-          <Link href="/btt" className="home-book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
+          <button href="/btt" className="home-book-button" style={{ textDecoration: "none"}}>Theory Practice</button>
         </div>
         <br></br>
         <br></br>
@@ -173,7 +172,7 @@ const Dashboard = () => {
           <h2 className='title'>Top-up Credit Balance</h2>
           <p>Credit Balance: {profileData.balance}</p>
           <br></br>
-          <Link href="/balance" className="home-book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
+          <button href="/balance" className="home-book-button" style={{ textDecoration: "none"}}>Top-up Now</button>
         </div>
         <br></br>
         <br></br>
@@ -181,7 +180,7 @@ const Dashboard = () => {
           <h2 className='title'>Manage Profile</h2>
           <p>View and edit your profile</p>
           <br></br>
-          <Link href="/profile" className="home-book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
+          <button href="/profile" className="home-book-button" style={{ textDecoration: "none"}}>Manage Profile</button>
         </div>
       </div>
     </div>
