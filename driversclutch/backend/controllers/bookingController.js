@@ -242,8 +242,8 @@ const makeBooking = async (req, res) => {
     const page = await browser.newPage();
 
     try {
-        // await page.goto('https://driversclutch.vercel.app/bbdc', { waitUntil: 'networkidle2' });
-        await page.goto('http://localhost:3000/bbdc', { waitUntil: 'networkidle2' });
+        await page.goto('https://driversclutch.vercel.app/bbdc', { waitUntil: 'networkidle2' });
+        // await page.goto('http://localhost:3000/bbdc', { waitUntil: 'networkidle2' });
 
         const monthSelector = async (month) => {
             await page.waitForSelector('.monthButtons button');
@@ -327,8 +327,8 @@ const confirmBooking = async (req, res) => {
     await page.setViewport({ width: 1920, height: 1080 });
 
     try {
-        // await page.goto('https://driversclutch.vercel.app/bbdc', { waitUntil: 'networkidle2' });
-        await page.goto('http://localhost:3000/bbdc', { waitUntil: 'networkidle2' });
+        await page.goto('https://driversclutch.vercel.app/bbdc', { waitUntil: 'networkidle2' });
+        // await page.goto('http://localhost:3000/bbdc', { waitUntil: 'networkidle2' });
 
         const month = date.split('-')[1].toUpperCase() + "'24";
         const day = date.split('-')[2];

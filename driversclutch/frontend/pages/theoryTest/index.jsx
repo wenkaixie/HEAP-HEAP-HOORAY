@@ -42,7 +42,7 @@ const Dashboard = () => {
         const day = date.date();
 
         try {
-            const response = await axios.get(`${url}/webscraping/make-booking`, {
+            const response = await axios.get(`http://localhost:8001/webscraping/make-booking`, {
                 params: { month: `${month}'24`, date: day }
             });
             setTimeslots(response.data.availableSlots);
@@ -143,7 +143,7 @@ const Dashboard = () => {
             const userDocID = localStorage.getItem('userDocID');
             const formattedDate = selectedDate ? selectedDate.format('YYYY-MM-DD') : '';
             console.log(userDocID, "--", formattedDate, "--", beforeFormat, "--", selectedSlot);
-            const response = await axios.post(`${url}/webscraping/confirm-booking-nonscrape`, {
+            const response = await axios.post(`http://localhost:8001/webscraping/confirm-booking-nonscrape`, {
                 studentID: userDocID,
                 date: formattedDate,
                 slot: beforeFormat,
