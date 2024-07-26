@@ -9,7 +9,7 @@ h3 {
   justify-content: space-around;
   padding: 20px 0px;
   border-radius: 10px;
-  gap: 40px
+  gap: 40px;
 }
 
 .profile-item {
@@ -30,12 +30,14 @@ h3 {
 @media (max-width: 480px) {
   .profile-item {
       flex: 1 1 100%;
-      margin: 5px;
+      margin: 5px 0;
+      padding: 10px 0;
   }
   .dashboard {
     padding: 10px;
   }
 }
+
 .profile-picture-container {
   max-width: 150px;
   min-width: 150px;
@@ -175,49 +177,88 @@ h3 {
 }
 
 .dashboard-container {
-text-align: left;
-flex: 1;
-margin-bottom: 20px;
+  text-align: left;
+  flex: 1;
+  margin-bottom: 20px;
 }
 
-.dashboard-container h2{
-font-size: 38px;
-margin-top: 10px;
-margin-bottom: 10px;
+.dashboard-container h2 {
+  font-size: 38px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .dashboard-container p {
-font-size: 16px;
-color: #666;
-margin-bottom: 20px;
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
 }
 
 .dashboard-details {
-font-size: 18px;
-margin: 20px 0px;
+  font-size: 18px;
+  margin: 20px 0px;
 }
 
 .dashboard-details span {
-display: block;
+  display: block;
 }
 
 .book-button {
-background-color: rgb(60, 79, 110);
-color: white;
-border: none;
-padding: 10px 20px;
-font-size: 16px;
-border-radius: 5px;
-cursor: pointer;
+  background-color: rgb(60, 79, 110);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .book-button:hover {
-background-color: #333;
+  background-color: #333;
 }
 
 @media (max-width: 768px) {
   .dashboard {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 1024px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .dashboard-details {
+    text-align: center;
+  }
+
+  .dashboard h2 {
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  .dashboard h3 {
+    margin-left: 10px;
+  }
+
+  .dashboard p {
+    text-align: left;
+    margin-left: 10px;
+  }
+
+  .buttons-container {
+    text-align: center;
+  }
+
+  .title {
+    text-align: center;
+    padding-top: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding: 10px;
   }
 }
 
@@ -255,7 +296,3 @@ background-color: #333;
 .card-details span {
   display: block;
 }
-
-
-
-

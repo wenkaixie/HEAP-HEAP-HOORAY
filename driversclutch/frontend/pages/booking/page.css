@@ -146,6 +146,9 @@ h2 {
   }
   
   @media (max-width: 768px) {
+    .dashboard {
+      flex-direction: center;
+    }
     .lesson {
       font-size: 4vw; 
     }
@@ -188,8 +191,73 @@ h2 {
     font-size: 15px; /* Increase the font size of text inside the calendar */
   }
 
+  .dashboard {
+    background-color: rgba(255, 255, 255, 0.654);
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px 60px;
+    text-align: left;
+    min-width: 320px;
+    max-width: calc(100% - 450px);
+    margin: auto;
+    margin-top: 154px;
+    margin-bottom: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .dashboard-container {
+  text-align: left;
+  flex: 1;
+  margin-bottom: 20px;
+  }
+  
+  .dashboard-container h2{
+  font-size: 38px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  }
+  
+  .dashboard-container p {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 20px;
+  }
+  
+  .dashboard-details {
+  font-size: 18px;
+  margin: 20px 0px;
+  }
+
+
+
+
+  @media (max-width: 1024px) {
+    .dashboard {
+      flex-direction: column;
+    }
+
+    .dashboard-details {
+      text-align: center;
+    }
+
+    .buttons-container {
+      text-align: center;
+    }
+
+    .title {
+      text-align: center;
+    }
+
+  }
+
   @media (max-width: 480px) {
     .dashboard {
       padding: 10px;
+ 
     }
   }

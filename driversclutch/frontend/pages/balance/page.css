@@ -159,7 +159,7 @@ input[type=number]::-webkit-outer-spin-button {
   }
 
   .balance-card h3 {
-    font-size: 20px;
+    font-size: 18px;
     margin-top: 10px;
   }
   
@@ -177,11 +177,70 @@ input[type=number]::-webkit-outer-spin-button {
   .balance-card-details span {
     display: block;
   }
+  @media (max-width: 1024px) {
+    .balance-card {
+      flex-direction: column;
+      height: auto;
+    }
+  
+  
+    .balance-card-container {
+      flex-direction: row;
+    }
+  
+    .balance-dashboard {
+      padding: 20px 40px;
+    }
+  
+    .balance-dashboard-container h2 {
+      font-size: 30px;
+      text-align: center;
+    }
 
+    .balance-dashboard p, .balance-dashboard h3 {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .balance-dashboard {
+      flex-direction: column;
+      padding: 20px;
+      margin-top: 100px;
+    }
+  
+    .balance-card {
+      margin: 10px;
+      flex-direction: column;
+    }
+  
+    .balance-book-button {
+      align-self: center;
+      margin-top: 10px;
+    }
+  }
+  
   @media (max-width: 480px) {
+    .balance-card {
+      margin: 10px 0;
+      flex-direction: column;
+    }
+  
+  
+    .balance-book-button {
+      align-self: center;
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+  
+
+  
     .balance-dashboard {
       padding: 10px;
     }
   }
+  
+
+
 
 
