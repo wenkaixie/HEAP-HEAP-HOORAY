@@ -129,6 +129,7 @@ width: 100%;
   justify-content: center;
   align-items: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Prevent background scrolling */
 }
 
 .popup-overlay.show {
@@ -137,18 +138,17 @@ width: 100%;
 
 .popup-box {
   background-color: white;
-  padding: 20px;
   padding: 20px 40px;
   border-radius: 8px;
   text-align: left;
+  max-height: 80%; /* Limit height to 80% of viewport */
+  overflow-y: auto; /* Make the pop-up scrollable */
   min-width: 250px;
   max-width: calc(100% - 450px);
-  width: 100%;
-  height: 50%;
   width: fit-content;
-  height: fit-content;
   margin: auto;
 }
+
 
 .large-input {
   width: 300px;
