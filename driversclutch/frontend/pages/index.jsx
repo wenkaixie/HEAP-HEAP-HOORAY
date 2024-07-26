@@ -127,7 +127,7 @@ const HomePage = () => {
                 <div className='info-container'>
                     <h2>Mission</h2>
                     <p>
-                        DriversClutch aims to streamline the learning process for both students and instructors by providing a one-stop platform for <span style={{color: 'darkgrey'}}><em><strong>scheduling</strong></em></span>, <span style={{color: 'darkgrey'}}><em><strong>resources</strong></em></span>, and <span style={{color: 'darkgrey'}}><em><strong>communication</strong></em></span>.
+                        DriversClutch aims to streamline the learning process for both students and instructors by providing a one-stop platform for <em><strong>scheduling</strong></em>, <em><strong>resources</strong></em>, and <em><strong>communication</strong></em>.
                     </p>
                 </div>
                 <div className='info-container'>
