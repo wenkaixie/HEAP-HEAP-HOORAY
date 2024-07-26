@@ -94,8 +94,34 @@
   background-color: #333;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     .home-dashboard {
       flex-direction: column;
+    }
+
+    .home-dashboard-details {
+      text-align: center;
+    }
+
+    .home-dashboard h2{
+      text-align: center;
+    }
+
+    .home-dashboard p{
+      text-align: center;
+    }
+
+    .buttons-container {
+      text-align: center;
+    }
+
+    .title {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .home-dashboard {
+      padding: 10px;
     }
   }

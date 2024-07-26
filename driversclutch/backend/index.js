@@ -20,7 +20,7 @@ const allowedOrigins = [
 	"https://driversclutch.vercel.app",
 	"http://localhost:3000",
 	"https://heap-heap-hooray-8w28-git-main-wenkais-projects.vercel.app",
-	"https://heap-heap-hooray-8w28-q3zsj5v9u-wenkais-projects.vercel.app",
+	"https://heap-heap-hooray-8w28-ozhar79a3-wenkais-projects.vercel.app",
   ];
   
   const corsOptions = {

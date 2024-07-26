@@ -4,8 +4,8 @@ import Navbar from "@/app/components/navbar/navbar";
 import './page.css';
 import '@/app/components/background/background.css';
 import axios from 'axios';
-import Link from "next/link";
 import { url } from '../../src/app/firebase/firebase_config';
+import Link from 'next/link';
 
 
 const Dashboard = () => {
@@ -136,17 +136,19 @@ const Dashboard = () => {
     <div className="home-dashboard">
       <div className="home-dashboard-container">
         <div>
-          <h2>Upcoming Lessons</h2>
+          <h2 className='title'>Upcoming Lessons</h2>
           <div className="home-dashboard-details">
             {renderBookings()}
           </div>
           <br></br>
-          <Link href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Lesson Bookings</Link>
+          <div className='buttons-container'>
+            <Link href="/bookingList" className="home-book-button" style={{ textDecoration: "none"}}>View All Lesson Bookings</Link>
+          </div>
         </div>
         <br></br>
         <br></br>
         <div>
-          <h2>Upcoming Theory Tests</h2>
+          <h2 className='title'>Upcoming Theory Tests</h2>
           <div className='home-dashboard-details'>
             {renderTestBookings()}
           </div>
@@ -154,34 +156,42 @@ const Dashboard = () => {
       </div>
       <div className="home-dashboard-container">
         <div>
-          <h2>Make a New Booking</h2>
+          <h2 className='title'>Make a New Booking</h2>
           <p>Book a practical lesson</p>
           <br></br>
-          <Link href="/booking" className="home-book-button" style={{ textDecoration: "none"}}>Book Now</Link>
+          <div className='buttons-container'>
+            <Link href="/booking" className="home-book-button" style={{ textDecoration: "none"}}>Book Now</Link>
+          </div>
         </div>
         <br></br>
         <br></br>
         <div>
-          <h2>Theory Practice</h2>
+          <h2 className='title'>Theory Practice</h2>
           <p>Test your knowledge with a mock theory test</p>
           <br></br>
-          <Link href="/btt" className="home-book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
+          <div className='buttons-container'>
+            <Link href="/btt" className="home-book-button" style={{ textDecoration: "none"}}>Theory Practice</Link>
+          </div>
         </div>
         <br></br>
         <br></br>
         <div>
-          <h2>Top-up Credit Balance</h2>
+          <h2 className='title'>Top-up Credit Balance</h2>
           <p>Credit Balance: {profileData.balance}</p>
           <br></br>
-          <Link href="/balance" className="home-book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
-        </div>
+          <div className='buttons-container'>
+            <Link href="/balance" className="home-book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>
+          </div>
+          </div>
         <br></br>
         <br></br>
         <div>
-          <h2>Manage Profile</h2>
+          <h2 className='title'>Manage Profile</h2>
           <p>View and edit your profile</p>
           <br></br>
-          <Link href="/profile" className="home-book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
+          <div className='buttons-container'>
+            <Link href="/profile" className="home-book-button" style={{ textDecoration: "none"}}>Manage Profile</Link>
+          </div>
         </div>
       </div>
     </div>

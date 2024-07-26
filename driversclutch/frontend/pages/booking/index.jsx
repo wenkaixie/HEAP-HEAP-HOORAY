@@ -8,7 +8,6 @@ import BookingSummary from './BookingSummary';
 import dayjs from 'dayjs';
 import './page.css';
 import '@/app/components/background/background.css';
-import '@/app/components/dashboard/dashboard.css';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';

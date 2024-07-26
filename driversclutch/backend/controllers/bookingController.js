@@ -106,6 +106,7 @@ const makeBooking = async (req, res) => {
 
 const confirmBooking = async (req, res) => {
     const { date, slot } = req.body;
+    const { studentID, date, slot, editedSlot } = req.body;
     console.log('Confirm booking request received:', date, slot);
 
     const driver = new Builder().forBrowser('chrome').setChromeOptions(options).build();
@@ -191,6 +192,12 @@ const confirmBooking = async (req, res) => {
         console.log('Booking confirmation message:', confirmationMessage);
 
         await driver.quit();
+
+        const theoryTestDate = date + " " + editedSlot;
+        const docRef = db.collection('students').doc(studentID);
+        await docRef.set({
+        theoryTestDate: theoryTestDate
+        }, { merge: true });
 
         res.json({
             status: 'success',

@@ -7,9 +7,9 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
   console.log('Selected Timeslot:', selectedTimeslot);
 
   const slotNumber = selectedTimeslot ? selectedTimeslot.split(' ')[1] : ''; // Extract slot number
-  const startTime = selectedTimeslot ? selectedTimeslot.split(' ')[2] : ''; // Extract start time
-  const formattedStartTime = startTime ? dayjs(startTime, 'HH:mm').format('hh:mm A') : ''; // Format start time with the desired format
-  const endTime = startTime ? dayjs(startTime, 'HH:mm').add(45, 'minute').format('hh:mm A') : ''; // Calculate and format end time with the desired format
+  const endTime = selectedTimeslot ? selectedTimeslot.split(' ')[2] : ''; // Extract start time
+  const formattedEndTime = endTime ? dayjs(endTime, 'HH:mm').format('hh:mm A') : ''; // Format start time with the desired format
+  const startTime = endTime ? dayjs(endTime, 'HH:mm').subtract(45, 'minute').format('hh:mm A') : ''; // Calculate and format end time with the desired format
 
   return (
     <div className="booking-summary">
@@ -18,7 +18,7 @@ const BookingSummary = ({ selectedDate, selectedTimeslot, handleNextStep, price,
           <div className="booking-item">
             Theory Test Session {slotNumber}<br /><br />
             {selectedDate.format('DD MMMM YYYY')} <br />
-            {formattedStartTime} - {endTime} <br />
+            {startTime} - {formattedEndTime} <br />
             <div className='price'>${price}</div> 
           </div>
         </div>

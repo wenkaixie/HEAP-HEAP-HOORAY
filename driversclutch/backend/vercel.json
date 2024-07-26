@@ -15,5 +15,10 @@
 			  "Access-Control-Allow-Origin": "*"
 			}
 		}
-	]
+	],
+	"git": {
+	  "deploymentEnabled": {
+		"main": true
+	  }
+	}
 }

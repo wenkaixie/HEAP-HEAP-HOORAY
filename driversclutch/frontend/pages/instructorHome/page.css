@@ -46,3 +46,36 @@
   .book-button:hover {
     background-color: #333;
   }
+
+
+  @media (max-width: 1024px) {
+    .dashboard {
+      flex-direction: column;
+    }
+
+    .dashboard-details {
+      text-align: center;
+    }
+
+    .dashboard h2 {
+      text-align: center;
+    }
+
+    .dashboard p {
+      text-align: center;
+    }
+
+    .buttons-container {
+      text-align: center;
+    }
+
+    .title {
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .dashboard {
+      padding: 10px;
+    }
+  }

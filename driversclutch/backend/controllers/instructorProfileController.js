@@ -49,42 +49,6 @@ const updateInfo = async (req, res) => {
 }
 
 
-// const updateProfilePic = async(req, res) => {
-//     const file = req.file;
-//     const instructorID = req.query.id;
-
-//     if (!file) {
-//         return res.status(400).send('No file uploaded.');
-//     }
-
-//     try {
-//         const bucket = storage.bucket();
-//         const fileName = `images/${file.originalname}`;
-//         const fileRef = bucket.file(fileName);
-
-//         // Upload the file to Firebase Storage
-//         await fileRef.save(file.buffer);
-
-//         // Get the file's download URL
-//         const downloadURL = await fileRef.getSignedUrl({
-//         action: 'read',
-//         expires: '03-01-2500'
-//         });
-
-//         // Save the download URL to Firestore in the "instructors" collection
-//         const docRef = db.collection('instructors').doc(instructorID);
-//         await docRef.set({
-//         profileImage: downloadURL[0]
-//         // updatedAt: admin.db.FieldValue.serverTimestamp()
-//         }, { merge: true });
-
-//         res.status(200).send('File uploaded successfully!');
-//     }
-//     catch (error) {
-//         res.status(500).send('Error uploading file: ' + error.message);
-//     }
-// }
-
 const getProfilePicture = async (req, res) => {
     const instructorID = req.query.id;
     try {

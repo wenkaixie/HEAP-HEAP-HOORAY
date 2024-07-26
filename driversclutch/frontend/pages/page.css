@@ -209,6 +209,21 @@ body {
     margin: 5px 0;
 }
 
+.footer .social-icons {
+    margin-top: 10px;
+}
+
+.footer .social-icons a {
+    margin: 0 10px;
+    font-size: 20px;
+    color: #007bff;
+    transition: color 0.3s ease;
+}
+
+.footer .social-icons a:hover {
+    color: #0056b3;
+}
+
 .hover-button:hover {
     transform: scale(1.05);
     transition: transform 0.3s;
