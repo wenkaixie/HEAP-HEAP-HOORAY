@@ -41,7 +41,7 @@ const noAuthRequired = ['/', '/login', '/bbdc'];
 // routes that require instructor authentication
 const instructorRoutes = ['/instructorHome', '/instructorProfile', '/instructorAvailability', '/instructorStudents']; // Define instructor-specific routes
 // routes that require student authentication
-const studentRoutes = ['/home', '/profile', '/theoryTest', '/booking', '/paymentBooking', '/balance', '/btt', '/ftt', '/auto', '/manual', '/bookingList']; // Define student-specific routes
+const studentRoutes = ['/home', '/profile', '/theoryTest', '/booking', '/paymentBooking', '/balance', '/btt', '/ftt', '/auto', '/manual', '/bookingList', '/webscraping']; // Define student-specific routes
 
 function MyApp({ Component, pageProps }) {
     const router = useRouter();
