@@ -177,7 +177,7 @@ const Dashboard = () => {
         <br></br>
         <div>
           <h2 className='title'>Top-up Credit Balance</h2>
-          <p>Credit Balance: {profileData.balance}</p>
+          <p>Credit Balance: {profileData.balance.toFixed(2)}</p>
           <br></br>
           <div className='buttons-container'>
             <Link href="/balance" className="home-book-button" style={{ textDecoration: "none"}}>Top-up Now</Link>

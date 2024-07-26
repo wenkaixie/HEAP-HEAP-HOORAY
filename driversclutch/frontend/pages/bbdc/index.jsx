@@ -234,11 +234,13 @@ const BookingPage = () => {
       const dateString = `2024-${monthIndex + 1}-${String(selectedDate).padStart(2, '0')}`;
       const parsedDate = parse(dateString, 'yyyy-MM-dd', new Date());
       const formattedDate = isValid(parsedDate) ? format(parsedDate, 'yyyy-MM-dd') : '';
+      const userDocID = localStorage.getItem('userDocID'); 
 
       console.log(formattedDate, " --- ", selectedSlot);
-      const response = await axios.post(`${url}/webscraping/confirm-booking-nonscrape`, {
+      const response = await axios.post(`http://localhost:8001/webscraping/confirm-booking-nonscrape`, {
         date: formattedDate,
-        slot: selectedSlot
+        slot: selectedSlot,
+        studentID: userDocID
       });
   
       if (response.data.status === 'success') {

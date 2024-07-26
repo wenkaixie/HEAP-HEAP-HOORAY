@@ -103,6 +103,7 @@ const Dashboard = () => {
         const startTime = dayjs(slot.split(' ')[2], 'HH:mm');
         const endTime = startTime.add(45, 'minute');
         const formattedSlot = `${startTime.format('HH:mm')} - ${endTime.format('HH:mm')}`;
+        console.log(formattedSlot);
         setSelectedSlot(formattedSlot);
     };
 
@@ -141,7 +142,8 @@ const Dashboard = () => {
         try {
             const userDocID = localStorage.getItem('userDocID');
             const formattedDate = selectedDate ? selectedDate.format('YYYY-MM-DD') : '';
-            const response = await axios.post(`${url}/webscraping/confirm-booking`, {
+            console.log(userDocID, "--", formattedDate, "--", beforeFormat, "--", selectedSlot);
+            const response = await axios.post(`${url}/webscraping/confirm-booking-nonscrape`, {
                 studentID: userDocID,
                 date: formattedDate,
                 slot: beforeFormat,
@@ -153,6 +155,8 @@ const Dashboard = () => {
             } else {
                 alert('Failed to confirm booking');
             }
+
+            await updateBalance();
         } catch (error) {
             console.error('Error confirming booking:', error);
             alert('Failed to confirm booking');

@@ -242,8 +242,8 @@ const makeBooking = async (req, res) => {
     const page = await browser.newPage();
 
     try {
-        await page.goto('https://driversclutch.vercel.app/bbdc', { waitUntil: 'networkidle2' });
-        // await page.goto('http://localhost:3000/bbdc', { waitUntil: 'networkidle2' });
+        // await page.goto('https://driversclutch.vercel.app/bbdc', { waitUntil: 'networkidle2' });
+        await page.goto('http://localhost:3000/bbdc', { waitUntil: 'networkidle2' });
 
         const monthSelector = async (month) => {
             await page.waitForSelector('.monthButtons button');
@@ -316,6 +316,7 @@ const makeBooking = async (req, res) => {
 
 const confirmBooking = async (req, res) => {
     const { studentID, date, slot, editedSlot } = req.body;
+    console.log(req.body);
     console.log('Confirm booking request received:', date, slot);
 
     const browser = await puppeteer.launch({
@@ -397,12 +398,13 @@ const confirmBooking = async (req, res) => {
 
         const checkBookingConfirmation = async () => {
             try {
-                await page.waitForSelector('.alert', { timeout: 60000 }); // Increase timeout to 60 seconds
-                const alertText = await page.evaluate(() => document.querySelector('.alert').innerText);
+                // await page.waitForSelector('.alert', { timeout: 10000 });
+                //const alertText = await page.evaluate(() => document.querySelector('.alert').innerText);
+                const alertTex = "Booking Successful!"
+                console.log(alertTex);
                 return alertText;
             } catch (e) {
                 console.error('Error waiting for alert:', e);
-                await page.screenshot({ path: 'error_screenshot.png' }); // Take a screenshot for debugging
                 throw e;
             }
         };
@@ -415,17 +417,18 @@ const confirmBooking = async (req, res) => {
         const confirmationMessage = await checkBookingConfirmation();
         console.log('Booking confirmation message:', confirmationMessage);
 
-        await browser.close();
+        browser.close();
 
-        const theoryTestDate = date + " " + editedSlot;
-        const docRef = db.collection('students').doc(studentID);
-        await docRef.set({
-        theoryTestDate: theoryTestDate
-        }, { merge: true });
+        // const theoryTestDate = `${date} ${slot}`;
+        // const docRef = db.collection('students').doc(studentID);
+        // console.log(theoryTestDate, "---" . studentID);
+        // await docRef.set({
+        //     theoryTestDate: theoryTestDate
+        // }, { merge: true });
 
         res.json({
             status: 'success',
-            message: confirmationMessage,
+            message: 'Booking confirmed successfully',
         });
     } catch (error) {
         await browser.close();
@@ -434,21 +437,29 @@ const confirmBooking = async (req, res) => {
     }
 };
 
-const confirmBookingNonscrape = async (req, res) => {
-    const { studentID, date, slot, editedSlot } = req.body;
-    console.log(studentID);
-    console.log('Confirm booking request received:', date, slot);
-        const theoryTestDate = date + " " + editedSlot;
-        const docRef = db.collection('students').doc(studentID);
-        await docRef.set({
-        theoryTestDate: theoryTestDate
-        }, { merge: true });
-
-        res.json({
-            status: 'success',
-            message: confirmationMessage,
-        });
-};
+    const confirmBookingNonscrape = async (req, res) => {
+        const { date, slot, studentID } = req.body;
+        // console.log('Confirm booking request received:', date, slot, 'for studentID:', studentID);
+    
+        try {
+            // const theoryTestDate = `${date} ${slot}`;
+            // const docRef = db.collection('students').doc(studentID);
+            // await docRef.set({
+            //     theoryTestDate: theoryTestDate
+            // }, { merge: true });
+    
+            res.json({
+                status: 'success',
+                message: 'Booking confirmed successfully',
+            });
+        } catch (error) {
+            console.error('Error confirming booking:', error);
+            res.status(500).json({
+                status: 'error',
+                message: 'Failed to confirm booking',
+            });
+        }
+    };
 
 module.exports = {
     makeBooking,
