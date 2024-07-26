@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './page.css';
 import { url } from '../../src/app/firebase/firebase_config';
+import { format, isValid, parse } from 'date-fns';
 
 const Navbar = () => (
   <div className="navbar">
@@ -192,19 +193,19 @@ const Summary = ({ selectedMonth, selectedDate, selectedSlot, handleConfirmBooki
 );
 
 const BookingPage = () => {
-  const [selectedMonth, setSelectedMonth] = useState('JUL\'24');
+  const [selectedMonth, setSelectedMonth] = useState("JUL'24");
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
   const [slots, setSlots] = useState([]);
 
   const getMonthIndex = (month) => {
     const monthMap = {
-      'JUL\'24': 7,
-      'AUG\'24': 8,
-      'SEP\'24': 9,
-      'OCT\'24': 10,
-      'NOV\'24': 11,
-      'DEC\'24': 12,
+      "JUL'24": 6, // month index starts from 0
+      "AUG'24": 7,
+      "SEP'24": 8,
+      "OCT'24": 9,
+      "NOV'24": 10,
+      "DEC'24": 11,
     };
     return monthMap[month];
   };
@@ -214,7 +215,8 @@ const BookingPage = () => {
       setSelectedSlot(''); // Clear the selected slot when the month changes
     }
     if (selectedDate) {
-      const date = new Date(2024, getMonthIndex(selectedMonth) - 1, selectedDate);
+      const monthIndex = getMonthIndex(selectedMonth);
+      const date = new Date(2024, monthIndex, selectedDate);
       setSlots(getFixedSlotsForDate(date));
       setSelectedSlot(''); // Clear the selected slot when the date changes
     }
@@ -227,8 +229,15 @@ const BookingPage = () => {
     }
   
     try {
-      const response = await axios.post(`${url}webscraping/confirm-booking`, {
-        date: selectedDate.format('YYYY-MM-DD'),
+      // Parse and format the date using date-fns
+      const monthIndex = getMonthIndex(selectedMonth);
+      const dateString = `2024-${monthIndex + 1}-${String(selectedDate).padStart(2, '0')}`;
+      const parsedDate = parse(dateString, 'yyyy-MM-dd', new Date());
+      const formattedDate = isValid(parsedDate) ? format(parsedDate, 'yyyy-MM-dd') : '';
+
+      console.log(formattedDate, " --- ", selectedSlot);
+      const response = await axios.post(`${url}/webscraping/confirm-booking-nonscrape`, {
+        date: formattedDate,
         slot: selectedSlot
       });
   
@@ -264,4 +273,4 @@ export default function Home() {
       <BookingPage />
     </div>
   );
-}
+};

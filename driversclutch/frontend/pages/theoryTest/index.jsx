@@ -15,6 +15,7 @@ import timezone from 'dayjs/plugin/timezone';
 import { url } from '../../src/app/firebase/firebase_config';
 import { GiCancel } from "react-icons/gi";
 import { SiTicktick } from "react-icons/si";
+import { format, isValid, parseISO } from 'date-fns';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -30,7 +31,6 @@ const Dashboard = () => {
     const [price, setPrice] = useState(5.45);
     const [loading, setLoading] = useState(false);
     const [beforeFormat, setBeforeFormat] = useState(null);
-
     const [creditBalance, setCreditBalance] = useState(0);
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [balanceData, setBalanceData] = useState(null);
@@ -38,8 +38,6 @@ const Dashboard = () => {
     const handleDateChange = async (date) => {
         setSelectedDate(date);
         setLoading(true);
-        // Format the date for the backend
-        // For this, only taking in the month and day
         const month = date.format('MMM').toUpperCase();
         const day = date.date();
 
@@ -48,16 +46,14 @@ const Dashboard = () => {
                 params: { month: `${month}'24`, date: day }
             });
             setTimeslots(response.data.availableSlots);
-            setLoading(false);
         } catch (error) {
             console.error('Error fetching timeslots:', error);
             setError('Failed to fetch timeslots');
+        } finally {
             setLoading(false);
         }
     };
 
-
-    // fetch timeslots:
     useEffect(() => {
         const fetchStudentData = async () => {
             try {
@@ -65,9 +61,7 @@ const Dashboard = () => {
                 if (!userDocID) {
                     throw new Error('User document ID not found in localStorage');
                 }
-                console.log(`Fetching student data for userDocID: ${userDocID}`);
                 const response = await axios.get(`${url}/students/booking/?id=${userDocID}`);
-                console.log('API Response:', response.data);
                 setStudentData(response.data);
             } catch (error) {
                 console.error('Error fetching student data:', error);
@@ -80,68 +74,43 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (studentData) {
+            const fetchBalanceData = async () => {
+                try {
+                    const userDocID = localStorage.getItem('userDocID');
+                    if (!userDocID) {
+                        throw new Error('User document ID not found in localStorage');
+                    }
+                    const response = await axios.get(`${url}/students/balance/?id=${userDocID}`);
+                    setBalanceData(response.data);
+                } catch (error) {
+                    console.error('Error fetching balance data:', error);
+                    setError(error.message);
+                }
+            };
 
+            fetchBalanceData();
         }
     }, [studentData]);
 
-    // Possible to replace top with this
-    // useEffect(() => {
-    //   if (studentData) {
-    //     const dateStr = selectedDate.format("YYYY-MM-DD");
-    //     const dataForDate = studentData[dateStr];
-
-    //     if (dataForDate) {
-    //       setTimeslots(dataForDate);
-    //     } else {
-    //       setTimeslots([]);
-    //     }
-    //   }
-    // }, [selectedDate, studentData]);
+    useEffect(() => {
+        if (balanceData) {
+            setCreditBalance(balanceData.balance);
+        }
+    }, [balanceData]);
 
     const handleAddBooking = (slot) => {
-        setBeforeFormat(slot)
+        setBeforeFormat(slot);
         const startTime = dayjs(slot.split(' ')[2], 'HH:mm');
         const endTime = startTime.add(45, 'minute');
         const formattedSlot = `${startTime.format('HH:mm')} - ${endTime.format('HH:mm')}`;
         setSelectedSlot(formattedSlot);
     };
 
-    
-    // fetch balance
-    useEffect(() => {
-        const fetchBalanceData = async () => {
-            try {
-                const userDocID = localStorage.getItem('userDocID');
-                if (!userDocID) {
-                    throw new Error('User document ID not found in localStorage');
-                }
-                console.log(`Fetching student data for userDocID: ${userDocID}`);
-                const response = await axios.get(`${url}/students/balance/?id=${userDocID}`);
-                console.log('API Response:', response.data);
-                setBalanceData(response.data);
-            } catch (error) {
-                console.error('Error fetching student data:', error);
-                setError(error.message);
-            }
-        };
-
-        fetchBalanceData();
-    }, []);
-
-
-    useEffect(() => {
-        if (balanceData) {
-            setCreditBalance(balanceData.balance);
-        }
-    })
-
-
     const handleNextStep = async () => {
-        
         if (creditBalance >= price) {
             await updateDatabase();
         }
-    }
+    };
 
     const updateBalance = async () => {
         const remainingBalance = creditBalance - price;
@@ -151,8 +120,6 @@ const Dashboard = () => {
                 studentID: userDocID,
                 amount: price,
             };
-            console.log("Sending data to server:", requestData);
-
             const response = await axios.put(`${url}/students/balance/payment`, requestData, {
                 headers: {
                     'Content-Type': 'application/json'
@@ -160,7 +127,6 @@ const Dashboard = () => {
             });
 
             if (response.status === 200) {
-                console.log("Balance data successfully sent to the database.");
                 setCreditBalance(remainingBalance);
                 setIsPopupVisible(true);
             } else {
@@ -168,30 +134,21 @@ const Dashboard = () => {
             }
         } catch (error) {
             console.error("Error:", error);
-            if (error.response) {
-                console.error("Server responded with:", error.response.data);
-            }
         }
     };
 
-    // if (!selectedDate || !selectedSlot) {
-    //     alert('Please select a date and time slot before confirming the booking.');
-    //     return;
-    // }
-
     const updateDatabase = async () => {
-        console.log(selectedSlot);
         try {
             const userDocID = localStorage.getItem('userDocID');
+            const formattedDate = selectedDate ? selectedDate.format('YYYY-MM-DD') : '';
             const response = await axios.post(`${url}/webscraping/confirm-booking`, {
                 studentID: userDocID,
-                date: selectedDate.format('YYYY-MM-DD'),
+                date: formattedDate,
                 slot: beforeFormat,
-                editedSlot: 'selectedSlot'
+                editedSlot: selectedSlot
             });
-    
+
             if (response.data.status === 'success') {
-                console.log("Data successfully sent to the database.");
                 await updateBalance();
             } else {
                 alert('Failed to confirm booking');
@@ -201,22 +158,20 @@ const Dashboard = () => {
             alert('Failed to confirm booking');
         }
     };
-    
 
     const closePopup = () => {
         setIsPopupVisible(false);
         window.location.href = "./home";
     };
 
-
     if (error) {
         return <div>Error: {error}</div>;
     }
 
     if (!studentData) {
-        console.log('No student data found.');
         return <div>Loading...</div>;
     }
+
     return (
         <div className='dashboard'>
             <div className='title'>
