@@ -112,8 +112,8 @@ const HomePage = () => {
                         <span className='author'>{testimonials[currentTestimonialIndex].author}</span>
                     </div>
                     <div className='testimonial-buttons'>
-                        <button onClick={prevTestimonial}>Previous</button>
-                        <button onClick={nextTestimonial}>Next</button>
+                        <button className="prev-button" onClick={prevTestimonial}>Back</button>
+                        <button className="next-button" onClick={nextTestimonial}>Next</button>
                     </div>
                 </div>
             </section>
@@ -127,13 +127,13 @@ const HomePage = () => {
                 <div className='info-container'>
                     <h2>Mission</h2>
                     <p>
-                        DriversClutch aims to streamline the learning process for both students and instructors by providing a one-stop platform for <em><strong>scheduling</strong></em>, <em><strong>resources</strong></em>, and <em><strong>communication</strong></em>.
+                        DriversClutch aims to streamline the learning process for both students and instructors by providing a one-stop platform for <span style={{color: 'darkgrey'}}><em><strong>scheduling</strong></em></span>, <span style={{color: 'darkgrey'}}><em><strong>resources</strong></em></span>, and <span style={{color: 'darkgrey'}}><em><strong>communication</strong></em></span>.
                     </p>
                 </div>
                 <div className='info-container'>
                     <h2>Vision</h2>
                     <p>
-                        Our vision is to create a seamless learning environment for driving in Singapore, and allow our students to get their licence <em><strong>efficiently</strong></em>.
+                        Our vision is to create a seamless learning environment for driving in Singapore, and allow our students to get their licence efficiently.
                     </p>
                 </div>
             </section>
