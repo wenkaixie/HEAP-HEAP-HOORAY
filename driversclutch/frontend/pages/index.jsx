@@ -133,7 +133,7 @@ const HomePage = () => {
                 <div className='info-container'>
                     <h2>Vision</h2>
                     <p>
-                        Our vision is to create a seamless learning environment for driving in Singapore, and allow our students to get their licence efficiently.
+                        Our vision is to create a seamless learning environment for driving in Singapore, and allow our students to get their licence <em><strong>efficiently</strong></em>.
                     </p>
                 </div>
             </section>
