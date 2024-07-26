@@ -63,7 +63,8 @@ function MyApp({ Component, pageProps }) {
             );
         } else {
             // If the route is not specified, you can either redirect to a 404 page or show an access denied message
-            return <div>Access Denied</div>;
+            <div>Access Denied</div>;
+            router.push('/login');
         }
     };
 
