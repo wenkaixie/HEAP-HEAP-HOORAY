@@ -8,6 +8,9 @@ body {
 }
 
 .header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,7 +52,6 @@ body {
     background-color: #c0daf9aa;
 }
 
-
 .heroImage img {
     max-width: 60%; /* Ensure the image doesn't exceed its container */
     height: auto;
@@ -69,7 +71,6 @@ body {
     font-weight: normal;
     margin-right: 11px;
 }
-
 
 .heroText .boldText {
     font-weight: bold;
@@ -115,20 +116,9 @@ body {
     color: #3c6c95;
 }
 
-
-.calendar-icon {
-    font-size: 35px; 
-    color: #210409
-}
-
-.paper-icon{
+.calendar-icon, .paper-icon, .people-icon {
     font-size: 35px;
-    color: #210409
-}
-
-.people-icon{
-    font-size: 35px;
-    color: #210409
+    color: #210409;
 }
 
 .info-sections {
@@ -136,7 +126,7 @@ body {
     justify-content: space-around;
     padding: 50px;
     background-color: #ffffff;
-    text-align: center; 
+    text-align: center;
 }
 
 .info-container {
@@ -168,21 +158,85 @@ body {
 
 .testimonial-buttons {
     display: flex;
-    justify-content: space-between;
-    width: 100%;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
 }
 
+.prev-button,
+.next-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    color: #fff; /* Text color */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
 
-.author {
-    font-style: italic;
-    margin-top: 10px;
-    display: block;
+/* Styles for Previous button */
+.prev-button {
+    background-color: #0c51919d; /* Green background */
+}
+
+.prev-button:hover {
+    background-color: #08335ce0; /* Darker green on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+/* Styles for Next button */
+.next-button {
+    background-color: #0c51919d; /* Blue background */
+}
+
+.next-button:hover {
+    background-color: #08335ce0; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
 }
 
 .info-container h2 {
     color: rgb(0, 37, 77);
 }
 
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+}
+
 .footer p {
-    margin: 15px 10px;
+    margin: 5px 0;
+}
+
+.hover-button:hover {
+    transform: scale(1.05);
+    transition: transform 0.3s;
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        padding: 20px;
+    }
+
+    .heroImage img {
+        max-width: 100%;
+        min-width: unset;
+        margin-left: 0;
+    }
+
+    .featureList {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .info-sections {
+        flex-direction: column;
+    }
+
+    .info-container {
+        margin: 20px 0;
+    }
 }

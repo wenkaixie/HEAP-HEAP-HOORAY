@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import './page.css';
 import { BiLogIn } from "react-icons/bi";
 import { IoCalendarOutline, IoNewspaperOutline } from "react-icons/io5";
 import { MdOutlinePeopleAlt } from "react-icons/md";
+import { FaStar } from 'react-icons/fa';
 
 const HomePage = () => {
     const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0);
@@ -11,23 +12,28 @@ const HomePage = () => {
     const testimonials = [
         {
             text: "When I first started my lessons, I always felt that driving was a huge hurdle, until I was fortunate enough to have Lian Huat Ng as my instructor and always looked forward to having him for my classes. He gave a lot of reassurance and gradually with each class and his guidance, I got a lot more confident in my driving and am proud to credit my passing to him. Will always recommend if anyone can specially book or request for him, you driving learning journey would definitely be a smooth one.",
-            author: "Sherilyn, 3A, 5 May 2024"
+            author: "Sherilyn, 3A, 5 May 2024",
+            rating: 5
         },
         {
             text: "I had a great experience learning with DriversClutch. The instructors were very professional and made the learning process enjoyable. I passed my driving test on the first attempt thanks to their excellent guidance!",
-            author: "John, 3, 12 April 2024"
+            author: "John, 3, 12 April 2024",
+            rating: 5
         },
         {
             text: "DriversClutch made it so easy to schedule and reschedule lessons. The online resources were extremely helpful in preparing for the theory test. Highly recommend!",
-            author: "Emily, 3A, 8 March 2024"
+            author: "Emily, 3A, 8 March 2024",
+            rating: 4
         },
         {
             text: "The instructors at DriversClutch are very knowledgeable and patient. They tailored the lessons to my learning pace, which made me feel comfortable and confident behind the wheel.",
-            author: "Michael, 3A, 25 February 2024"
+            author: "Michael, 3A, 25 February 2024",
+            rating: 5
         },
         {
             text: "Fantastic service! The booking process was seamless and the instructors were top-notch. I would recommend DriversClutch to anyone looking to learn how to drive.",
-            author: "Sarah, 3, 15 January 2024"
+            author: "Sarah, 3, 15 January 2024",
+            rating: 4
         }
     ];
 
@@ -38,6 +44,13 @@ const HomePage = () => {
     const prevTestimonial = () => {
         setCurrentTestimonialIndex((currentTestimonialIndex - 1 + testimonials.length) % testimonials.length);
     };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextTestimonial();
+        }, 5000); // Rotate testimonials every 5 seconds
+        return () => clearInterval(interval);
+    }, [currentTestimonialIndex]);
 
     return (
         <main className='main'>
@@ -91,11 +104,16 @@ const HomePage = () => {
                 <div className='testimonial-container'>
                     <div className='testimonial'>
                         <p>{testimonials[currentTestimonialIndex].text}</p>
+                        <div>
+                            {[...Array(testimonials[currentTestimonialIndex].rating)].map((_, i) => (
+                                <FaStar key={i} color="#ffd700" />
+                            ))}
+                        </div>
                         <span className='author'>{testimonials[currentTestimonialIndex].author}</span>
                     </div>
                     <div className='testimonial-buttons'>
-                        <button onClick={prevTestimonial}>Previous</button>
-                        <button onClick={nextTestimonial}>Next</button>
+                        <button className="prev-button" onClick={prevTestimonial}>Back</button>
+                        <button className="next-button" onClick={nextTestimonial}>Next</button>
                     </div>
                 </div>
             </section>
@@ -115,12 +133,12 @@ const HomePage = () => {
                 <div className='info-container'>
                     <h2>Vision</h2>
                     <p>
-                        Our vision is to create a seamless learning environment for driving in Singapore, and allow our students to get their licence efficiently.
+                        Our vision is to create a seamless learning environment for driving in Singapore, and allow our students to get their licence <em><strong>efficiently</strong></em>.
                     </p>
                 </div>
             </section>
             <footer className='footer'>
-                <p>Created by: </p>
+                <p>Created by:</p>
                 <p>Wenkai, Zu Wei, Yuan Qi, Yi Chi, Sheng Wei</p>
             </footer>
         </main>
