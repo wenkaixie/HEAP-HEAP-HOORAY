@@ -237,12 +237,8 @@ h3 {
     padding-top: 10px;
   }
 
-  .dashboard h3 {
-    margin-left: 10px;
-  }
-
   .dashboard p {
-    text-align: left;
+
     margin-left: 10px;
   }
 
@@ -258,7 +254,7 @@ h3 {
 
 @media (max-width: 480px) {
   .dashboard {
-    padding: 10px;
+    padding: 30px;
   }
 }
 
