@@ -105,7 +105,6 @@ const makeBooking = async (req, res) => {
 };
 
 const confirmBooking = async (req, res) => {
-    const { date, slot } = req.body;
     const { studentID, date, slot, editedSlot } = req.body;
     console.log('Confirm booking request received:', date, slot);
 
