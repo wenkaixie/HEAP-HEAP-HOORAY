@@ -245,6 +245,9 @@ body {
     .featureList {
         flex-direction: column;
         gap: 20px;
+        display: flex;
+        align-items: center;
+
     }
 
     .info-sections {

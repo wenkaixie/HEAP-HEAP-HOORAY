@@ -83,7 +83,7 @@ const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
 
 
     try {
-      console.log('Trying to postt', updatedProfileData);
+      console.log('Trying to post', updatedProfileData);
       const response = await axios.put(`${url}/instructors/profile/update`, updatedProfileData, {
         headers: {
           'Content-Type': 'application/json',
@@ -91,6 +91,7 @@ const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
       });
       console.log('Profile updated:', response.data);
       setIsPopupVisible(false);
+      document.body.style.overflow = 'auto'; // Reset the body overflow when popup closes
       fetchProfileData();
     } catch (error) {
       console.log('Error updating profile:', error);
@@ -254,21 +255,24 @@ const ProfileInfo = ({ profileData, setIsPopupVisible, fetchProfileData }) => {
 };
 
 const Dashboard = () => {
-    const [isPictureVisible, setIsPictureVisible] = useState(false);
-    const [isPopupVisible, setIsPopupVisible] = useState(false);
-    const [profileData, setProfileData] = useState(null);
-    const [profilePic, setProfilePic] = useState("");
-    const [error, setError] = useState(null);
-    const [selectedFile, setSelectedFile] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+  const [isPictureVisible, setIsPictureVisible] = useState(false);
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [profileData, setProfileData] = useState(null);
+  const [profilePic, setProfilePic] = useState("");
+  const [error, setError] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-    const togglePicture = () => {
-      setIsPictureVisible(!isPictureVisible);
+  const togglePicture = () => {
+    setIsPictureVisible(!isPictureVisible);
   }
 
-    const togglePopup = () => {
-        setIsPopupVisible(!isPopupVisible);
-    }
+  const togglePopup = () => {
+    const newPopupVisibility = !isPopupVisible;
+    setIsPopupVisible(newPopupVisibility);
+    document.body.style.overflow = newPopupVisibility ? 'hidden' : 'auto';
+  };
+  
     
     const fetchProfileData = async () => {
       try {
@@ -466,10 +470,10 @@ const Dashboard = () => {
             </div>
           </div>
           <div id="popupOverlay" className={`popup-overlay ${isPopupVisible ? 'show' : ''}`}>
-              <div className='popup-box'>
-                  <ProfileInfo profileData={profileData} setIsPopupVisible={setIsPopupVisible} fetchProfileData={fetchProfileData} />
-              </div>
+          <div className='popup-box'>
+            <ProfileInfo profileData={profileData} setIsPopupVisible={setIsPopupVisible} fetchProfileData={fetchProfileData} />
           </div>
+        </div>
         </div>
       </div>
     );
